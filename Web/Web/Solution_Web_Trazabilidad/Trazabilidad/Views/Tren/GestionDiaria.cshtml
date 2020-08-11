@@ -1,0 +1,113 @@
+﻿@model IEnumerable<ViewModels.Models.Tren>
+@{
+    ViewBag.Title = "Gestion Diaria De Trenes";
+    ViewBag.Header = "Gestion Diaria De Trenes";
+    //var servicios = ViewBag.Servicios;
+}
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-8">
+        <h2>@ViewBag.Header</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+            </li>
+            <li class="active">
+                <strong>@ViewBag.Header</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+
+            @*<div class="ibox-content bg-success">
+               
+                <h3 style="margin:0;">Desde las 18:00hrs del @Html.Raw(DateTime.Now.ToShortDateString()) Hasta las 17:59hrs del @Html.Raw(DateTime.Now.AddDays(1).ToShortDateString())</h3>
+            </div>*@
+        </div>
+    </div>
+</div>
+
+@*<div id="TrenSuprime"></div>
+    <div id="locomotiveEdit"></div>
+    <div id="locomotiveDelete"></div>
+    <div id="locomotiveEditLoc"></div>
+    <div id="locomotiveEditTrip"></div>
+    <div id="TrenHora"></div>*@
+@*RESTO DE LA PAGINA*@
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+
+            @*<form role="form">
+                    <div class="form-group">
+                        @Html.LabelFor(srv => srv.Id, "Filtrar Servicio")
+                        @Html.DropDownListFor(model => model.Id, (SelectList)ViewBag.Servicios, "Seleccione Servicio", htmlAttributes: new { @class = "form-control", onchange = "SelectedIndexChanged(this)" })
+                    </div>
+                </form>*@
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="partialDiv">
+
+                @foreach (var tTime in Model)
+                {
+                    @Html.Partial("GestionDiaria/_TrenesDiarios", tTime)
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*MODAL*@
+@*@Html.Partial("Partial/_Create", new ViewModels.Models.Tiempo_Hapa())*@
+@section Scripts{
+
+    <script src="~/Scripts/Modal.GestionDiaria.js"></script>
+
+    <script>
+        $('.toggler').click(function (event) {
+            event.preventDefault();
+            $(this).parent().siblings('.toggled').slideToggle(300);
+        });
+    </script>
+
+    <script type="text/javascript">
+        function SelectedIndexChanged(valor) {
+            var url = '@Url.Action(nameof(Trazabilidad.Controllers.TrenController.ListById))' + "/" + valor.value;
+            $.ajax({
+                type: "GET",
+                url: '../Tren/ListById' + "/" + valor.value,
+                success: function (result) {
+                    if (result.success) {
+                        if (result.data == null) {
+
+                            toastr.error(msg, "rror");
+                        }
+                        else {
+                            $("#partialDiv").html(result);
+                            toastr.success(result.message, "rror");
+                        }
+                    }
+                    else {
+                        toastr.error(result.message,"rror");
+                    }
+                },
+                error: function (result) {
+                    toastr.error('@($"{Resources.Strings.Errors.UnknownError} {Resources.Strings.Errors.ErrorNotified}")', '@Resources.Strings.Models.Tren');
+                }
+            });
+        }
+    </script>
+}
+
+@section Styles{
+    <style>
+        .toggled {
+            display: none;
+        }
+    </style>
+}

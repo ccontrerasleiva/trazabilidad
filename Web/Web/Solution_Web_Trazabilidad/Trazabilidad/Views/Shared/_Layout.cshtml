@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Gestión de Jornada e Itinerario</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
+    @*SECCIÓN DEFINIDA PARA EL FULLCALENDAR*@
+    @if (IsSectionDefined("Headers"))
+    {
+        @RenderSection("Headers", required: false)
+    }
+    <script type = 'text/javascript'>
+        var appInsights=window.appInsights||function(config)
+        {
+            function r(config){ t[config] = function(){ var i = arguments; t.queue.push(function(){ t[config].apply(t, i)})} }
+            var t = { config:config},u=document,e=window,o='script',s=u.createElement(o),i,f;for(s.src=config.url||'//az416426.vo.msecnd.net/scripts/a/ai.0.js',u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=['Event','Exception','Metric','PageView','Trace','Ajax'];i.length;)r('track'+i.pop());return r('setAuthenticatedUserContext'),r('clearAuthenticatedUserContext'),config.disableExceptionTracking||(i='onerror',r('_'+i),f=e[i],e[i]=function(config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t['_' + i](config, r, u, e, o),s}),t
+        }({
+            instrumentationKey:'a424ce64-1f88-4cba-909e-60f52fffa9eb'
+        });
+
+        window.appInsights=appInsights;
+        appInsights.trackPageView();
+    </script>
+</head>
+<body class="pace-done">
+    <div class="pace pace-inactive">
+        <div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+    <div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    @Html.Partial("_SideBar")
+                </ul>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="gray-bg">
+            @Html.Partial("_TopBar")
+
+            @RenderBody()
+
+            @*FOOTER*@
+            <div class="footer">
+                <div class="pull-right">
+                </div>
+                <div>
+                    <strong>Derechos de Autor</strong> FEPASA / © 2017
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*SECCIÓN PARA LOS SCRIPTS*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/page")
+    @RenderSection("scripts", required: false)
+
+    @*<div class="theme-config">
+        <div class="theme-config-box">
+            <div class="spin-icon" data-vivaldi-spatnav-clickable="1">
+                <i class="fa fa-cogs fa-spin"></i>
+            </div>
+            <div class="skin-settings">
+                <div class="title">
+                    Configuration <br>
+                    <small style="text-transform: none;font-weight: 400">
+                        Config box designed for demo purpose. All options available via code.
+                    </small>
+                </div>
+                <div class="setings-item">
+                    <span>
+                        Collapse menu
+                    </span>
+
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="collapsemenu">
+                            <label class="onoffswitch-label" for="collapsemenu">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="setings-item">
+                    <span>
+                        Fixed sidebar
+                    </span>
+
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="fixedsidebar" class="onoffswitch-checkbox" id="fixedsidebar">
+                            <label class="onoffswitch-label" for="fixedsidebar">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="setings-item">
+                    <span>
+                        Top navbar
+                    </span>
+
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="fixednavbar" class="onoffswitch-checkbox" id="fixednavbar">
+                            <label class="onoffswitch-label" for="fixednavbar">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="setings-item">
+                    <span>
+                        Top navbar v.2
+                        <br>
+                        <small>*Primary layout</small>
+                    </span>
+
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="fixednavbar2" class="onoffswitch-checkbox" id="fixednavbar2">
+                            <label class="onoffswitch-label" for="fixednavbar2">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="setings-item">
+                    <span>
+                        Boxed layout
+                    </span>
+
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="boxedlayout" class="onoffswitch-checkbox" id="boxedlayout">
+                            <label class="onoffswitch-label" for="boxedlayout">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="setings-item">
+                    <span>
+                        Fixed footer
+                    </span>
+
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="fixedfooter" class="onoffswitch-checkbox" id="fixedfooter">
+                            <label class="onoffswitch-label" for="fixedfooter">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="title">Skins</div>
+                <div class="setings-item default-skin">
+                    <span class="skin-name ">
+                        <a href="#" class="s-skin-0">
+                            Default
+                        </a>
+                    </span>
+                </div>
+                <div class="setings-item blue-skin">
+                    <span class="skin-name ">
+                        <a href="#" class="s-skin-1">
+                            Blue light
+                        </a>
+                    </span>
+                </div>
+                <div class="setings-item yellow-skin">
+                    <span class="skin-name ">
+                        <a href="#" class="s-skin-3">
+                            Yellow/Purple
+                        </a>
+                    </span>
+                </div>
+                <div class="setings-item ultra-skin">
+                    <span class="skin-name ">
+                        <a href="md_skin/" class="md-skin">
+                            Material Design
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>*@
+</body>
+</html>

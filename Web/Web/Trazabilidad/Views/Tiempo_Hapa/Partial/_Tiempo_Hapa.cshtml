@@ -1,0 +1,92 @@
+﻿@*@model ViewModels.Models.PassengerTravelTime
+    <tr>
+        <div id="form-edit">
+            @using (Html.BeginForm(nameof(Trazabilidad.Controllers.PassengerTravelTimesController.Edit), nameof(Resources.Strings.Models.PassengerTravelTimes), FormMethod.Post))
+            {
+                @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.OriginId)
+                @Html.HiddenFor(x => x.DestinationId)
+                <td>@Model.Origin.Name</td>
+                <td>@Model.Destination.Name</td>
+                <td>
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.TimeLapse, htmlAttributes: new { @class = "form-control input-sm", type = "time", pattern = "[0-9]{2}:[0-9]{2}", max = "11:00", min = "00:01" })
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-pencil"></i></button>
+                        </span>
+                    </div>
+                </td>
+            }
+        </div>
+    </tr>
+*@
+
+@model ViewModels.Models.Tiempo_Hapa
+@using Trazabilidad.Controllers
+@using Resources.Strings
+<tr>
+    @using (Html.BeginForm(nameof(Trazabilidad.Controllers.Tiempo_HapaController.Edit), nameof(Resources.Strings.Models.Tiempo_Hapa), FormMethod.Post))
+    {
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.Id_Origen)
+        @Html.HiddenFor(x => x.Id_Destino)
+        @*<td>@Model.Origin.Name</td>
+            <td>@Model.Destination.Name</td>*@
+
+        <td>@Model.Origen.Nombre</td>
+        <td>@Model.Destino.Nombre</td>
+
+
+        if (@Model.Deshabilitado == false)
+        {
+            <td>Habilitado</td>}
+        else
+        {
+            <td>Deshabilitado</td>}
+
+        <td>
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.Tiempo_Viaje, htmlAttributes: new { @class = "form-control ", disabled = "disabled" })
+            </div>
+        </td>
+
+        <td>
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.TiempoRetorno, htmlAttributes: new { @class = "form-control ", disabled = "disabled" })
+            </div>
+        </td>
+
+        <td>
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <a data-toggle="modal" onclick="Edit(@Model.Id,6)" href="#modal-edit" class="btn btn-primary"><i class="fa fa-pencil" data-id="@Model.Id"></i> </a>
+                    <a data-toggle="modal" onclick="Delete(@Model.Id,6)" href="#modal-delete" class="btn btn-primary"><i class="fa fa-trash-o" data-id="@Model.Id"></i> </a>
+                </span>
+            </div>
+        </td>
+
+    }
+</tr>
+
+@*AGREGADO. JTC.(Crea el formulario que edita y elimina)*@
+<div id="modal-edit" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="travelTimeHapaEdit">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-delete" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="travelTimeHapaDelete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,41 @@
+﻿@model ViewModels.Models.Tren
+@using (Html.BeginForm(nameof(Trazabilidad.Controllers.TrenController.AutorizarTren), nameof(Resources.Strings.Models.Tren), FormMethod.Post, htmlAttributes: new { @id = "modal-element-delete" }))
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.Estado)
+
+    if (Model.Estado == (int)ViewModels.Enum.EstadoTren.Confirmado)
+    {
+        <div class="col-md-12">
+            <h2 class="m-t-none m-b">Autorizacion de Tren</h2>
+        </div>
+
+        <form role="form">
+
+            <h4 class="m-t-none m-b">¿Desea Autorizar el tren  @Model.Tren_Concatenado  ?</h4>
+
+            <div>
+                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Aceptar</strong></button>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="col-md-12">
+            <h2 class="m-t-none m-b">Desautorizar Tren</h2>
+        </div>
+
+        <form role="form">
+
+            <h4 class="m-t-none m-b">¿Desea Desautorizar el tren  @Model.Tren_Concatenado  ?</h4>
+
+            <div>
+                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Aceptar</strong></button>
+            </div>
+        </form>
+    }
+
+
+
+
+}

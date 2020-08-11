@@ -1,0 +1,54 @@
+﻿@model ViewModels.Models.Statu
+
+<tr>
+    @using (Html.BeginForm(nameof(Trazabilidad.Controllers.StatuController), nameof(Resources.Strings.Models.Statu), FormMethod.Post))
+    {
+
+        <td>@Model.Id</td>
+           if (@Model.Deshabilitado == false)
+        {
+            <td>Habilitado</td>}
+        else
+        {
+         <td>Deshabilitado</td>}
+        <td>@Model.Descripcion</td>
+
+
+
+
+
+        <td>
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <a data-toggle="modal" onclick="Edit(@Model.Id,13)" href="#modal-edit" class="btn btn-primary"><i class="fa fa-pencil" data-id="@Model.Id"></i> </a>
+                    @*<a data-toggle="modal" onclick="Delete(@Model.Id,7)" href="#modal-delete" class="btn btn-primary"><i class="fa fa-trash-o" data-id="@Model.Id"></i> </a>*@
+                </div>
+            </div>
+        </td>
+
+    }
+</tr>
+
+<div id="modal-edit" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="StatuEdit">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-delete" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="StatuDelete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

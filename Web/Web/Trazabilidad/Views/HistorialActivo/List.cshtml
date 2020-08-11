@@ -1,0 +1,435 @@
+﻿@model IEnumerable<ViewModels.Custom.HistoricoPatente>
+
+@{
+    ViewBag.Title = "Historial de Contenedores";
+    ViewBag.Header = "Informe de Contenedores";
+}
+
+@*<div class="ibox-title title-action">*@
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-sm-8">
+            <h2>@ViewBag.Header</h2>
+            <ol class="breadcrumb">
+                <li><a href="@Url.Action("SignOutCallback", "Account" )">Inicio</a></li>
+                @*<li><a href="@Url.Action(" Index", "Home" )">Inicio</a></li>*@
+                <li class="active"><strong> Historial Contenedores</strong></li>
+            </ol>
+        </div>
+    </div>
+
+
+@*</div>*@
+<style>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('../../Content/Img/ajax_loader.gif') 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+    .card {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, .125);
+        border-radius: .25rem
+    }
+
+        .card > hr {
+            margin-right: 0;
+            margin-left: 0
+        }
+
+        .card > .list-group:first-child .list-group-item:first-child {
+            border-top-left-radius: .25rem;
+            border-top-right-radius: .25rem
+        }
+
+        .card > .list-group:last-child .list-group-item:last-child {
+            border-bottom-right-radius: .25rem;
+            border-bottom-left-radius: .25rem
+        }
+
+
+    .card-body {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1.25rem
+    }
+
+    .col,
+    .col-1,
+    .col-10,
+    .col-11,
+    .col-12,
+    .col-2,
+    .col-3,
+    .col-4,
+    .col-5,
+    .col-6,
+    .col-7,
+    .col-8,
+    .col-9,
+    .col-auto,
+    .col-lg,
+    .col-lg-1,
+    .col-lg-10,
+    .col-lg-11,
+    .col-lg-12,
+    .col-lg-2,
+    .col-lg-3,
+    .col-lg-4,
+    .col-lg-5,
+    .col-lg-6,
+    .col-lg-7,
+    .col-lg-8,
+    .col-lg-9,
+    .col-lg-auto,
+    .col-md,
+    .col-md-1,
+    .col-md-10,
+    .col-md-11,
+    .col-md-12,
+    .col-md-2,
+    .col-md-3,
+    .col-md-4,
+    .col-md-5,
+    .col-md-6,
+    .col-md-7,
+    .col-md-8,
+    .col-md-9,
+    .col-md-auto,
+    .col-sm,
+    .col-sm-1,
+    .col-sm-10,
+    .col-sm-11,
+    .col-sm-12,
+    .col-sm-2,
+    .col-sm-3,
+    .col-sm-4,
+    .col-sm-5,
+    .col-sm-6,
+    .col-sm-7,
+    .col-sm-8,
+    .col-sm-9,
+    .col-sm-auto,
+    .col-xl,
+    .col-xl-1,
+    .col-xl-10,
+    .col-xl-11,
+    .col-xl-12,
+    .col-xl-2,
+    .col-xl-3,
+    .col-xl-4,
+    .col-xl-5,
+    .col-xl-6,
+    .col-xl-7,
+    .col-xl-8,
+    .col-xl-9,
+    .col-xl-auto {
+        position: relative;
+        width: 100%;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px
+    }
+</style>
+
+
+@*<!DOCTYPE html>*@
+
+@*<html>*@
+@*<head>*@
+<meta name="viewport" content="width=device-width" />
+@*<title>List</title>*@
+
+@*<link href="~/Content/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />*@
+@*<link href="~/Content/bootstrap/vendor/charts/c3charts/c3.css" rel="stylesheet" />*@
+
+@*</head>*@
+
+@*<body>*@
+<div class="wrapper wrapper-content ">
+    @*a<div class="col-lg-12">
+        b<div class="ibox float-e-margins">*@
+            
+            <div class="col-lg-6">
+                @Html.ActionLink("Retornar", "Index")
+                <div class="card">
+                    <div class="card-body">
+                        @*<h4 class="header-title">Thead light</h4>*@
+                        <div class="single-table">
+                            <div class="table-responsive">
+                                <table class="table table-responsive">
+                                    <thead class="text-uppercase bg-light">
+                                        <tr>
+                                            <th>
+                                                Id
+                                            </th>
+                                            <th>
+                                                Ubicación
+                                            </th>
+                                            <th>
+                                                Fecha Lectura
+                                            </th>
+                                            <th>
+                                                Patente
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Id)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Ubicacion)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FechaLectura)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Patente)
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @Html.ActionLink("Retornar", "Index")
+                <!-- Optional JavaScript -->
+                <script src="~/Content/bootstrap/vendor/jquery/jquery-3.3.1.min.js"></script>
+
+                @*<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+        <script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>*@
+
+
+
+                <script src="~/Content/bootstrap/vendor/charts/c3charts/c3.min.js"></script>
+                <script src="~/Content/bootstrap/vendor/charts/c3charts/d3-5.4.0.min.js"></script>
+                @*<script src="~/Content/bootstrap/vendor/charts/c3charts/C3chartjs.js"></script>*@
+
+                <script src="~/Scripts/Custom/jquery.sparkline.js"></script>
+
+                @*<script src="../assets/libs/js/main-js.js"></script>*@
+
+                <script>
+                    (function (window, document, $, undefined) {
+                        "use strict";
+                        $(function () {
+                            $.getJSON("../HistorialActivo/Totales_GraficoCharte", function (mps) {
+                                var mes1 = "Data1";
+                                var mes2 = "Data2";
+                                var fila = [];
+                                var fila2 = [];
+                                fila.push(mes1);
+                                fila2.push(mes2);
+                                //var type1 = mes1 + ": 'area-spline'";
+                                //var type2 = mes2 + ": 'area-spline'";
+
+                                //var color1 = mes1 + ": '#5969ff'";
+                                //var color2 = mes2 + ": '#5969ff'";
+
+                                var mes = 12;
+                                //alert(mes);
+                                for (var x = 1; x <= 31; x++) {
+                                    fila.push(0);
+                                    fila2.push(0);
+                                }
+                                $(mps).each(function () {
+                                    //alert(mps.length);
+                                    if (mes == this.Mes) {
+                                        fila[parseInt(this.Dia) + 1] = this.Cantidad;
+                                        //fila.push(this.Cantidad);
+
+                                    }
+                                    else {
+                                        fila2[parseInt(this.Dia) + 1] = this.Cantidad;
+                                        //fila2.push(this.Cantidad);
+                                        //fila2 = fila2 + this.Cantidad + ",";
+                                    }
+                                    //   mes = this.Mes;
+                                    //alert(this.Cantidad);
+
+                                });
+                                //fila = ['data1ss', + fila.substring(0, fila.length - 1).toString() + ];
+                                //fila2 = ['data2ss',  + fila2.substring(0, fila2.length - 1).toString() + ];
+                                //alert(fila);
+                                //alert(type1);
+                                //alert(color1);
+
+                                if ($('#c3chart_area').length) {
+                                    var chart = c3.generate({
+                                        bindto: "#c3chart_area",
+                                        data: {
+                                            columns: [
+                                                fila,
+                                                fila2
+                                                //['data1', 1, 2, 1, 1, 2, 1],
+                                                //['data2', 1, 2, 1, 1, 2, 1]
+                                                //['data1', 300, 250, 300, 50, 0, 0],
+                                                //['data2', 130, 100, 140, 200, 150, 50, 100],
+                                                //['data3', 130, 100, 140, 400, 150, 50, 100]
+                                            ],
+                                            types: {
+                                                Data1: 'area',
+                                                Data2: 'area-spline'
+                                                //type1
+                                                //type2
+                                                //data1: 'area',
+                                                //data2: 'area-spline',
+                                                //data3: 'area'
+                                            },
+                                            colors: {
+                                                Data1: '#5969ff',
+                                                Data2: '#ff407b',
+                                                //color2,
+                                                //data1: '#5969ff',
+                                                //data2: '#ff407b',
+                                                //data3: '#A4A4A4',
+                                            }
+
+                                        },
+                                        axis: {
+
+                                            y: {
+                                                show: true
+
+                                            },
+                                            x: {
+                                                show: true
+                                            }
+                                        }
+
+                                    });
+                                    //alert(chart.data.columns);
+                                }
+
+                                // ==============================================================
+                                // Revenue Cards
+                                // ==============================================================
+                                //$("#sparkline-1").sparkline([51, 5, 7, 7, 9, 5, 3, 5, 2, 4, 6, 7], {
+                                $("#sparkline-1").sparkline([51, 55, 70], {
+                                    type: 'line',
+                                    width: '99.5%',
+                                    height: '100',
+                                    lineColor: '#5969ff',
+                                    fillColor: '#dbdeff',
+                                    lineWidth: 2,
+                                    spotColor: undefined,
+                                    minSpotColor: undefined,
+                                    maxSpotColor: undefined,
+                                    highlightSpotColor: undefined,
+                                    highlightLineColor: undefined,
+                                    resize: true
+                                });
+
+
+
+                                $("#sparkline-2").sparkline([3, 7, 6, 4, 5, 4, 3, 5, 5, 2, 3, 1], {
+                                    type: 'line',
+                                    width: '99.5%',
+                                    height: '100',
+                                    lineColor: '#ff407b',
+                                    fillColor: '#ffdbe6',
+                                    lineWidth: 2,
+                                    spotColor: undefined,
+                                    minSpotColor: undefined,
+                                    maxSpotColor: undefined,
+                                    highlightSpotColor: undefined,
+                                    highlightLineColor: undefined,
+                                    resize: true
+                                });
+
+
+
+                                $("#sparkline-3").sparkline([5, 3, 4, 6, 5, 7, 9, 4, 3, 5, 6, 1], {
+                                    type: 'line',
+                                    width: '99.5%',
+                                    height: '100',
+                                    lineColor: '#25d5f2',
+                                    fillColor: '#dffaff',
+                                    lineWidth: 2,
+                                    spotColor: undefined,
+                                    minSpotColor: undefined,
+                                    maxSpotColor: undefined,
+                                    highlightSpotColor: undefined,
+                                    highlightLineColor: undefined,
+                                    resize: true
+                                });
+
+
+
+                                $("#sparkline-4").sparkline([6, 5, 3, 4, 2, 5, 3, 8, 6, 4, 5, 1], {
+                                    type: 'line',
+                                    width: '99.5%',
+                                    height: '100',
+                                    lineColor: '#fec957',
+                                    fillColor: '#fff2d5',
+                                    lineWidth: 2,
+                                    spotColor: undefined,
+                                    minSpotColor: undefined,
+                                    maxSpotColor: undefined,
+                                    highlightSpotColor: undefined,
+                                    highlightLineColor: undefined,
+                                    resize: true,
+                                });
+
+                            });
+
+
+                            if ($('.ct-chart-line').length) {
+                                new Chartist.Line('.ct-chart-line', {
+                                    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                                    series: [
+                                        [8, 9, 7, 8, 5],
+                                        [2, 1, 3.5, 7, 3],
+                                        [1, 3, 4, 5, 6]
+                                    ]
+                                }, {
+                                        fullWidth: true,
+                                        chartPadding: {
+                                            right: 40
+                                        },
+                                        axisY: {
+
+                                        }
+                                    });
+
+                            }
+
+                        });
+
+                    })(window, document, window.jQuery);
+                </script>
+            </div>
+        @*</div>
+    </div>*@
+</div>
+
+<script src="~/Scripts/Custom/Chartistjs.js"></script>
+<script src="~/Scripts/Custom/chartist.min.js"></script>
+@*</body>*@
+@*</html>*@

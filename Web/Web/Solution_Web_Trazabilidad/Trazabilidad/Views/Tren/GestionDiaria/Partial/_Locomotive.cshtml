@@ -1,0 +1,108 @@
+﻿@*@model ViewModels.Custom.TrainLocomotive*@
+@model ViewModels.Models.Tren_Locomotora
+@using ViewModels.Enum;
+@using Resources.Strings;
+
+<tr>
+    <td>
+        <strong class="label label-default  pull-right">Locomotora: <span>@Model.Locomotora.Patente</span></strong>
+
+    </td>
+
+    <td style="padding-right:10px; padding-left:10px;">
+        
+            <button type="button" data-toggle="modal" onclick="Edit(@Model.Id,2)" href="#modal-editLoc" class="pull-right btn btn-success " data-id="@Model.Id"><i class="fa fa-pencil"></i>Modificar</button>
+        
+       
+    </td>
+
+
+    <td class="issue-info" style="padding-right:10px; padding-left:10px; text-align:right">
+        @*maquinista*@
+        @if (!Model.Tripulantes.Where(x => x.Rol == RolTripulante.Maquinista).Any())
+        {
+            <small>Sin Asignar</small>
+        }
+        @foreach (var c in Model.Tripulantes.Where(x => x.Rol == RolTripulante.Maquinista @*&& x.Ausente == false*@))
+        {
+            <strong>@c.Tripulante_Persona.Nombre</strong>
+            <small>@c.Rol</small>
+        }
+
+    </td>
+    <td style="padding-right:10px; padding-left:10px;">
+       
+            <button type="button" data-toggle="modal" onclick="EditTrip(@Model.Id,1,1)" href="#modal-editTrip" class="pull-right btn btn-success " data-id="@Model.Id"><i class="fa fa-pencil"></i>Modificar</button>
+        
+        
+
+    </td>
+    <td class="issue-info" style="padding-right:10px; padding-left:10px; text-align:right">
+        @*jefe tren*@
+        @if (!Model.Tripulantes.Where(x => x.Rol == RolTripulante.JefeDeTren).Any())
+        {
+            <small>Sin Asignar</small>
+        }
+        @foreach (var c in Model.Tripulantes.Where(x => x.Rol == RolTripulante.JefeDeTren @*&& x.Ausente == false*@))
+        {
+            <strong>@c.Tripulante_Persona.Nombre</strong>
+            <small>@c.Rol</small>
+        }
+
+    </td>
+    <td style="padding-right:10px; padding-left:10px;">
+       
+            <button type="button" data-toggle="modal" onclick="EditTrip(@Model.Id,1,2)" href="#modal-editTrip" class="pull-right btn btn-success " data-id="@Model.Id"><i class="fa fa-pencil">Modificar</i></button>
+        
+        
+
+    </td>
+
+
+    <td class="issue-info" style="padding-right:10px; padding-left:10px; text-align:right"></td>
+    <td style="padding-right:10px; padding-left:10px; ">
+       
+            <button type="button" data-toggle="modal" onclick="Delete(@Model.Id,2)" href="#modal-deleteTrenLoc" class="pull-right btn btn-success " data-id="@Model.Id"><i class="fa fa-trash-o"></i></button>
+        
+          
+
+    </td>
+</tr>
+
+@section Scripts{
+
+    @*<script src="~/Scripts/GestionDiaria.js"></script>*@
+
+}
+
+<div id="modal-deleteTrenLoc" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="DeleteTrenLocom">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-editTrip" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="EditTrip">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-editLoc" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="EditLoc">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

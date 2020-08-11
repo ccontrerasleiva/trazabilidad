@@ -1,0 +1,59 @@
+﻿@model ViewModels.Models.Servicio
+
+@using (Html.BeginForm(nameof(Trazabilidad.Controllers.ServicioController.Edit), nameof(Resources.Strings.Models.Servicio), FormMethod.Post, htmlAttributes: new { @id = "modal-element-edit" }))
+{
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="col-sm-12">
+        <h3 class="m-t-none m-b">Editar Servicio</h3>
+
+        <form role="form">
+
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Codigo, "Código")
+                @Html.TextBoxFor(model => model.Codigo, htmlAttributes: new { @class = "form-control " })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Descripcion, "Descripción")
+                @Html.TextBoxFor(model => model.Descripcion, htmlAttributes: new { @class = "form-control " })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Responsable, "Responsable")
+                @Html.TextBoxFor(model => model.Responsable, htmlAttributes: new { @class = "form-control " })
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox checkbox-primary checkbox-inline col-sm-12">
+                    <div class="col-sm-4">
+                        @Html.CheckBoxFor(model => model.VColacion, htmlAttributes: new { @class = "styled" })
+                        @Html.LabelFor(model => model.VColacion, labelText: "Viatico Colacion")
+                    </div>
+                    <div class="col-sm-8">
+                        @Html.CheckBoxFor(model => model.VAlojamiento, htmlAttributes: new { @class = "styled" })
+                        @Html.LabelFor(model => model.VAlojamiento, labelText: "Viatico Alojamiento")
+                    </div>
+                </div>
+            </div>
+
+            <br><br>
+            <div class="form-group">
+                <div class="form-group">
+                    @Html.RadioButtonFor(m => m.Deshabilitado,false, htmlAttributes: new { id = "Habilitado" }) @Html.Label("Habilitado", "Habilitado")
+                    @Html.RadioButtonFor(m => m.Deshabilitado,true, htmlAttributes: new { id = "Deshabilitado" }) @Html.Label("Deshabilitado", "Deshabilitado")
+                    @Html.ValidationMessageFor(x => x.Deshabilitado, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div>
+                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+            </div>
+        </form>
+    </div>
+}
+
+
+
+
+

@@ -1,0 +1,60 @@
+﻿@model ViewModels.Models._Tramo_Itinerario
+
+@using (Html.BeginCollectionItem(nameof(ViewModels.Models.Itinerario.Tramo_Itinerario)))
+{
+    <li class="row horizontal-timeline-block">
+        <div class="col-xs-2">
+            >@Html.Label(Model.Origen.Nombre)
+            @*@Html.HiddenFor(m => Model.Origen.Id, new { @id = "EstacionId", @name = "EstacionId" })*@
+            @Html.HiddenFor(m => Model.Origen.Id, new { @id = "Id_Estacion", @name = "Id_Estacion" })
+            @Html.HiddenFor(m => Model.Origen.Id)
+            @Html.HiddenFor(m => Model.Destino.Id)
+        </div>
+        @*@if (Model.Origen.Id != Model.Origen.Id)*@
+        @if (Model.Origen.Id != Model.Id_Origen)
+        {
+            <div class="col-xs-2">
+                @Html.TextBoxFor(m => m.Tiempo_Viaje, format: "{0:hh\\:mm}", htmlAttributes: new { @class = "form-control  isnumber" })
+            </div>
+            <div class="col-xs-2">
+                @Html.TextBoxFor(m => m.Hora_Llegada_Planificada, format: "{0:HH:mm:ss}", htmlAttributes: new { type = "time", @readonly = "readonly", @class = "calculated" })
+            </div>
+            <div class="col-xs-2">
+                @Html.TextBoxFor(m => m.Detencion, format: "{0:hh\\:mm}", htmlAttributes: new { @class = "form-control  isnumber" })
+            </div>
+        }
+        else
+        {
+            if (Model.Origen.Id == Model.Origen.Id && Model.Valor == 1)
+            {
+                <div class="col-xs-2">
+                    @Html.TextBoxFor(m => m.Tiempo_Viaje, format: "{0:hh\\:mm}", htmlAttributes: new { @class = "form-control isnumber hidden " })
+                </div>
+                <div class="col-xs-2">
+                    @Html.TextBoxFor(m => m.Hora_Llegada_Planificada, format: "{0:HH:mm:ss}", htmlAttributes: new { type = "time", @class = "calculated hidden" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.TextBoxFor(m => m.Detencion, format: "{0:hh\\:mm}", htmlAttributes: new { @class = "form-control isnumber hidden" })
+                </div>
+            }
+            else
+            {
+                <div class="col-xs-6">
+                </div>
+            }
+        }
+
+        <div class="col-xs-2">
+            @Html.TextBoxFor(m => m.Hora_Salida_Planificada, format: "{0:HH:mm:ss}", htmlAttributes: new { type = "time", required = "required", @class = "calculated" })
+        </div>
+        <div class="col-xs-2">@Html.TextBoxFor(m => m.Origen.Nombre, htmlAttributes: new { name = "Observacion" })</div>
+        @*<div class="col-xs-2">
+                    <button type="submit" class="fa fa-save">&nbsp;</button>
+                @Html.ValidationMessageFor(x => x.Hora_Llegada_Planificada, null, new { @class = "text-danger" })
+                @Html.ValidationMessageFor(x => x.Tiempo_Viaje, null, new { @class = "text-danger" })
+                @Html.ValidationMessageFor(x => x.Hora_Llegada_Planificada, null, new { @class = "text-danger" })
+                @Html.ValidationMessageFor(x => x.Detencion, null, new { @class = "text-danger" })
+                @Html.ValidationMessageFor(x => x.Observaciones, null, new { @class = "text-danger" })
+            </div>*@
+    </li>
+}

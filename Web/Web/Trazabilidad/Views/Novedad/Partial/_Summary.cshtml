@@ -1,0 +1,13 @@
+﻿@model ViewModels.Models.Novedad
+
+<li class="novedad @(Model.Tipo.ToLower().Replace(' ', '-'))" id="modal-edit"> @*<li class="novedad problemas-con-la-carga">*@
+    @*<p>00:33 EMPALME 50009 3208 REPORTADO POR: CLAUDIO YÁÑEZ, PATENTES: 3208 Notificados: DANIEL NÚÑEZ, JORGE BADILLA Evento/Falla : FALLA DE LOC. DESCARGA DE BATERÍAS, POR DICHA SITUACIÓN SE SUPRIME TREN 50009 Observación: FALLA DE LOC. DESCARGA DE BATERÍAS, POR DICHA SITUACIÓN SE SUPRIME TREN 50009.</p>
+        <p class="pull-left">Reportado por: Claudio Yáñez</p>
+        <p class="pull-left">Fecha reporte: <span class="date">20/11/2017 20:00</span></p>*@
+
+    <p>@Model.Descripcion</p>
+    @*<p class="pull-left">Reportado por: Claudio Yáñez</p>*@
+    @*<p class="pull-left">Fecha reporte: <span class="date">@Model.Created.ToString("dd/MM/yyyy hh:mm")</span></p>*@
+    <small>Reportado por: <strong class="date">@Model.Reportado_Por</strong></small></br>
+    <small>Fecha reporte: <strong class="date">@Model.Created.ToString("dd/MM/yyyy HH:mm")</strong></small>
+</li>

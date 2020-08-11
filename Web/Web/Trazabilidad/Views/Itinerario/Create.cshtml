@@ -1,0 +1,352 @@
+﻿@model ViewModels.Models.Itinerario
+@{
+    ViewBag.Title = $"Itinerarios";
+}
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-12">
+        <h2>@ViewBag.Header</h2>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("/", "Home")">Inicio</a></li>
+            <li><a href="@Url.Action("List", "Itinerario")">Itinerarios</a></li>
+            <li class="active"><strong>Nuevo Itinerario</strong></li>
+        </ol>
+    </div>
+</div>
+
+@*RESTO DE LA PAGINA*@
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+
+                    @using (Html.BeginForm("Create", "Itinerario", FormMethod.Post, htmlAttributes: new { @id = "wizard" }))
+                    {
+                        <h3>Vigencia</h3>
+                        @*SECCIÓN ITINERARIO (SERVICIO, DESCRIPCIÓN, VIGENCIA, FRECUENCIA)*@
+                        <section>
+                            @Html.Partial("Partial/_NewTimes", Model)
+                        </section>
+                        <h3>Recorrido de Trenes</h3>
+                        @*RUTA DEL TREN*@
+                        <section>
+                            @Html.Partial("Partial/_NewRoutes", Model)
+                        </section>
+                        @*Patios*@
+                        @*<section>
+                                @Html.Partial("Partial/_NewRailyard", Model)
+                            </section>*@
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/schedules")
+    <script>
+
+        var origen = 0;
+        var primero = 0;
+
+        $(function () {
+        $(document).ready(function () {
+
+            //Initialize wizard
+            $("#wizard").steps({
+                labels: {
+                finish: "Finalizar",
+                next: "Siguiente",
+                previous: "Anterior"
+                },
+                headerTag: "h3",
+                bodyTag: "section",
+                transitionEffect: "slideLeft",
+                autoFocus: true,
+                onFinished: function (event, currentIndex) {
+                    $(this).submit();
+                }
+            });
+
+            $('.chosen-select').chosen({ width: "100%" });
+
+            $('#routes tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                }
+            });
+
+            //Toggle element if train icon button is clicked
+            $('body').on('click', '.vertical-timeline-icon',function (event) {
+                $(this).parent().find('.estaciones-it').slideToggle(300);
+            });
+
+            //Remove element if close button is clicked
+            $('body').on('click', '.close-btn', function (event) {
+                event.preventDefault();
+                $(this).parent().parent().remove();
+            });
+
+
+            $("#Id_Origen").add("#Id_Destino").on('change', function () {
+                ////If both values are the same
+                var orig = $('#Id_Origen').find('option:selected').val();
+                var dest = $('#Id_Destino').find('option:selected').val();
+                if (orig === dest)
+                    $("#addStation").attr('disabled', true);
+
+                if (orig === "" || dest === "")
+                    $("#addStation").attr('disabled', true);
+                else
+                    $("#addStation").attr('disabled', false);
+            });
+
+            //Recalculate when any
+            $('body').on('change', '.calculated', function (event) {
+                event.preventDefault();
+
+                console.log("Recalculate");
+                Recalculate();
+            });
+
+            //Fix unproper times
+            $('body').on('change', '.isnumber', function (event) {
+                event.preventDefault();
+                var $this = $(this);
+
+                var time = $this.val();
+
+                console.log('isnumber');
+
+                if (isNaN(time.replace(":", "")))
+                    $this.val("00:00");
+
+                else $this.val([time.slice(0, 2), ":", time.slice(2)].join(''));
+
+                Recalculate();
+            });
+
+
+            $("#addStation").click(function () {
+                var originStation = $("#Id_Origen").val(); // The value of the selected option
+                var destinationStation = $("#Id_Destino").val(); // The value of the selected option
+                //var tableSize = $("#ruta").children().length / 2; //MDC 03-04-2018 se usa?
+
+                if (origen == 0) {
+                    origen = originStation;
+                }
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action(nameof(Trazabilidad.Controllers.TramoController.GetStationTravelTime), nameof(Resources.Strings.Models.Tramo))',
+                    data: { origin: originStation, destination: destinationStation, size: primero },
+                    success: function (result) {
+
+                        if (result.success) {
+                            if (result.data == null) {
+                                var msg = result.message + " " + $("#Id_Origen :selected").text() + " y " + $("#Id_Destino :selected").text();
+                                toastr.error(msg, result.source);
+                            }
+                            else {
+                                $("#routes").append(result.data);
+                                $('#Id_Origen').val(destinationStation).trigger("chosen:updated");
+                                //Remover el elemento seleccionado de la lista de origenes para evitar futuros usos.
+                                $("#Id_Destino").find("option:selected").remove();
+                                $("#Id_Destino").trigger('change').prop('disabled', false).trigger("chosen:updated");
+                                toastr.success(result.message, result.source);
+                                primero = 1;
+
+                                //if (tableSize == 1) {
+                                //    //Set first stopped time to zero and disabled because it's not supposed to change.
+                                //    var first = $(".vertical-timeline-block").first();
+                                //    var firstDepTime = first.find("input[name$='DepartureTime']").val();
+                                //    first.find("input[name$='StoppedTime']").prop('readonly', true);
+                                //}
+
+                                Recalculate();
+                            }
+                        }
+                        else {
+                            toastr.error(result.message, result.source);
+                        }
+                    },
+                    error: function (result) {
+                        toastr.error('@($"{Resources.Strings.Errors.UnknownError} {Resources.Strings.Errors.ErrorNotified}")', '@Resources.Strings.Models.Tramo');
+                    }
+                });
+            });
+        });
+
+            function Recalculate() {
+            //Rest of the routes
+            var inicio = true;
+            var anterior = new moment();
+            var anteriorEst = "";
+
+            $(".vertical-timeline-block").each(function (index, val) {
+
+                $(".horizontal-timeline-block").each(function (index, val) {
+
+                    if (!inicio) {
+                        var newDepatureTime = anterior.format("HH:mm:ss");
+
+                        var departureTime = $(val).find("input[name$='Hora_Llegada_Planificada']");
+                        departureTime.val(newDepatureTime);
+                        departureTime.prop('readonly', val);
+
+                    }
+
+                    //Obtener tiempo fila anterior
+                    console.log($(val).prev().prev().hasClass("horizontal-timeline-block"));
+                    if ($(val).prev().prev().hasClass("horizontal-timeline-block")) {
+
+                        var prevArrival = $(val).prev().prev()
+                            .find("input[name$='Hora_Salida_Planificada']").val();
+
+                        var departure = new moment(prevArrival, 'HH:mm:ss');
+                        var newDepatureTime = departure;
+
+
+                        console.log(departure+ "    aca");
+
+                        var departureTime = $(val).find("input[name$='Hora_Llegada_Planificada']");
+                        departureTime.val(newDepatureTime.format("HH:mm:ss"));
+                        departureTime.prop('readonly', val);
+                    }
+
+                    //Obtener imput de la fila
+                    var currDeparture = $(val).find("input[name$='Hora_Llegada_Planificada']");
+                    var currTravel = $(val).find("input[name$='Tiempo_Viaje']");
+                    var currArrival = $(val).find("input[name$='Hora_Salida_Planificada']");
+                    var currStopped = $(val).find("input[name$='Detencion']");
+
+
+                    if (currDeparture.length != 0 && currTravel.length != 0) {
+
+                        var estacion = $(val).find("input[name$='Origen.Nombre']");
+
+                        if (estacion.val() == anteriorEst) {
+                            currTravel.val("00:00");
+                            currStopped.val("00:00");
+                        }
+
+                        //Calcular moment
+                        var currDepMoment = new moment(currDeparture.val(), 'HH:mm:ss');
+                        var currTravelMoment = new moment(currTravel.val(), 'HH:mm');
+                        var currStopMoment = new moment(currStopped.val(), 'HH:mm');
+
+                        //Calcular hora llegada
+                        var newDepartureTime = currDepMoment
+                            .add(currTravelMoment.hours(), 'hours')
+                            .add(currTravelMoment.minutes(), 'minutes');
+
+                        //Asignar llegada
+                        currDeparture.val(newDepartureTime.format("HH:mm:ss"));
+
+                        //Calcular hora saluda
+                        var newArrivalTime = newDepartureTime
+                            .add(currStopMoment.hours(), 'hours')
+                            .add(currStopMoment.minutes(), 'minutes');
+
+                        //Asignar Salida
+                        currArrival.val(newArrivalTime.format("HH:mm:ss"));
+                        //Para ruta siguiente
+                        anterior = new moment(newArrivalTime, 'HH:mm:ss');
+                        inicio = false;
+                        anteriorEst = estacion.val();
+                    }
+                });
+            });
+        }
+        });
+
+        function CallChangefunc(val)// agregado JTC.
+        {
+            //Fecha Inicio Vigencia
+            var fechaInicial = $("#Fecha_Inicio_Vigencia").val();
+            var fechaFinal = $("#Fecha_Fin_Vigencia").val();
+
+            //Obtiene la fecha actual con formato "YYYY-MM-DD"
+            var hoy = new Date();
+            var dd = hoy.getDate();
+            var mm = hoy.getMonth() + 1; //hoy es 0!
+            var yyyy = hoy.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            var fechaActual = yyyy + '-' + mm + '-' + dd;
+
+            //1. Valida que la Fecha Inicial no sea menor a la Fecha Actual.
+            if ($('#Fecha_Inicio_Vigencia').val() == "")
+               {
+                    alert("Debe seleccionar la Fecha Inicial.");
+                    $('#Fecha_Inicio_Vigencia').focus
+                    return;
+                }
+                else if (Date.parse(fechaInicial) < Date.parse(fechaActual))
+                {
+                    alert("Error, La Fecha Inicial no puede ser menor a la Fecha Actual.");
+                    $('#Fecha_Inicio_Vigencia').val(fechaActual);
+                    //$('#Fecha_Inicio_Vigencia').focus
+                    return;
+                }
+
+            //2. Valida que la Fecha Fin no sea menor a la Fecha Actual.
+            if ($('#Fecha_Fin_Vigencia').val() == "")
+                {
+                    //alert("Debe seleccionar la Fecha Fin.");
+                    //$('#Fecha_Fin_Vigencia').focus
+                    //return;
+                }
+                else if (Date.parse(fechaFinal) < Date.parse(fechaActual))
+                {
+                    alert("Error, La Fecha Fin no puede ser menor a la Fecha Actual.");
+                    $('#Fecha_Fin_Vigencia').val(fechaActual);
+                    //$('#Fecha_Fin_Vigencia').focus
+                    return;
+                }
+
+            //3. Valida que la Fecha Final no puede ser menor a la Fecha Inicial.
+            if (($('#Fecha_Inicio_Vigencia').val() != "") && ($('#Fecha_Fin_Vigencia').val() != ""))
+            {
+                if (Date.parse(fechaFinal) < Date.parse(fechaInicial))
+                {
+                    alert("Error, La Fecha Fin no puede ser menor a la Fecha Inicial.");
+                    $('#Fecha_Inicio_Vigencia').val(fechaActual);
+                    $('#Fecha_Fin_Vigencia').val(fechaActual);
+                    //$('#Fecha_Fin_Vigencia').focus
+                    return;
+                }
+            }
+    }
+
+    </script>
+
+}
+
+@section Styles {
+    @Styles.Render("~/Content/schedules")
+    <style>
+        .toggled {
+            display: none;
+        }
+    </style>
+}

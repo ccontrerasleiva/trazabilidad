@@ -1,0 +1,81 @@
+﻿@*@model ViewModels.Custom.TrainLocomotive*@
+@model ViewModels.Models.Actividad
+@using ViewModels.Enum;
+@using Resources.Strings;
+@{
+    var user = (System.Security.Claims.ClaimsIdentity)User.Identity;
+}
+
+<tr>
+    <td>
+        <strong class="pull-left" style="padding-right:10px; padding-left:10px; text-align:center">
+            <span>@Model.Hora_Inicio.ToString("dd/MM HH:mm")</span>
+        </strong>
+        <strong  style="padding-right:10px; padding-left:10px; text-align:center">
+            <span>@Model.Hora_Fin.ToString("dd/MM HH:mm")</span>
+        </strong>
+        <strong style="padding-right:10px; padding-left:10px; text-align:center">
+
+            @switch (Model.Tipo.ToString())
+            {
+                case "0":
+                    <span>  Servicio de ruta #@Model.Tripulante.Tren_Locomotora.Tren.Itinerario.Servicio.Codigo</span>
+                    <span style="padding-right:10px; padding-left:10px; text-align:center">  Rol de  @Resources.Util.Enums.GetDescription((ViewModels.Enum.RolTripulante)Model.Tripulante.Rol)</span>
+                    break;
+                case "1":
+                    <span>  Pasajero desde @Model.Origen.Codigo hacia @Model.Destino.Codigo</span>
+                    break;
+                case "2":
+                    <span>  Servicio de Patio en @Model.Destino.Codigo</span>
+                    break;
+
+            }
+
+        </strong>
+    </td>
+    <td>
+        <strong>
+            <span>@Resources.Util.Enums.GetDescription((ViewModels.Enum.EstadoActividad)Model.Estado)</span>
+        </strong>
+    </td>
+
+    <td>
+        @if (Model.Tipo != (int)ViewModels.Enum.TipoActividad.Servicio)
+        {
+            <strong>
+                <a data-toggle="modal" onclick="Edit(@Model.Id,10)" href="#modal-edit" class="btn btn-primary"><i class="fa fa-pencil" data-id="@Model.Id" data-idActividad="@Model.">Editar</i> </a>
+            </strong>
+        }
+        else
+        {
+            @Html.ActionLink("revisar en Gestión Diaria", "GestionDiaria", "Tren", new { id = "" }, null)
+
+            @*<a href="@Url.Action(nameof(TrenController.GestionDiaria), nameof(Models.Tren))"><i class="fa fa-train"></i> Gestión Diaria</a>*@
+
+            @*@Html.ActionLink("revisar en Gestión Diaria", "GestionDiaria", "Tren", new { id = "" }, null)*@
+            @*<a href="@Url.Action("GestionDiaria", "Tren")">revisar en Gestión Diaria</a>*@
+            @*<a href="https://localhost:44381/Tren/GestionDiaria">revisar en gestion diaria</a>*@
+            @*<a href="https://www.google.com">revisar en gestion diaria</a>*@
+        }
+    </td>
+</tr>
+
+@*<!DOCTYPE html>
+<html>
+<head>
+    <title>Título de la página 2</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Noticias.</h1>
+    <a href="https://www.google.com">Salir.</a>
+</body>
+</html>*@
+
+
+
+@section Scripts{
+    @*<script src="~/Scripts/GestionDiaria.js"></script>*@
+    <script src="~/Scripts/Modal.Gestion.js"></script>
+
+}

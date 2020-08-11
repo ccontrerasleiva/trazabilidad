@@ -1,0 +1,72 @@
+﻿@model ViewModels.Models.Ruta
+@using Trazabilidad.Controllers;
+@using Resources.Strings;
+
+@using (Html.BeginForm(nameof(Trazabilidad.Controllers.RutaController.Edit), nameof(Resources.Strings.Models.Ruta), FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+                                                                                                                                                                                                                                                                                                    
+    <div class="col-sm-12">
+        <h3 class="m-t-none m-b">Editar Ruta</h3>
+
+        <form role="form">
+
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Descripcion, "Descripcion")
+                @Html.TextBoxFor(model => model.Descripcion, htmlAttributes: new { @class = "form-control " })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Sigla_Codelco, "Sigla Codelco")
+                @Html.TextBoxFor(model => model.Sigla_Codelco, htmlAttributes: new { @class = "form-control " })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Longitud, "Longitud")
+                @Html.TextBoxFor(model => model.Longitud, htmlAttributes: new { @class = "form-control " })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Latitud, "Latitud")
+                @Html.TextBoxFor(model => model.Latitud, htmlAttributes: new { @class = "form-control " })
+            </div>
+            <div class="form-group">
+                <label class="control-label">Fecha Hora Inicio</label>
+                <div class="input-daterange input-group" id="datepicker">
+                    @Html.TextBoxFor(mo => mo.FechaHoraInicio, format: "{0:dd-MM-yyyy hh:mm}", htmlAttributes: new { required = "required", @class = "form-control", @type = "date", @value = @DateTime.Now.ToString("yyyy-MM") })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Fecha Hora Termino</label>
+                <div class="input-group date" id="datepicker">
+                    @Html.TextBoxFor(mo => mo.FechaHoraTermino, format: "{0:dd-MM-yyyy}", htmlAttributes: new { required = "required", @class = "form-control", @type = "date", @value = @DateTime.Now.ToString("dd-MM-yyy hh:mm:ss") })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Nombre, "Nombre")
+                @Html.TextBoxFor(model => model.Nombre, htmlAttributes: new { @class = "form-control " })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Id, "Estado")
+                @*@Html.DropDownListFor(model => model.Id_Base, (SelectList)ViewBag.estacion, "Seleccione un origen", htmlAttributes: new { @class = "form-control chosen-select", @disabled = "disabled" })
+            @Html.ValidationMessageFor(x => x.Id_Base, null, new { @class = "text-danger" })*@
+            </div>
+
+            <div class="form-group">
+                <div class="form-group">
+                    @Html.RadioButtonFor(m => m.Deshabilitado, false, htmlAttributes: new { id = "Habilitado" }) @Html.Label("Habilitado", "Habilitado")
+                    @Html.RadioButtonFor(m => m.Deshabilitado, true, htmlAttributes: new { id = "Deshabilitado" }) @Html.Label("Deshabilitado", "Deshabilitado")
+                    @Html.ValidationMessageFor(x => x.Deshabilitado, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div>
+                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+            </div>
+        </form>
+    </div>
+}
+
+
+
+

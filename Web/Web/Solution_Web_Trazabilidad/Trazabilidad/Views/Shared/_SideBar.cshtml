@@ -1,0 +1,57 @@
+﻿@using Trazabilidad.Controllers;
+@using Resources.Strings;
+@{
+    var user = (System.Security.Claims.ClaimsIdentity)User.Identity;
+}
+
+@*LISTADOS*@
+@*CGO: DISPLAY IF USER IS IN CGO GROUP*@
+@if (user.HasClaim("groups", Resources.Strings.AzureGroups.PlatformAdmin) || user.HasClaim("groups", Resources.Strings.AzureGroups.PlatformManager))
+{
+    <li>
+        <a href="#"><i class="fa fa-gears"></i> <span class="nav-label">@UI.Operations</span> <span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse">
+            
+            <li>
+                <a href="#"><i class="fa fa-train"></i> <span class="nav-label">Gestion Trenes </span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                   
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-train"></i> <span class="nav-label">Trenes </span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                   
+                </ul>
+            </li>
+
+        </ul>
+    </li>
+
+    <li>
+        <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Mantenedores</span> <span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse">
+            <li><a href="@Url.Action(nameof(CarroController.List), nameof(Models.Carro))"><i class="fa fa-edit"></i>Carros</a></li>
+            <li><a href="@Url.Action(nameof(TagController.List), nameof(Models.Tag))"><i class="fa fa-edit"></i>Tags</a></li>
+            <li><a href="@Url.Action(nameof(StatuController.List), nameof(Models.Statu))"><i class="fa fa-edit"></i>Status</a></li>
+            <li><a href="@Url.Action(nameof(ContenedorController.List), nameof(Models.Contenedor))"><i class="fa fa-edit"></i>Contenedores</a></li>
+            <li><a href="@Url.Action(nameof(ClienteController.List), nameof(Models.Cliente))"><i class="fa fa-edit"></i>Clientes</a></li>
+            <li><a href="@Url.Action(nameof(RutaController.List), nameof(Models.Ruta))"><i class="fa fa-edit"></i>Rutas</a></li>
+            <li><a href="@Url.Action(nameof(LocomotoraController.List), nameof(Models.Locomotora))"><i class="fa fa-edit"></i>Locomotoras</a></li>
+            <li><a href="@Url.Action(nameof(ConductorController.List), nameof(Models.Conductor))"><i class="fa fa-edit"></i>Conductores</a></li>
+
+        </ul>
+    </li>
+}
+
+@*RRHH: DISPLAY IF USER HAS RRHH OR ADMIN GROUP IN THEIR CLAIMS*@
+@if(user.HasClaim("groups", Resources.Strings.AzureGroups.PlatformAdmin) || user.HasClaim("groups", Resources.Strings.AzureGroups.PlatformHumanResources))
+{
+    <li>
+        <a href="#"><i class="fa fa-users"></i><span class="nav-label">Reportería</span> <span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse">
+            <li><a href="@Url.Action(nameof(TrazabilidadController.ListResumenTrazabilidad), nameof(Models.Trazabilidad))"><i class="fa fa-bar-chart"></i> Resumen General</a></li>
+            <li><a href="@Url.Action(nameof(TrazabilidadController.ListResumenTrazabilidadGrafica), nameof(Models.Trazabilidad))"><i class="fa fa-bar-chart"></i> Resumen General (Grafico)</a></li>
+        </ul>
+    </li>
+}  

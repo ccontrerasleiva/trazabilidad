@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TrazabilidadDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="IG_Armado">
+          <Key>
+            <PropertyRef Name="IdIGArmado" />
+          </Key>
+          <Property Name="IdIGArmado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="stop-time" Type="varchar" MaxLength="50" />
+          <Property Name="stop-event" Type="varchar" MaxLength="50" />
+          <Property Name="start-time" Type="varchar" MaxLength="50" />
+          <Property Name="start-event" Type="varchar" MaxLength="100" />
+          <Property Name="condition" Type="varchar" MaxLength="50" />
+          <Property Name="locationId" Type="varchar" MaxLength="10" />
+          <Property Name="tag-count" Type="varchar" MaxLength="10" />
+          <Property Name="type" Type="varchar" MaxLength="100" />
+          <Property Name="objectId" Type="varchar" MaxLength="100" />
+          <Property Name="drivers" Type="varchar" MaxLength="100" />
+          <Property Name="status" Type="varchar" MaxLength="100" />
+          <Property Name="timestamp" Type="varchar" MaxLength="50" />
+          <Property Name="UUID" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IG_Log_Armado">
+          <Key>
+            <PropertyRef Name="IdIGLog" />
+          </Key>
+          <Property Name="IdIGLog" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Texto" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Estado" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Descripcion_Estado" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="IG_Mov_Armado">
+          <Key>
+            <PropertyRef Name="IdIG_Mov_Armado" />
+          </Key>
+          <Property Name="IdIG_Mov_Armado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdIGArmado" Type="int" Nullable="false" />
+          <Property Name="last-read" Type="varchar" MaxLength="50" />
+          <Property Name="observationUUID" Type="varchar" MaxLength="200" />
+          <Property Name="locationId" Type="varchar" MaxLength="50" />
+          <Property Name="reads" Type="varchar" MaxLength="50" />
+          <Property Name="companyPrefix" Type="varchar" MaxLength="50" />
+          <Property Name="itemReference" Type="varchar" MaxLength="50" />
+          <Property Name="filterValue" Type="varchar" MaxLength="50" />
+          <Property Name="serialNumber" Type="varchar" MaxLength="50" />
+          <Property Name="first-read" Type="varchar" MaxLength="50" />
+          <Property Name="type" Type="varchar" MaxLength="100" />
+          <Property Name="objectId" Type="varchar" MaxLength="200" />
+          <Property Name="timestamp" Type="varchar" MaxLength="50" />
+          <Property Name="UUID" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_IG_Mov_Armado_IG_Armado">
+          <End Role="IG_Armado" Type="Self.IG_Armado" Multiplicity="1" />
+          <End Role="IG_Mov_Armado" Type="Self.IG_Mov_Armado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IG_Armado">
+              <PropertyRef Name="IdIGArmado" />
+            </Principal>
+            <Dependent Role="IG_Mov_Armado">
+              <PropertyRef Name="IdIGArmado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TrazabilidadDBModelStoreContainer">
+          <EntitySet Name="IG_Armado" EntityType="Self.IG_Armado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IG_Log_Armado" EntityType="Self.IG_Log_Armado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IG_Mov_Armado" EntityType="Self.IG_Mov_Armado" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_IG_Mov_Armado_IG_Armado" Association="Self.FK_IG_Mov_Armado_IG_Armado">
+            <End Role="IG_Armado" EntitySet="IG_Armado" />
+            <End Role="IG_Mov_Armado" EntitySet="IG_Mov_Armado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TrazabilidadDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="IG_Armado">
+          <Key>
+            <PropertyRef Name="IdIGArmado" />
+          </Key>
+          <Property Name="IdIGArmado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="stop_time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="stop_event" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="start_time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="start_event" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="condition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="locationId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="tag_count" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="objectId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="drivers" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="timestamp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UUID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="IG_Mov_Armado" Relationship="Self.FK_IG_Mov_Armado_IG_Armado" FromRole="IG_Armado" ToRole="IG_Mov_Armado" />
+        </EntityType>
+        <EntityType Name="IG_Mov_Armado">
+          <Key>
+            <PropertyRef Name="IdIG_Mov_Armado" />
+          </Key>
+          <Property Name="IdIG_Mov_Armado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdIGArmado" Type="Int32" Nullable="false" />
+          <Property Name="last_read" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="observationUUID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="locationId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="reads" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="companyPrefix" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="itemReference" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="filterValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="serialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="first_read" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="objectId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="timestamp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UUID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="IG_Armado" Relationship="Self.FK_IG_Mov_Armado_IG_Armado" FromRole="IG_Mov_Armado" ToRole="IG_Armado" />
+        </EntityType>
+        <Association Name="FK_IG_Mov_Armado_IG_Armado">
+          <End Role="IG_Armado" Type="Self.IG_Armado" Multiplicity="1" />
+          <End Role="IG_Mov_Armado" Type="Self.IG_Mov_Armado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IG_Armado">
+              <PropertyRef Name="IdIGArmado" />
+            </Principal>
+            <Dependent Role="IG_Mov_Armado">
+              <PropertyRef Name="IdIGArmado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TrazabilidadDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="IG_Armado" EntityType="Self.IG_Armado" />
+          <EntitySet Name="IG_Mov_Armado" EntityType="Self.IG_Mov_Armado" />
+          <AssociationSet Name="FK_IG_Mov_Armado_IG_Armado" Association="Self.FK_IG_Mov_Armado_IG_Armado">
+            <End Role="IG_Armado" EntitySet="IG_Armado" />
+            <End Role="IG_Mov_Armado" EntitySet="IG_Mov_Armado" />
+          </AssociationSet>
+          <EntitySet Name="IG_Log_Armado" EntityType="TrazabilidadDBModel.IG_Log_Armado" />
+        </EntityContainer>
+        <EntityType Name="IG_Log_Armado">
+          <Key>
+            <PropertyRef Name="IdIGLog" />
+          </Key>
+          <Property Name="IdIGLog" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Texto" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion_Estado" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TrazabilidadDBModelStoreContainer" CdmEntityContainer="TrazabilidadDBEntities">
+          <EntitySetMapping Name="IG_Armado">
+            <EntityTypeMapping TypeName="TrazabilidadDBModel.IG_Armado">
+              <MappingFragment StoreEntitySet="IG_Armado">
+                <ScalarProperty Name="IdIGArmado" ColumnName="IdIGArmado" />
+                <ScalarProperty Name="stop_time" ColumnName="stop-time" />
+                <ScalarProperty Name="stop_event" ColumnName="stop-event" />
+                <ScalarProperty Name="start_time" ColumnName="start-time" />
+                <ScalarProperty Name="start_event" ColumnName="start-event" />
+                <ScalarProperty Name="condition" ColumnName="condition" />
+                <ScalarProperty Name="locationId" ColumnName="locationId" />
+                <ScalarProperty Name="tag_count" ColumnName="tag-count" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="objectId" ColumnName="objectId" />
+                <ScalarProperty Name="drivers" ColumnName="drivers" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IG_Mov_Armado">
+            <EntityTypeMapping TypeName="TrazabilidadDBModel.IG_Mov_Armado">
+              <MappingFragment StoreEntitySet="IG_Mov_Armado">
+                <ScalarProperty Name="IdIG_Mov_Armado" ColumnName="IdIG_Mov_Armado" />
+                <ScalarProperty Name="IdIGArmado" ColumnName="IdIGArmado" />
+                <ScalarProperty Name="last_read" ColumnName="last-read" />
+                <ScalarProperty Name="observationUUID" ColumnName="observationUUID" />
+                <ScalarProperty Name="locationId" ColumnName="locationId" />
+                <ScalarProperty Name="reads" ColumnName="reads" />
+                <ScalarProperty Name="companyPrefix" ColumnName="companyPrefix" />
+                <ScalarProperty Name="itemReference" ColumnName="itemReference" />
+                <ScalarProperty Name="filterValue" ColumnName="filterValue" />
+                <ScalarProperty Name="serialNumber" ColumnName="serialNumber" />
+                <ScalarProperty Name="first_read" ColumnName="first-read" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="objectId" ColumnName="objectId" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IG_Log_Armado">
+            <EntityTypeMapping TypeName="TrazabilidadDBModel.IG_Log_Armado">
+              <MappingFragment StoreEntitySet="IG_Log_Armado">
+                <ScalarProperty Name="Descripcion_Estado" ColumnName="Descripcion_Estado" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Texto" ColumnName="Texto" />
+                <ScalarProperty Name="IdIGLog" ColumnName="IdIGLog" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

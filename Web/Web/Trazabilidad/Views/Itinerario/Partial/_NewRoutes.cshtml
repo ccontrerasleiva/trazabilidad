@@ -1,0 +1,38 @@
+﻿@model ViewModels.Models.Itinerario
+
+<h2>Puntos de Control</h2>
+<div class="row">
+    <div class="col-lg-12">
+        @if (ViewBag.Stations != null)
+        {
+            <div class="row">
+                <div class="col-md-5 od">
+                    <i class="fa fa-home"></i>
+                    <div class="col-xs-6">
+                        <label>Origen</label>
+                        @Html.DropDownList(nameof(ViewModels.Models.Itinerario.Id_Origen), (SelectList)ViewBag.Stations, "Estación Origen", htmlAttributes: new { @class = "form-control chosen-select" })
+                    </div>
+                </div>
+                <div class="col-md-5 od">
+                    <div class="col-xs-6">
+                        <label>Destino</label>
+                        @Html.DropDownList(nameof(ViewModels.Models.Itinerario.Id_Destino), (SelectList)ViewBag.Stations, "Estación Destino", htmlAttributes: new { @class = "form-control chosen-select" })
+                    </div>
+                    <i class="fa fa-home"></i>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" id="addStation" disabled>Agregar Ruta <i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+        }
+
+        @Html.ValidationMessageFor(x => x.Ruta, null, new { @class = "text-danger" })
+        <div id="routes" class="light-timeline">
+            @if (Model != null)
+            {
+
+                @Html.Partial("Partial/_Route", Model);
+            }
+        </div>
+    </div>
+</div>

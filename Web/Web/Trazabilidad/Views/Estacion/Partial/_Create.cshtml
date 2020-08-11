@@ -1,0 +1,78 @@
+﻿@model ViewModels.Models.Estacion
+@using Trazabilidad.Controllers
+@using Resources.Strings
+
+<div id="modal-create" class="modal fade" aria-hidden="true" data-vivaldi-spatnav-clickable="1" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    @using (Html.BeginForm(nameof(EstacionController.Create), nameof(Models.Estacion), FormMethod.Post, htmlAttributes: new { id = "modal-client-form" }))
+                    {
+                        <div class="col-sm-12">
+                            <h3 class="m-t-none m-b">Nueva Estación</h3>
+
+                            <p>Agregar una nueva Estación al sistema.</p>
+
+                            <form role="form">
+                                @Html.HiddenFor(x => x.Deshabilitado)
+                                @Html.HiddenFor(x => x.X_Mapa_Virtual)
+                                @Html.HiddenFor(x => x.Y_Mapa_Virtual)
+                                <div class="form-group">
+                                    @Html.LabelFor(st => st.Codigo_Recorrido, "Codigo Correlativo")
+                                    @Html.TextBoxFor(st => st.Codigo_Recorrido, htmlAttributes: new
+                                    {
+                                        @class = "form-control",
+                                        placeholder = "Codigo Correlativo",
+                                        type = "number",
+                                        min = "0"@*, step = "0"*@})
+                                    @Html.ValidationMessageFor(x => x.Codigo_Recorrido, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(st => st.Nombre, "Nombre de la estación")
+                                    @Html.TextBoxFor(st => st.Nombre, htmlAttributes: new { @class = "form-control", placeholder = "Nombre" })
+                                    @Html.ValidationMessageFor(x => x.Nombre, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(st => st.Codigo, "Código de la estación ")
+                                    @Html.TextBoxFor(st => st.Codigo, htmlAttributes: new { @class = "form-control", placeholder = "Código", maxlength = "5" })
+                                    @Html.ValidationMessageFor(x => x.Codigo, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(st => st.Punto_Kilometraje, "Punto de Kilometraje")
+                                    @Html.TextBoxFor(st => st.Punto_Kilometraje, htmlAttributes: new { @class = "form-control", placeholder = "Punto Kilometraje", type = "number", min = "0", step = "0.01" })
+                                    @Html.ValidationMessageFor(x => x.Punto_Kilometraje, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(cl => cl.Coordenadas_Area, "Coordenadas de Area")
+                                    @Html.TextAreaFor(cl => cl.Coordenadas_Area, htmlAttributes: new { @class = "form-control", placeholder = "Coordenadas de Area", rows = "2", Style = "resize: none;" })
+                                </div>
+                                <div class="form-group">
+                                    @*TODO: BASE, PUNTO DE CONTROL, ETC. RADIO BUTTON.*@
+                                    @Html.LabelFor(st => st.Bifurcacion, "PUNTO DE BIFURCACION")
+                                    <div class="form-group">
+                                        @Html.RadioButtonFor(m => m.Bifurcacion, false, htmlAttributes: new { id = "no" }) @Html.Label("no", "No")
+                                        @Html.RadioButtonFor(m => m.Bifurcacion, true, htmlAttributes: new { id = "si" }) @Html.Label("si", "Si")
+                                        @Html.ValidationMessageFor(x => x.Bifurcacion, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @*TODO: BASE, PUNTO DE CONTROL, ETC. RADIO BUTTON.*@
+                                    @Html.LabelFor(st => st.Tipo, "Tipo de estación")
+                                    <div class="form-group">
+                                        @Html.RadioButtonFor(m => m.Tipo, 0, htmlAttributes: new { id = "base" }) @Html.Label("base", "Base")
+                                        @Html.RadioButtonFor(m => m.Tipo, 1, htmlAttributes: new { id = "Estacion" }) @Html.Label("Estacion", "Estación")
+                                        @Html.ValidationMessageFor(x => x.Tipo, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+                                </div>
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,108 @@
+﻿@model IEnumerable<ViewModels.Models.Itinerario>
+
+@*@model ViewModels.Models.Tramo_Itinerario*@
+
+@*RESTO DE LA PAGINA*@
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id Tramo</th>
+                                <th>Hora Salida Planificada</th>
+                                <th>Hora Llegada Planificada</th>
+                                <th>Tiempo Viaje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             @foreach (var train in Model)
+                             {
+                                  @Html.Partial("Partial/_New2", train)
+                             }
+                        </tbody>
+
+
+
+                            @*
+                                @if (Model != null && Model.Count() > 0)
+                                {
+                                    foreach (var tramoItinerario in Model)
+                                    {
+                                        foreach (var item in tramoItinerario.Ruta)
+                                        {
+                                            if (item.Tramo_Itinerario != null)
+                                            {
+                                                foreach (var item2 in item.Tramo_Itinerario)
+
+                                                {
+                                                    if (item2 != null)
+                                                    {
+                                                    @Html.Partial("Partial/_New2", item2)
+                                                    }
+
+                                                }
+                                            }
+
+                                        }
+
+                                    }
+                                }*@
+
+                            @*@if (Model != null && Model.Count() > 0)
+                                {
+                                    foreach (var tramoItinerario in Model)
+                                    {
+                                        foreach (var item in tramoItinerario.Ruta)
+                                        {
+                                            if (item.Tramo_Itinerario != null)
+                                            {
+                                                foreach (var item2 in item.Tramo_Itinerario)
+
+                                                {
+                                                    if (item2 != null)
+                                                    {
+                                                    @Html.Partial("Partial/_New2", item2)
+                                                    }
+
+                                                }
+                                            }
+
+                                        }
+
+                                    }
+                                }*@
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/modal")*@
+    <script src="~/Scripts/modal.comun.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/modal.stations.js"></script>
+}
+
+@section Styles {
+    <link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

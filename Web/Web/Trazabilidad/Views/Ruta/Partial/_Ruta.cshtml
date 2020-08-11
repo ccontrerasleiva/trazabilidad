@@ -1,0 +1,55 @@
+﻿@model ViewModels.Models.Ruta
+
+<tr>
+    @using (Html.BeginForm(nameof(Trazabilidad.Controllers.RutaController), nameof(Resources.Strings.Models.Ruta), FormMethod.Post))
+    {
+
+        <td>@Model.Id</td>
+        if (@Model.Deshabilitado == false)
+        {
+            <td>Habilitado</td>}
+        else
+        {
+            <td>Deshabilitado</td>}
+        <td>@Model.Descripcion</td>
+        <td>@Model.Sigla_Codelco</td>
+        <td>@Model.Longitud</td>
+        <td>@Model.Latitud</td>
+        <td>@Model.FechaHoraInicio</td>
+        <td>@Model.FechaHoraTermino</td>
+
+        <td>
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <a data-toggle="modal" onclick="Edit(@Model.Id,16)" href="#modal-edit" class="btn btn-primary"><i class="fa fa-pencil" data-id="@Model.Id"></i> </a>
+
+                </div>
+            </div>
+        </td>
+
+    }
+</tr>
+
+<div id="modal-edit" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="RutaEdit">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-delete" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="RutaDelete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

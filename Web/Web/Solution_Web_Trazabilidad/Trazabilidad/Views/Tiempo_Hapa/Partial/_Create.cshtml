@@ -1,0 +1,58 @@
+﻿@model ViewModels.Models.Tiempo_Hapa
+@using Trazabilidad.Controllers;
+@using Resources.Strings;
+
+<div id="modal-create" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    @using (Html.BeginForm(nameof(Tiempo_HapaController.Create), nameof(Models.Tiempo_Hapa), FormMethod.Post, htmlAttributes: new { @id = "modal-element-create" }))
+                    {
+                        <div class="col-sm-12">
+                            <h3 class="m-t-none m-b">Crear Tiempo de Viaje HAPA</h3>
+
+                            <form role="form">
+                                <div class="form-group">
+                                    @Html.LabelFor(tt => tt.Origen, "Origen")
+                                    @Html.DropDownListFor(model => model.Id_Origen, (SelectList)ViewBag.Stations, "Seleccione un origen", htmlAttributes: new { @class = "form-control chosen-select" })
+                                    @Html.ValidationMessageFor(x => x.Id_Origen, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(tt => tt.Destino, "Destino")
+                                    @Html.DropDownListFor(model => model.Id_Destino, (SelectList)ViewBag.Stations, "Seleccione un destino", htmlAttributes: new { @class = "form-control chosen-select" })
+                                    @Html.ValidationMessageFor(x => x.Id_Destino, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(tt => tt.Tiempo_Viaje, "Tiempo Viaje Ida")
+                                    @Html.TextBoxFor(model => model.Tiempo_Viaje, htmlAttributes: new { @class = "form-control", type = "time", pattern = "[0-9]{2}:[0-9]{2}", min = "00:01", max = "11:00" })
+                                    @Html.ValidationMessageFor(x => x.Tiempo_Viaje, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(tt => tt.Tiempo_Viaje, "Tiempo Viaje Vuelta")
+                                    @Html.TextBoxFor(model => model.Tiempo_Viaje, htmlAttributes: new { @class = "form-control", type = "time", pattern = "[0-9]{2}:[0-9]{2}", min = "00:01", max = "11:00" })
+                                    @Html.ValidationMessageFor(x => x.Tiempo_Viaje, null, new { @class = "text-danger" })
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+                                </div>
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*
+    <div id="modal-edit" class="modal fade" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row" id="travelTimeEdit">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@

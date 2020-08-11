@@ -1,0 +1,70 @@
+﻿@{
+    Layout = null;
+    var user = (System.Security.Claims.ClaimsIdentity)User.Identity;
+    //ViewBag.Name = user.Claims.FirstOrDefault(x => x.Type.Equals("name")).Value;
+    //ViewBag.FirstName = user.Claims.FirstOrDefault(x => x.Type.Contains("/givenname")).Value;
+    if (User.Identity.IsAuthenticated)
+    {
+        //string admi = "453a05f1-e6a4-4108-abd8-665d2025a5ef";
+        //string oper = "ce47fa1e-1641-4ff1-950c-77b5304e3e89";
+        //string exte = "290f0286-b748-4a22-af96-e51db0aaccb6";
+        ViewBag.FirstName = user.Claims.FirstOrDefault(x => x.Type.Contains("/givenname")).Value;
+        ViewBag.SecondName = user.Claims.FirstOrDefault(x => x.Type.Contains("/surname")).Value;
+        //var ss = user.Claims.FirstOrDefault(c => c.Value == "453a05f1-e6a4-4108-abd8-665d2025a5ef").Value;
+        //var ss=""; 
+        //try
+        //{
+        //    ss = user.Claims.FirstOrDefault(c => c.Type == "groups").Value;
+        //}
+        //catch(Exception ee)
+        //{
+        //    ss = ee.Message;
+        //}
+
+        //ViewBag.Administra = ss;  /* user.HasClaim("groups", admi);*/
+        //ViewBag.Operacion = user.HasClaim("groups", oper);
+        //ViewBag.Externo = user.HasClaim("groups", exte);
+    }
+}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>No autorizado</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/font-awesome.css" rel="stylesheet">
+    <link href="~/Content/animate.css" rel="stylesheet">
+    <link href="~/Content/Site.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center animated fadeInDown">
+        <h2>No Autorizado</h2>
+        <h3 class="font-bold"></h3>
+
+        <div class="error-desc">
+            @*Administrador(@ViewBag.Administra)
+            Operacion(@ViewBag.Operacion)
+            Externo(@ViewBag.Externo)*@
+
+            Estimad@s @ViewBag.FirstName @ViewBag.SecondName, no se encuentra autorizado
+            para acceder al recurso pedido.
+            Consulte con los administradores de la plataforma.
+            Puede volver al principio haciendo clic al siguiente botón
+            O ingresar con otra cuenta<br />
+            @*@if (user.HasClaim("groups", Resources.Strings.AzureGroups.PlatformHumanResources))
+        {*@
+            @*<a href="@Url.Action("Index", "Home", routeValues: null)" class="btn btn-primary m-t"><i class="fa fa-home"></i> Inicio</a>*@
+            @*}*@
+            <a href="@Url.Action("SignOut","Account", routeValues: null)" class="btn btn-default m-t"><i class="fa fa-sign-out"></i> Salir</a>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

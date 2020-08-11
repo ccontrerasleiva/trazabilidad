@@ -1,0 +1,47 @@
+﻿@model ViewModels.Models.TripulantePersona
+
+@using (Html.BeginForm(nameof(Trazabilidad.Controllers.TripulantePersonaController.Edit), nameof(Resources.Strings.Models.TripulantePersona), FormMethod.Post, htmlAttributes: new { @id = "modal-element-edit" }))
+{
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="col-sm-12">
+        <h3 class="m-t-none m-b">Editar Tripulante</h3>
+
+        <form role="form">
+            <div class="form-group">
+                @Html.LabelFor(lc => lc.Nombre,"Nombre")
+                @Html.TextBoxFor(model => model.Nombre,htmlAttributes: new { @class = "form-control"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(cl => cl.Sindicato,"Sindicato")
+                @Html.DropDownListFor(model => model.Sindicato,(SelectList)ViewBag.sindicatos,"Seleccione un Sindicato",htmlAttributes: new { @class = "form-control chosen-select" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(cl => cl.Cargo,"Cargo")
+                @Html.DropDownListFor(model => model.cargoString,(SelectList)ViewBag.cargos,"Seleccione un Cargo",htmlAttributes: new { @class = "form-control chosen-select" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(cl => cl.Correo, "Correo")
+                @Html.TextBoxFor(cl => cl.Correo, htmlAttributes: new { @class = "form-control", placeholder = "Correo" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(cl => cl.Telefono, "Telefono")
+                @Html.TextBoxFor(cl => cl.Telefono, htmlAttributes: new { @class = "form-control", placeholder = "Teléfono" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(cl => cl.Base,"Base")
+                @Html.DropDownListFor(model => model.Id_Base,(SelectList)ViewBag.estaciones,"Seleccione una Base",htmlAttributes: new { @class = "form-control chosen-select" })
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    @Html.RadioButtonFor(m => m.Deshabilitado, false, htmlAttributes: new { id = "Habilitado" }) @Html.Label("Habilitado", "Habilitado")
+                    @Html.RadioButtonFor(m => m.Deshabilitado, true, htmlAttributes: new { id = "Deshabilitado" }) @Html.Label("Deshabilitado", "Deshabilitado")
+                    @Html.ValidationMessageFor(x => x.Deshabilitado, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+            </div>
+        </form>
+    </div>
+}

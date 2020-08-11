@@ -1,0 +1,68 @@
+﻿@model ViewModels.Models.Tramo
+@using Trazabilidad.Controllers;
+@using Resources.Strings;
+
+@using (Html.BeginForm(nameof(Trazabilidad.Controllers.TramoController.Edit), nameof(Resources.Strings.Models.Tramo), FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.Id_Origen)
+    @Html.HiddenFor(x => x.Id_Destino)
+
+    <div class="col-sm-12">
+        <h3 class="m-t-none m-b">Editar Tiempo de Viaje de Tramo</h3>
+
+        <form role="form">
+
+
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Tiempo_Viaje, "Tiempo Viaje de Ida")
+                @Html.TextBoxFor(model => model.Tiempo_Viaje, htmlAttributes: new { @class = "form-control", type = "time", pattern = "[0-9]{2}:[0-9]{2}", min = "00:01", max = "11:00" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Tiempo_Viaje, "Tiempo Viaje de Vuelta")
+                @Html.TextBoxFor(model => model.TiempoRetorno, htmlAttributes: new { @class = "form-control", type = "time", pattern = "[0-9]{2}:[0-9]{2}", min = "00:01", max = "11:00" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Origen, "Origen")
+                @Html.DropDownListFor(model => model.Id_Origen, (SelectList)ViewBag.Stations, "Seleccione un origen", htmlAttributes: new { @class = "form-control chosen-select", @disabled = "disabled" })
+                @Html.ValidationMessageFor(x => x.Id_Origen, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Destino, "Destino")
+                @Html.DropDownListFor(model => model.Id_Destino, (SelectList)ViewBag.Stations, "Seleccione un destino", htmlAttributes: new { @class = "form-control chosen-select", @disabled = "disabled" })
+                @Html.ValidationMessageFor(x => x.Id_Destino, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <div class="form-group">
+                    @Html.RadioButtonFor(m => m.Deshabilitado, false, htmlAttributes: new { id = "Habilitado" }) @Html.Label("Habilitado", "Habilitado")
+                    @Html.RadioButtonFor(m => m.Deshabilitado, true, htmlAttributes: new { id = "Deshabilitado" }) @Html.Label("Deshabilitado", "Deshabilitado")
+                    @Html.ValidationMessageFor(x => x.Deshabilitado, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+            </div>
+        </form>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

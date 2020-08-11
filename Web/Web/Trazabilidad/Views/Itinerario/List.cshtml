@@ -1,0 +1,88 @@
+﻿@model IEnumerable<ViewModels.Models.Itinerario>
+    @{
+        ViewBag.Title = "Itinerarios";
+        ViewBag.Header = "Listado de Tramos Itinerarios";
+    }
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-8">
+        <h2>@ViewBag.Header</h2>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index", "Home")">Inicio</a></li>
+            <li class="active"><strong>Itinerarios</strong></li>
+        </ol>
+    </div>
+    <div class="col-sm-4">
+        <div class="title-action">
+            <a data-toggle="modal" href="@Url.Action("Create", "Itinerario")" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</a>
+        </div>
+    </div>
+</div>
+
+@*RESTO DE LA PAGINA*@
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+
+                <div class="ibox-content">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Servicio - Descripción</th>
+                                <th>Vigencia</th>
+                                <th>Frecuencia</th>
+                                @*<th>Opciones</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var schedule in Model)
+                                {
+                                    @Html.Partial("Partial/_New", schedule)
+                                    @*<tr>
+                                            <td>@schedule.Id - @schedule.Descripcion</td>
+                                            <td>@schedule.Fecha_Inicio_Vigencia.ToString("MMMM yyyy") - @schedule.Fecha_Fin_Vigencia.ToString("MMMM yyyy")</td>
+                                            <td>@schedule.Frequency</td>
+                                            <td><a href="@Url.Action("Index","Itinerario", routeValues: new { id = schedule.Id })"><i class="fa fa-search text-default"></i></a></td>
+                                        </tr>*@
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL*@
+@Html.Partial("Partial/_Create", new ViewModels.Models.Itinerario())
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/modal")*@
+    <script src="~/Scripts/modal.comun.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/modal.stations.js"></script>
+    @*<script>
+            $('#data_5 .input-daterange').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                showButtonPanel: true,
+                dateFormat: 'dd/MM/yyyy',
+                //onClose: function (dateText, inst) {
+                //    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                //    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                //    $(this).datepicker('setDate', new Date(year, month, 1));
+                //}
+            });
+        </script>*@
+}
+
+@section Styles {
+    <link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
+}
+

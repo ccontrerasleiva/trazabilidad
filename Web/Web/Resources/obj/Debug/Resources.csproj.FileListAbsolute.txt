@@ -1,0 +1,14 @@
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\bin\Debug\Resources.dll
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\bin\Debug\Resources.pdb
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\bin\Debug\EPPlus.dll
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\bin\Debug\EPPlus.xml
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\obj\Debug\Resources.csprojAssemblyReference.cache
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\obj\Debug\Resources.Strings.AzureGroups.resources
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\obj\Debug\Resources.Strings.Models.resources
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\obj\Debug\Resources.Strings.Errors.resources
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\obj\Debug\Resources.Strings.UI.resources
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\obj\Debug\Resources.csproj.GenerateResource.cache
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\obj\Debug\Resources.csproj.CoreCompileInputs.cache
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\obj\Debug\Resources.csproj.CopyComplete
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\obj\Debug\Resources.dll
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Resources\obj\Debug\Resources.pdb

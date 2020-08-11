@@ -1,0 +1,320 @@
+﻿@model IEnumerable<ViewModels.Models.TrazaUbicacionContenedor>
+@{
+    ViewBag.Title = "Ubicación de Activos";
+    ViewBag.Header = "Informe de Activos";
+}
+
+<style>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('../../Content/Img/ajax_loader.gif') 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+</style>
+
+<div class="loader"></div>
+
+
+@using TrazaUbicacionContenedor.Controllers;
+@using Resources.Strings;
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-8">
+        <h2>@ViewBag.Header</h2>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("SignOutCallback", "Account" )">Inicio</a></li>
+            @*<li><a href="@Url.Action(" Index", "Home" )">Inicio</a></li>*@
+            <li class="active"><strong>Informe de Activos Contenedores</strong></li>
+        </ol>
+    </div>
+</div>
+
+@*RESTO DE LA PAGINA*@
+<div class="wrapper wrapper-content ">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title title-action" style="background-color:#b2eaea">
+                <table border="0" style="width:100%; column-span:0px">
+                    <tr>
+                        <td style="text-align:left">
+                            <p>Escriba algo en el campo de entrada para buscar:</p>
+                            <input id="myInput" type="text" placeholder="Buscar..">
+                        </td>
+                        <td>
+                            @*<button id="ExportaExcell" style="display:none" type="button">Exportar a Excel</button>*@
+                            <a id="ExportaExcell" class="btn btn-primary"><i class="fa fa-plus"></i>Exportar a Excel</a>
+
+                            <div id="excel">
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="content">
+                <div id="output" class="ibox-content" style="background-color:#b5dada;overflow-y: scroll">
+                    <div id="divProcessing" style="display:none" class="col-xs-12" align="center">
+                        <div class="center-block">
+                            <p>  Espere un momento ... <img src="~/Content/img/Rolling.gif" width="50" height="50" /> </p>
+                        </div>
+                    </div>
+                    <table id="tblReporte" border="1" style="width:500px; display:none;">
+                        <thead>
+                            <tr>
+                                @*<th class="head">Id Contenedor</th>*@
+                                <th class="head">Patente</th>
+                                @*<th>IdRuta</th>*@
+                                <th>Descripción Ruta</th>
+                                <th>Sigla Codelco</th>
+                                <th>Nombre</th>
+                                <th>Fecha Actualización</th>
+                                <th>Tiempo</th>
+                                <th>Orden</th>
+                                <th>Trocha</th>
+                            </tr>
+                        </thead>
+                        <tbody style="overflow-x: auto;"></tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{-
+    <!--  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <!--  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></!--script>-->
+    <!--  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>  -->
+    <script type="text/javascript" src="~/Scripts/Listado/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/Listado/jquery.ui.touch-punch.min.js"></script>
+
+
+    @*@Scripts.Render("~/bundles/DTList_js")*@
+
+    @Scripts.Render("~/bundles/DTList")
+
+
+    @*<script>
+            $("#output").pivotUI(
+                $.pivotUtilities.tipsData, {
+                    rows: ["sex"],
+                    cols: ["smoker"],
+                    vals: ["tip", "total_bill"],
+                    aggregatorName: "Sum over Sum",
+                    rendererName: "Bar Chart",
+                    hideTotals: true,
+                    renderers: $.extend(
+                        $.pivotUtilities.renderers,
+                        $.pivotUtilities.c3_renderers
+                    )
+                });
+        </script>*@
+
+    <script>
+        $(document).ready(function () {
+            var sstring = $("#table.pvtTable2").text().split("ó").join("&oacute;");
+            $("#table.pvtTable").append(sstring);
+        });
+
+        $(function () {
+            var derivers = $.pivotUtilities.derivers;
+            var renderers = $.extend($.pivotUtilities.renderers,
+                $.pivotUtilities.c3_renderers);
+            //            $("#divProcessing").show();
+            $.getJSON("../TrazaUbicacionContenedor/ResumenActivos", function (mps) {
+                var filter = "";
+                $(mps).each(function () {
+                    //alert(this.filterValue);
+                    var fila = "";
+                    fila = fila + //"<tr><td>" + this.IdContenedor +
+                        //"</td><td>" + this.Patente +
+                        "<tr>" +
+                       
+                        "<td>" + this.Patente +
+                        //"</td><td>" + this.IdRuta +
+                        "</td><td>" + this.Descripcion_Ruta +
+                        "</td><td>" + this.Sigla_Codelco +
+                        "</td><td>" + this.Descripcion +
+                        "</td><td>" + this.Fecha_Actualizacion +
+                        "</td><td>" + this.Tiempo +
+                        "</td><td>" + this.Orden +
+                        "</td><td>" + this.Trocha +
+                        "</td></tr>";
+                    $(fila).appendTo("#tblReporte tbody");
+                });
+
+                //                $("#divProcessing").hide();
+                $(document).ready(function () {
+                    $('.loader').fadeOut();
+                });
+                $("#output").pivotUI($("#tblReporte"), {
+                    //rows: ["Id_Contenedor", "Patente", "Id_Ruta", "Descripción Ruta", "Sigla Codelco", "Fecha Actualizacion"                    
+                    rows: ["Orden","Patente", "Descripción_Ruta", "Sigla Codelco", "Nombre", "Fecha Actualización", "Tiempo","Trocha"
+                    ]
+                }, false, "es"
+                );
+            });
+            //alert("Se Termino");
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        }
+    </script>
+
+    @*<script>
+                //$("#hideSelect").click(function (e) {
+                //    var contenidoTabla = "<table>" + $("table.pvtTable").html() + "</table>";
+                //    window.open('data:application/vnd.ms-excel,' + encodeURIComponent(contenidoTabla));
+                //    e.preventDefault();
+                //});
+        </script>*@
+    <script>
+        //ExportaExcell.style = "display:block"
+    </script>
+    <script>
+        function sendToExcel(html) {
+            var parent = $("<div>").append(html);
+            parent.find("br").replaceWith('<br style="mso-data-placement:same-cell" />');
+            html = parent.html();
+
+            // IE?
+            // alert(html);
+            if (navigator.msSaveOrOpenBlob) {
+                navigator.msSaveOrOpenBlob(new Blob([html]), "ResumenArmado.xls");
+            }
+
+            // Non-IE.
+            else {
+                $("<a>", {
+                    download: "ResumenArmado.xls",
+                    href: "data:text/html," + encodeURIComponent(html)
+                })[0].click();
+            }
+        }
+
+        $(function () {
+            //$("#ExportaExcell").click(function (e) {
+            //    sendToExcel("<table>" + $("table.pvtTable").html() + "</table>")
+            //    e.preventDefault();
+
+            //});
+            $("#ExportaExcell").click(function (e) {
+
+                //$(document).ready(function () {
+                //    var strNewString = $('table.pvtTable').html().replace(/\ó/g, '---');
+                //    $('table.pvtTable').html(strNewString);
+                //});
+
+                var _html = "<table>" + $("table.pvtTable").html().toString() + "</table>";
+                _html = _html.replace(/\á/g, '&aacute;');
+                _html = _html.replace(/\é/g, '&eacute;');
+                _html = _html.replace(/\í/g, '&iacute;');
+                _html = _html.replace(/\ó/g, '&oacute;');
+                _html = _html.replace(/\ú/g, '&uacute;');
+                _html = _html.replace(/\ñ/g, '&ntilde;');
+                _html = _html.replace(/\Á/g, '&Aacute;');
+                _html = _html.replace(/\É/g, '&Eacute;');
+                _html = _html.replace(/\Í/g, '&Iacute;');
+                _html = _html.replace(/\Ó/g, '&Oacute;');
+                _html = _html.replace(/\Ú/g, '&Uacute;');
+                _html = _html.replace(/\Ñ/g, '&Ntilde;');
+                //                alert(_html);
+                //_html = _html.replace("ó", "&oacute;");
+                //_html = _html.replace('ó', '&oacute;');
+                //_html = _html.replaceWith('ó', '&oacute;');
+
+                //_html = "<table><tr><td>A</td><td>B</td></tr><tr><td>dos</td><td>uno</td></tr></table>";
+
+                var parent = $("<div>").append(_html);
+                parent.find("br").replaceWith('<br style="mso-data-placement:same-cell" />');
+                html = parent.html();
+                if (navigator.msSaveOrOpenBlob) {
+                    navigator.msSaveOrOpenBlob(new Blob([_html]), "ResumenArmado.xls");
+                }
+
+                // Non-IE.
+                else {
+                    $("<a>", {
+                        download: "ResumenArmado.xls",
+                        href: "data:text/html," + encodeURIComponent(_html)
+                    })[0].click();
+                }
+
+                //window.open('data:application/vnd.ms-excel,' + encodeURIComponent("<table>" + _html + "</table>"));
+                //e.preventDefault();
+            });
+        });
+
+
+
+
+    </script>
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script>$('.chosen-select').chosen({ width: "10%" });</script>
+}
+
+@section styles {
+    @*@Styles.Render("~/bundles/csspivot")*@
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.6/c3.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.6/c3.min.css" />
+    <link href="~/Content/bootstrap-chosen.css" type="text/css" rel="stylesheet" hidden="hidden" />
+    <style type="text/css">
+
+        #page-wrapper {
+            /*    height: 100% !important;*/
+            font-size: 10px;
+            /*  width: 90%;  */
+        }
+
+
+        tbody > tr > th.pvtTotalLabel, .colTotal, .pvtGrandTotal {
+            display: none;
+        }
+
+        .pvtRowTotalLabel {
+            display: none;
+        }
+
+        .pvtAggregator {
+            display: none;
+        }
+
+        .rowTotal {
+            display: none
+        }
+
+        .cscrooll {
+        }
+    </style>
+
+}

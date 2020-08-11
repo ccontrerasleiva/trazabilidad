@@ -1,0 +1,211 @@
+﻿@model ViewModels.Models.Tren
+@using ViewModels.Enum;
+@if (@Model != null)
+{
+    var color = "";
+    var letraColor = "";
+    <div class="ibox float-e-margins accordion">
+        
+        @if (Model.Estado == (int)EstadoTren.Autorizado)
+        {
+            color = "dodgerblue";
+            letraColor = "white";
+        }
+        else if (Model.Estado == (int)EstadoTren.ATiempo)
+        {
+            color = "greenyellow";
+            
+        }
+        else if (Model.Estado == (int)EstadoTren.Incumpliendo)
+        {
+            color = "yellow";
+            
+        }
+        else if (Model.Estado == (int)EstadoTren.Atrasado)
+        {
+            color = "red";
+            letraColor = "white";
+        }
+        else if (Model.Estado == (int)EstadoTren.Confirmado)
+        {
+            color = "white";
+        }
+
+        <div class="ibox-title accordion-head" style="background-color: @color">
+            <a class="toggler">
+                <h3>
+                    <strong style="color:@letraColor;padding-right:10px;">#@Model.Itinerario.Servicio.Codigo</strong>
+                    <strong style="color:@letraColor;padding-right:10px;">@Model.Itinerario.Origen.Codigo - @Model.Itinerario.Destino.Codigo</strong>
+                    @*<span style="padding-right:10px;">@Model.Itinerario.Id_Origen - @Model.Itinerario.Id_Destino</span>*@
+
+
+                    <strong style="color:@letraColor;padding-right:10px;">
+                    @if (Model.HoraInicioReprogramada.ToString("yyyy") != "1900" && Model.HoraFinalReprogramada.ToString("yyyy") != "1900")
+                    {
+
+                        <strong>
+                            @Model.HoraInicioReprogramada.ToString("dd/MM")
+                            @Model.HoraInicioReprogramada.ToString("HH:mm")
+                            ---
+                            @Model.HoraFinalReprogramada.ToString("dd/MM")
+                            @Model.HoraFinalReprogramada.ToString("HH:mm")
+                        </strong>
+                    }
+                    else
+                    {
+                        <strong>
+                            @Model.HoraInicio.ToString("dd/MM")
+                            @Model.HoraInicio.ToString("HH:mm")
+                            ---
+                            @Model.HoraFin.ToString("dd/MM")
+                            @Model.HoraFin.ToString("HH:mm")
+                        </strong>
+                    }
+                    </strong>
+
+
+
+                    <i class="fa fa-chevron-down pull-right"></i>
+                    @if (Model.Estado >= (int)EstadoTren.Confirmado && Model.Estado < (int)EstadoTren.ATiempo)
+                    {
+                        <strong class="pull-right" style="padding-right:10px; text-align:right; color:@letraColor">
+                            @Resources.Util.Enums.GetDescription((ViewModels.Enum.EstadoTren)Model.Estado)
+                        </strong>
+                    }
+
+                    @if (Model.Estado >= (int)EstadoTren.ATiempo && Model.Estado < (int)EstadoTren.Finalizado)
+                    {
+                        <strong class="pull-right" style="padding-right:10px; text-align:right; color:@letraColor">
+                            @*En Curso: @Model.Tren_Tramos.Select(x => x.Tiempo_Acumulado).OrderByDescending(Model.Tren_Tramos.Select(d => d.Id)).FirstOrDefault();
+                                var lastRoute = Routes.OrderByDescending(x => x.Route.Order).FirstOrDefault();*@
+                            En Curso: @Model.Tren_Tramos.OrderByDescending(x => x.Id).Select(y => y.Tiempo_Acumulado).FirstOrDefault()
+                        </strong>
+                    }
+
+
+                </h3>
+            </a>
+        </div>
+        <div class="ibox-content toggled">
+            <div class="row">
+
+                <div class="col-xs-12">
+
+                    @*<strong>Locomotoras: @Model.Tren_Locomotoras.Count()</strong>*@
+                    <strong>Composicion del Tren: </strong>
+
+                    @*Agregar pareja y locomotora nueva a tren*@
+                    @if (Model.Estado >= (int)EstadoTren.Autorizado)
+                    {
+                        <button type="button" disabled data-toggle="modal" onclick="Edit(@Model.Id,1)" href="#modal-edit" class="pull-right btn btn-success" data-id="@Model.Id"><i class="fa fa-clock-o"></i>Cambiar Horario</button>
+                        <button type="button" data-toggle="modal" onclick="Delete(@Model.Id,1)" href="#modal-delete" class="pull-right btn btn-success" data-id="@Model.Id"><i class="fa fa-trash-o"></i>Suprimir Tren</button>
+                        <button type="button" data-toggle="modal" onclick="Create(@Model.Id,1)" href="#modal-create" class="pull-right btn btn-success " data-id="@Model.Id"><i class="fa fa-plus"></i>Agregar Pareja </button>
+                    }
+                    else
+                    {
+                        <button type="button" data-toggle="modal" onclick="Edit(@Model.Id,1)" href="#modal-edit" class="pull-right btn btn-success" data-id="@Model.Id"><i class="fa fa-clock-o"></i>Cambiar Horario</button>
+                        <button type="button" data-toggle="modal" onclick="Delete(@Model.Id,1)" href="#modal-delete" class="pull-right btn btn-success" data-id="@Model.Id"><i class="fa fa-trash-o"></i>Suprimir Tren</button>
+                        <button type="button" data-toggle="modal" onclick="Create(@Model.Id,1)" href="#modal-create" class="pull-right btn btn-success " data-id="@Model.Id"><i class="fa fa-plus"></i>Agregar Pareja </button>
+
+                    }
+
+
+
+
+
+                    @*<a data-toggle="modal" onclick="Edit(@Model.Id,5)" href="#modal-edit" class="btn btn-primary"><i class="fa fa-plus" data-id="@Model.Id">Agregar Pareja</i> </a>*@
+                    @*</div>
+        </div>*@
+
+
+                    <table class="table table-sm table-hover issue-tracker">
+                        <tbody>
+
+                            @if (Model.Tren_Locomotoras != null && Model.Tren_Locomotoras.Count() > 0)
+                            {
+                                foreach (var loco in Model.Tren_Locomotoras)
+                                {
+                                    if (loco.Deshabilitado == false)
+                                    {
+                                        @Html.Partial("GestionDiaria/Partial/_Locomotive", loco)
+                                    }
+
+                                }
+                             }
+                        </tbody>
+                    </table>
+
+                    @if (Model.Estado == (int)ViewModels.Enum.EstadoTren.Autorizado)
+                    {
+                        <strong>
+                            <button type="button" data-toggle="modal" onclick="Autoriza(@Model.Id, 2)" href="#modal-editAutoriza" class="pull-right btn btn-success" data-id="@Model.Id"><i class="fa fa-clock-o"></i>Deshabilitar</button>
+                        </strong>
+                    }
+                    else if (Model.Estado == (int)ViewModels.Enum.EstadoTren.Confirmado)
+                    {
+                        <strong>
+                            <button type="button" data-toggle="modal" onclick="Autoriza(@Model.Id, 1)" href="#modal-editAutoriza" class="pull-right btn btn-success" data-id="@Model.Id"><i class="fa fa-clock-o"></i>Autorizar</button>
+                        </strong>
+                    }
+                    else
+                    {
+                        <strong>
+                            <button type="button" disabled data-toggle="modal" onclick="Autoriza(@Model.Id, 1)" href="#modal-editAutoriza" class="pull-right btn btn-success" data-id="@Model.Id"><i class="fa fa-clock-o"></i>Autorizar</button>
+                        </strong>
+                    }
+
+                    @*<a data-train-id="@Model.Id" data-toggle="modal" href="#modal-edit" class="btn btn-success showModal"><i class="fa fa-pencil"></i> Modificar</a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+
+    @*<script src="~/Scripts/GestionDiaria.js"></script>*@
+    @*<script src="~/Scripts/ModalGestionDiaria.js"></script>*@
+    <script src="~/Scripts/Modal.GestionDiaria.js"></script>
+
+}
+<div id="modal-create" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="AgregarParejaCreate">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-edit" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="CambiaHoraTren">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-delete" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="SuprimirTren">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-editAutoriza" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="AutorizaTren">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

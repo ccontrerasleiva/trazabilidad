@@ -1,0 +1,30 @@
+﻿@model ViewModels.Models.Actividad
+<tr>
+
+    @*@using (Html.BeginForm(nameof(Trazabilidad.Controllers.TripulanteController.ListActividades), nameof(Resources.Strings.Models.Tripulante), FormMethod.Post))
+        {
+            if (Model.Estado == 2)
+            {
+
+                @Html.HiddenFor(x => x.Id)
+
+                <td>@Resources.Util.Enums.GetDescription((ViewModels.Enum.TipoActividad)Model.Tipo)</td>
+                <td>@Model.Hora_Inicio.ToString("HH:mm:ss")</td>
+                <td>@Model.Hora_Fin.ToString("HH:mm:ss")</td>
+
+
+                <td>@Resources.Util.Enums.GetDescription((ViewModels.Enum.EstadoActividad)Model.Estado)</td>
+            }
+
+
+
+        }*@
+    
+   @*@foreach (var count in )
+   {
+
+   }*@
+        <h3>@Model.TripulantePersona.Nombre --- @Model.TripulantePersona.Base.Nombre ---- @Model.TripulantePersona.Rut</h3>
+   
+
+</tr>

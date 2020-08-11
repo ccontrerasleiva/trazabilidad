@@ -1,0 +1,106 @@
+﻿@model ViewModels.Models.Estacion
+@using Trazabilidad.Controllers
+@using Resources.Strings
+<tr>
+    @using (Html.BeginForm(nameof(Trazabilidad.Controllers.EstacionController.Edit), nameof(Resources.Strings.Models.Estacion), FormMethod.Post))
+    {
+        @*<td>@Model.Id</td>*@
+        @Html.HiddenFor(x => x.Id)
+        <td>@Model.Codigo_Recorrido</td>
+        <td>@Model.Nombre</td>
+        <td>@Model.Codigo</td>
+        <td>@Model.Punto_Kilometraje</td>
+
+        if (@Model.Deshabilitado == false){
+            <td>Habilitado</td>}
+        else{
+            <td>Deshabilitado</td>}
+
+        <td>
+            @*@using (Html.BeginForm(nameof(EstacionController.ToggleStation), nameof(Models.Estacion), routeValues: new { id = Model.Id }))*@
+            @*{*@
+
+            @*<button type="submit" class="btn btn-xs @(Model.Deshabilitado ? "btn-success" : "btn-default")">*@
+            @*<button type="submit" class="btn btn-xs @(Model.Deshabilitado ? "btn-default" : "btn-success")">*@
+            @*<button type="submit" class="btn btn-xs">*@
+            @*<i class="fa fa-power-off" aria-hidden="true"></i>*@
+            @*</button>*@
+
+            <div class="input-group">
+                <div class="input-group-btn">
+                    @*<a href="@Url.Action("Index","Services", routeValues: new { id = Model.Id })" class="btn btn-xs btn-success"><i class="fa fa-search"></i></a>*@
+                    @*Agregado jtc.*@
+                    @*<a data-toggle="modal" onclick="editEst(@Model.Id)" href="#modal-edit" class="btn btn-primary"><i class="fa fa-pencil" data-id="@Model.Id"></i> </a>*@
+                    @*<a data-toggle="modal" onclick="deleteEst(@Model.Id)" href="#modal-delete" class="btn btn-primary"><i class="fa fa-trash-o" data-id="@Model.Id"></i> </a>*@
+
+                    @*<a data-toggle="modal" onclick="Edit(@Model.Id,4)" href="#modal-edit" class="btn btn-primary"><i class="fa fa-pencil" data-id="@Model.Id"></i> </a>*@
+                    <a data-toggle="modal" onclick="Edit(@Model.Id,4)" href="#modal-edit" class="btn btn-primary"><i class="fa fa-pencil" data-id="@Model.Id"></i> </a>
+                    <a data-toggle="modal" onclick="Delete(@Model.Id,4)" href="#modal-delete" class="btn btn-primary"><i class="fa fa-trash-o" data-id="@Model.Id"></i> </a>
+
+                    @*<button type="submit" class="btn btn-xs @(Model.Active ? "btn-success" : "btn-default")">
+        <i class="fa fa-power-off" aria-hidden="true"></i>
+        </button>*@
+                </div>
+            </div>
+        </td>
+    }
+</tr>
+
+@*AGREGADO JTC*@
+<div id="modal-edit" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="estacionEdit">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*AGREGADO JTC*@
+<div id="modal-delete" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="estacionDelete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

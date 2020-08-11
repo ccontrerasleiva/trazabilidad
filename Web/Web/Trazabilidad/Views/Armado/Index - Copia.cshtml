@@ -1,0 +1,458 @@
+﻿@model IEnumerable<ViewModels.Custom.Portico>
+
+<div class="row form-mapa">
+    <style>
+        table {
+            border-collapse: collapse;
+            /*width: 100%;*/
+        }
+
+        th, td {
+            padding: 5px;
+        }
+
+
+        /*body {
+            background: steelblue;
+            font-family: Arial, Verdana;
+        }*/
+
+        .tooltip_elemento {
+            position: relative;
+        }
+
+        h2 {
+            color: #FFF;
+            margin-top: 100px;
+        }
+
+
+        span {
+            color: #CCC
+        }
+
+        .label-primary_ls {
+            background-color: #04B45F;
+            color: #FFFFFF;
+        }
+
+        .primary_sd {
+            background: #2ECCFA;
+            /*background: #F5DA81;*/
+            text-space-collapse: collapse;
+            font-weight: bold;
+            max-width: 80%;
+            max-height: 25px;
+            font-size: 10px;
+            color:white;
+            /*background-color: #F5DA81;*/
+            /*color: #FFFFFF;*/
+        }
+
+        .primary_rd {
+            background: #688A08; /*#F7FE2E;*/
+            text-space-collapse: collapse;
+            font-weight: bold;
+            max-width: 80%;
+            max-height: 25px;
+            font-size: 10px;
+            color: white;
+            /*background-color: #F5DA81;*/
+            /*color: #FFFFFF;*/
+        }
+
+        .label-primary_sd_rb {
+            background-color: #FF8000;
+            /*color: #FFFFFF;*/
+        }
+
+        .label-primary_rb {
+            background-color: #F7FE2E;
+            /*colo*/
+        }
+
+        .label-primary_rb_ls {
+            background-color: #2ECCFA;
+            /*colo*/
+        }
+
+        .label-primary_ls_ve {
+            background-color: #9A2EFE;
+            color: #FFFFFF;
+        }
+
+        .label-primary_ve_ve {
+            background-color: #DAD8D8;
+            /*colo*/
+        }
+
+        .label-primary_ve_ls {
+            background-color: #F20909;
+            color: #FFFFFF;
+        }
+
+        .label-primary_ls_rb {
+            background-color: #2128E3;
+            color: #FFFFFF;
+        }
+
+        .label-primary_rb_sd {
+            background-color: #050505;
+            color: #FFFFFF;
+        }
+
+        .label-primary_ls_sd {
+            background-color: #2DF329;
+            /*color: #FFFFFF;*/
+        }
+
+        .label-primary_total {
+            background-color: #F2F2F2;
+            /*color: #FFFFFF;*/
+        }
+
+        .tooltip {
+            display: none;
+            position: absolute;
+            width: 200px;
+            padding: 10px;
+            margin: 0 0 12px 0;
+            z-index: 100;
+            bottom: 100%;
+            background: #FDD017;
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 11px;
+            border-radius: 5px;
+        }
+
+            .tooltip:after {
+                content: "";
+                position: absolute;
+                bottom: -14px;
+                z-index: 100;
+                border: 0 solid #FDD017;
+                border-bottom: 14px solid transparent;
+                border-left-width: 10px;
+                width: 50%;
+                left: 50%;
+            }
+
+            .tooltip:before {
+                content: "";
+                position: absolute;
+                border: 0 solid #FDD017;
+                bottom: -14px;
+                z-index: 100;
+                border-right-width: 10px;
+                border-bottom: 14px solid transparent;
+                width: 50%;
+                right: 50%;
+            }
+    </style>
+
+    <style>
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('../../Content/Img/ajax_loader.gif') 50% 50% no-repeat rgb(249,249,249);
+            opacity: .8;
+        }
+    </style>
+
+    <div class="loader"></div>
+
+    <form id="form1" runat="server" style="height:100%;">
+        <asp:Panel ID="Panel1" runat="server">
+            @*<%--Place holder to fill with javascript by server side code--%>*@
+            <asp:Literal ID="js" runat="server"></asp:Literal>
+            @*<%--Place for google to show your MAP--%>*@
+
+            <div id="ibox-content1" class="ibox-content">
+
+                    <table border="0" style="width:100%">
+                        <tr>
+                            <td>
+                                <table style="width:100%" id="resumen" border="0" class="table table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <td colspan="6"><strong>Resumen Activos Contenedores de Trocha Ancha</strong></td>
+                                            @*<th>Estaciones</th>*@
+                                        </tr>
+                                    </thead>
+                                    @*<tbody>*@
+                                    @{ if (Model != null && Model.Count() > 0)
+                                        {
+                                            string item1_title = "";
+                                            string item1_Codelco = "";
+                                            string item1_Nombre = "";
+                                            string item2_title = "";
+                                            string item2_Codelco = "";
+                                            string item2_Nombre = "";
+                                            int con = 1;
+                                            foreach (var item in Model)
+                                            {
+                                                if (item.Trocha == "A")
+                                                {
+                                                    if (con == 1)
+                                                    {
+                                                        item1_title = item.Title;
+                                                        item1_Codelco = item.SiglaCodelco;
+                                                        item1_Nombre = item.SiglaNombre;
+                                                    }
+                                                    if (con == 2)
+                                                    {
+                                                        item2_title = item.Title;
+                                                        item2_Codelco = item.SiglaCodelco;
+                                                        item2_Nombre = item.SiglaNombre;
+                                                    }
+                                                    if (con == 3)
+                                                    {
+                                                        <tr>
+                                                            <td width="25%"><div class="primary_sd" title="@item1_title">&nbsp;&nbsp;&nbsp;@item1_Codelco</div></td>
+                                                            <td width="5%" id="activo" style="text-align:right"><span class="badge" id="@item1_Nombre" name="@item1_Nombre"></span></td>
+                                                            <td width="25%"><div class="primary_sd" title="@item2_title">&nbsp;&nbsp;&nbsp;@item2_Codelco</div></td>
+                                                            <td width="5%" id="activo" style="text-align:right"><span class="badge" id="@item2_Nombre" name="@item2_Nombre"></span></td>
+                                                            <td width="25%"><div class="primary_sd" title="@item.Title">&nbsp;&nbsp;&nbsp;@item.SiglaCodelco</div></td>
+                                                            <td width="5%" id="activo" style="text-align:right"><span class="badge" id="@item.SiglaNombre" name="@item.SiglaNombre"></span></td>
+                                                        </tr>
+                                                        con = 1;
+                                                        item1_title = "";
+                                                        item1_Codelco = "";
+                                                        item1_Nombre = "";
+                                                        item2_title = "";
+                                                        item2_Codelco = "";
+                                                        item2_Nombre = "";
+
+                                                    }
+                                                    else
+                                                    {
+                                                        con++;
+                                                    }
+                                                }
+                                            }
+                                            con--;
+                                            if (con == 1)
+                                            {
+                                                <tr>
+                                                    <td><div class="primary_sd" title="@item1_title">&nbsp;&nbsp;&nbsp;@item1_Codelco</div></td>
+                                                    <td id="activo" style="text-align:right"><span class="badge" id="@item1_Nombre" name="@item1_Nombre"></span></td>
+                                                    <td colspan="5"></td>
+
+
+                                                </tr>
+                                            }
+                                            if (con == 2)
+                                            {
+                                                <tr>
+                                                    <td width="25%"><div class="primary_sd" title="@item1_title">&nbsp;&nbsp;&nbsp;@item1_Codelco</div></td>
+                                                    <td width="5%" id="activo" style="text-align:right"><span class="badge" id="@item1_Nombre" name="@item1_Nombre"></span></td>
+                                                    <td width="25%"><div class="primary_sd" title="@item2_title">&nbsp;&nbsp;&nbsp;@item2_Codelco</div></td>
+                                                    <td width="5%" id="activo" style="text-align:right"><span class="badge" id="@item2_Nombre" name="@item2_Nombre"></span></td>
+                                                    <td width="25%"></td>
+                                                    <td width="5%" id="activo" style="text-align:right"></td>
+
+                                                </tr>
+                                            }
+                                        } 
+                                    }
+                                    <thead>
+                                        <tr>
+                                            <th colspan="6"><strong>Resumen Activos Contenedores de Trocha Metrica</strong></th>
+                                            @*<th>Estaciones</th>*@
+                                        </tr>
+                                    </thead>
+                                    @*<tbody>*@
+                                    @{ if (Model != null && Model.Count() > 0)
+                                        {
+                                            string item1_title = "";
+                                            string item1_Codelco = "";
+                                            string item1_Nombre = "";
+                                            string item2_title = "";
+                                            string item2_Codelco = "";
+                                            string item2_Nombre = "";
+                                            int con = 1;
+                                            foreach (var item in Model)
+                                            {
+                                                if (item.Trocha == "M")
+                                                {
+                                                    if (con == 1)
+                                                    {
+                                                        item1_title = item.Title;
+                                                        item1_Codelco = item.SiglaCodelco;
+                                                        item1_Nombre = item.SiglaNombre;
+                                                    }
+                                                    if (con == 2)
+                                                    {
+                                                        item2_title = item.Title;
+                                                        item2_Codelco = item.SiglaCodelco;
+                                                        item2_Nombre = item.SiglaNombre;
+                                                    }
+                                                    if (con == 3)
+                                                    {
+                                                        <tr>
+                                                            <td width="20%"><div class="primary_rd" title="@item1_title">&nbsp;@item1_Codelco</div></td>
+                                                            <td id="activo" style="text-align:right"><span class="badge" id="@item1_Nombre" name="@item1_Nombre"></span></td>
+                                                            <td width="20%"><div class="primary_rd" title="@item2_title">&nbsp;@item2_Codelco</div></td>
+                                                            <td id="activo" style="text-align:right"><span class="badge" id="@item2_Nombre" name="@item2_Nombre"></span></td>
+                                                            <td width="20%"><div class="primary_rd" title="@item.Title">&nbsp;@item.SiglaCodelco</div></td>
+                                                            <td id="activo" style="text-align:right"><span class="badge" id="@item.SiglaNombre" name="@item.SiglaNombre"></span></td>
+                                                        </tr>
+                                                        con = 1;
+                                                        item1_title = "";
+                                                        item1_Codelco = "";
+                                                        item1_Nombre = "";
+                                                        item2_title = "";
+                                                        item2_Codelco = "";
+                                                        item2_Nombre = "";
+
+                                                    }
+                                                    else
+                                                    {
+                                                        con++;
+                                                    }
+                                                }
+                                            }
+                                            con--;
+                                            if (con == 1)
+                                            {
+                                                <tr>
+                                                    <td><div class="primary_rd" title="@item1_title">&nbsp;@item1_Codelco</div></td>
+                                                    <td id="activo" style="text-align:right"><span class="badge" id="@item1_Nombre" name="@item1_Nombre"></span></td>
+                                                    <td colspan="5"></td>
+
+
+                                                </tr>
+                                            }
+                                            if (con == 2)
+                                            {
+                                                <tr>
+                                                    <td><div class="primary_rd" title="@item1_title">&nbsp;@item1_Codelco</div></td>
+                                                    <td id="activo" style="text-align:right"><span class="badge" id="@item1_Nombre" name="@item1_Nombre"></span></td>
+                                                    <td><div class="primary_rd" title="@item2_title">&nbsp;@item2_Codelco</div></td>
+                                                    <td id="activo" style="text-align:right"><span class="badge" id="@item2_Nombre" name="@item2_Nombre"></span></td>
+                                                    <td colspan="2"></td>
+
+                                                </tr>
+                                            }
+                                        } 
+                                    }
+                                    @*</tbody>*@
+                                @*</table>
+                                        </td>
+                                    </tr>
+                                </table>
+               
+                <table border="0" style="width:100%">
+                    <tr>
+                        <td>
+                            <table style="width:100%" id="resumen2" border="0" class="table table-bordered table-condensed table-hover">*@
+                                <thead>
+                            <tr>
+                                <td colspan="6"><strong>Totales</strong></td>
+                            </tr>
+                        </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="20%"><span class="label  ">Subiendo :</span></td>
+                                        <td width="10%" id="activo" style="text-align:right"><span class="badge" id="total_sub" name="total_sub"></span></td>
+                                        <td width="20%"><span class="label  ">Bajando :</span></td>
+                                        <td width="10%" id="activo" style="text-align:right"><span class="badge" id="total_baj" name="total_baj"></span></td>
+                                        <td width="20%"><span class="label  ">Detenido </span></td>
+                                        <td width="10%" id="activo" style="text-align:right"><span class="badge" id="total_det" name="total_det"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="label  ">Total :</span></td>
+                                        <td id="activo" style="text-align:right"><span class="badge" id="total_act" name="total_act"></span></td>
+                                        <td colspan="4"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </td>
+                        </tr>
+                    </table>
+                        
+                            <div style="margin-bottom: 4px">
+                                <label style="float:left;margin-right:15px;">
+                                    <a class="btn btn-primary" href="#" id="alternar-respuesta-ej1"><i class="fa fa-bars"></i></a>
+                                </label>
+                                <label class="css-checkbox" style="float:left;margin-right:15px;">
+                                    <input type="checkbox" name="Estaciones" value="Estaciones" id="estacion"> Estaciones
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="css-checkbox" style="float:left;">
+                                    <input type="checkbox" name="Vias" value="Vias" id="vias"> Vías Ferreas
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <select class="chosen-select form-control" id="EstacionIds">
+                                <option value="0" selected>Seleccione un activo a ubicar</option>
+                            </select>
+            </div>
+            <div id="map" style="height: 100%;">
+            </div>
+        </asp:Panel>
+    </form>
+</div>
+
+@section styles {
+    <link href="~/Content/bootstrap-chosen.css" type="text/css" rel="stylesheet" />
+    <style>
+        #page-wrapper {
+            height: 100% !important;
+        }
+    </style>
+
+    @*<script type="text/javascript">
+            jQuery("a").mouseenter(function (e) {
+                var posMouse = e.pageX - this.offsetLeft;
+                var textoTooltip = jQuery(this).attr("title");
+
+                if (textoTooltip.length > 0) {
+                    jQuery(this).append('<div class="tooltip">' + textoTooltip + '</div>');
+                    jQuery("a > div.tooltip").css("left", "" + posMouse - 103 + "px");
+                    jQuery("a > div.tooltip").fadeIn(300);
+                }
+            });
+
+            jQuery("a").mouseleave(function () {
+                jQuery("a > div.tooltip").fadeOut(300).delay(300).queue(function () {
+                    jQuery(this).remove();
+                    jQuery(this).dequeue();
+                });
+            });
+        </script>*@
+
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/maps")
+
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr63Y3sQ9WJJ9YmUCq3re8_Ss4zahYnGY&libraries=places,geometry&callback=initMap"></script>
+
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script>$('.chosen-select').chosen({ width: "100%" });</script>
+    <script>
+
+        $(document).ready(function () {
+            $('#alternar-respuesta-ej1').on('click', function () {
+                //$('#ibox-content1').toggle('slow');
+                $('#ibox-content1').toggleClass('ibox-content_ocultar', 1000);
+
+            });
+        });
+    </script>
+    <script>
+                //$(document).ready(function () {
+                //    $('.loader').fadeOut("slow");
+                //});
+    </script>
+
+}

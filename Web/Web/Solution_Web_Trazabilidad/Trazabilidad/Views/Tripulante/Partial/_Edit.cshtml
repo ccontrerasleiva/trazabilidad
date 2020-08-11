@@ -1,0 +1,23 @@
+﻿@model ViewModels.Models.Tripulante
+
+@using (Html.BeginForm(nameof(Trazabilidad.Controllers.TripulanteController.Edit), nameof(Resources.Strings.Models.Tripulante), FormMethod.Post))
+{
+    @*@Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.Id_Origens)
+    @Html.HiddenFor(x => x.Id_Destinos)*@
+
+    <div class="col-sm-12">
+        <h3 class="m-t-none m-b">Editar Tiempo de Viaje HAPA</h3>
+
+        @*<form role="form">
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Tiempo_Viaje, "Tiempo de Viaje")
+                @Html.TextBoxFor(model => model.Tiempo_Viaje, htmlAttributes: new { @class = "form-control", type = "time", pattern = "[0-9]{2}:[0-9]{2}", min = "00:01", max = "11:00" })
+            </div>
+
+            <div>
+                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+            </div>
+        </form>*@
+    </div>
+}

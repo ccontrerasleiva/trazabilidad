@@ -1,0 +1,55 @@
+﻿@{
+    var user = (System.Security.Claims.ClaimsIdentity)User.Identity;
+    try
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+
+            ViewBag.Name = user.Claims.FirstOrDefault(x => x.Type.Equals("name")).Value;
+            ViewBag.FirstName = user.Claims.FirstOrDefault(x => x.Type.Contains("/givenname")).Value;
+            ViewBag.JobTitle = user.Claims.FirstOrDefault(x => x.Type.Contains("jobTitle")).Value;
+            ViewBag.Office = user.Claims.FirstOrDefault(x => x.Type.Contains("Office")).Value;
+        }
+
+    }
+    catch (Exception)
+    {
+
+    }
+}
+
+<nav class="navbar navbar-expand-xl navbar-dark mb-2" style="border: none;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#!">Trazabilidad Andina</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Bienvenido, @ViewBag.Name
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <a class="dropdown-item" href="#!">
+
+                            <span class="text-muted">@ViewBag.JobTitle</span>
+                        </a>
+
+                        @if (Request.IsAuthenticated)
+                        {
+                            <a class="dropdown-item" href="@Url.Action("SignOut", "Account")">
+
+                                <i class="fa fa-sign-out"></i> Salir
+
+                            </a>
+                        }
+
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>

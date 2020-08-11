@@ -1,0 +1,73 @@
+﻿<div class="row form-mapa">
+    <form id="form1" runat="server" style="height:100%;">
+        <asp:Panel ID="Panel1" runat="server">
+            @*<%--Place holder to fill with javascript by server side code--%>*@
+            <asp:Literal ID="js" runat="server"></asp:Literal>
+            @*<%--Place for google to show your MAP--%>*@
+
+            <div class="ibox-content">
+                <table class="table" id="resumen">
+                    <thead>
+                        <tr>
+                            <th>Resumen de Activos</th>
+                            @*<th>Estaciones</th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @*<td><span class="label label-primary">50090</span></td>
+                                <td>Alameda-Buin</td>*@
+                            @*<td><span class="label label-primary">Servicios a tiempo</span></td>*@
+                            <td><span class="label label-primary">Contenedores</span></td>
+                            <td id="activo"><strong id="cst" name="cst"></strong></td>
+                        </tr>
+                        <tr>
+                            @*<td><span class="label label-warning">50091</span></td>
+                                <td>Paine-Los Andes</td>*@
+                            <td><span class="label label-warning-light">Carros</span></td>
+                            <td id="incumpliendo"><strong id="csr" name="csr"></strong></td>
+                        </tr>
+                        <tr>
+                            @*<td><span class="label label-warning">50091</span></td>
+                                <td>Paine-Los Andes</td>*@
+                            <td><span class="label label-danger">Locomotoras</span></td>
+                            <td id="atrasado"><strong id="csa" name="csa"></strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="margin-bottom: 4px">
+                    <label class="css-checkbox" style="float:left;margin-right:15px;">
+                        <input type="checkbox" name="Estaciones" value="Estaciones" id="estacion"> Estaciones
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="css-checkbox" style="float:left;">
+                        <input type="checkbox" name="Vias" value="Vias" id="vias"> Vías Ferreas
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <select class="chosen-select form-control" id="EstacionIds">
+                    <option value="0" selected>Seleccione un servicio a ubicar</option>
+                </select>
+            </div>
+            <div id="map" style="height: 100%;">
+            </div>
+        </asp:Panel>
+    </form>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/maps")
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr63Y3sQ9WJJ9YmUCq3re8_Ss4zahYnGY&libraries=places,geometry&callback=initMap"></script>
+
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script> $('.chosen-select').chosen({ width: "100%" });</script>
+
+}
+@section styles {
+    <link href="~/Content/bootstrap-chosen.css" type="text/css" rel="stylesheet" />
+    <style>
+        #page-wrapper {
+            height: 100% !important;
+        }
+    </style>
+}

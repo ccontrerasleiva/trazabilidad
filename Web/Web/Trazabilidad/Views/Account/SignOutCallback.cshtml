@@ -1,0 +1,38 @@
+﻿@*@{
+        ViewBag.Title = "Sign Out";
+    }
+    <h2>@ViewBag.Title.</h2>
+    <p class="text-success">You have successfully signed out.</p>*@
+
+@*@Html.Partial("Index")*@
+
+@{var user = (System.Security.Claims.ClaimsIdentity)User.Identity;
+    try
+    {
+        //if (((System.Security.Principal.WindowsIdentity)user).AccessToken.IsInvalid == false)
+        if( User.Identity.IsAuthenticated)
+        {
+            ViewBag.FirstName = User.Identity.Name;
+            //ViewBag.FirstName = user.Claims.FirstOrDefault(x => x.Type.Contains("/givenname")).Value;
+        }
+        else
+        {
+            {
+                ViewBag.Title = "Sign Out";
+                <h2>@ViewBag.Title.</h2>
+                <p class="text-success">You have successfully signed out.</p>
+
+            }
+        }
+
+    }
+    catch (Exception)
+    {
+        //ViewBag.FirstName = (new System.Linq.SystemCore_EnumerableDebugView<System.Security.Claims.Claim>(user.Claims).Items[15]).Value;
+
+    }
+    //ViewBag.Name = user.Claims.FirstOrDefault(x => x.Type.Equals("name")).Value;
+    // ViewBag.FirstName = user.Claims.FirstOrDefault(x => x.Type.Contains("/givenname")).Value;
+    //ViewBag.JobTitle = user.Claims.FirstOrDefault(x => x.Type.Contains("jobTitle")).Value;
+    //ViewBag.Office = user.Claims.FirstOrDefault(x => x.Type.Contains("Office")).Value;
+}

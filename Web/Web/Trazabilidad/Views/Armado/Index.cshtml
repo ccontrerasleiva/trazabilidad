@@ -1,0 +1,328 @@
+﻿<div class="modal fade fixed-right" id="modalTrainData" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-card card" data-toggle="lists">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+
+                            <!-- Title -->
+                            <h4 class="card-header-title" id="modalTitulo"></h4>
+                            <div class="mb-3">
+                                <ul class="list-group list-group-flush">
+
+                                    <li class="list-group-item d-flex align-items-center justify-content-between px-0">
+                                        <small>Velocidad</small> <small id="velocidad"></small>
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center justify-content-between px-0">
+                                        <small>PK</small> <small id="pk"></small>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-auto">
+
+                                <!-- Close -->
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+
+                            </div>
+                        </div> <!-- / .row -->
+                </div>
+                <div class="card-body" >
+                    
+
+                        <table class="table table-striped mb-0 table-sm table-nowrap">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Contenedor</th>
+                                    <th scope="col">Peso Carga</th>
+                                </tr>
+                            </thead>
+                            <tbody id="carga"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ul class="nav nav-tabs ml-4" id="tab-principal" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true">Dashboard</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="mapa-tab" data-toggle="tab" href="#mapa" role="tab" aria-controls="mapa" aria-selected="false">Mapa</a>
+    </li>
+
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane active" id="dashboard" role="tabpanel" aria-labelledby="home-tab">
+        <div class="header bg-dark pb-5">
+            <div class="container-fluid">
+
+                <!-- Body -->
+
+                <div class="header-body">
+                    <div class="row align-items-end">
+                        <div class="col">
+
+                            <!-- Pretitle -->
+                            <h6 class="header-pretitle text-secondary">
+                                Vista Rapida
+                            </h6>
+
+                            <!-- Title -->
+                            <h1 class="header-title text-white">
+                                Contenedores Transportados
+                            </h1>
+
+                        </div>
+                        <div class="col-auto">
+
+                            <!-- Nav -->
+                            <!-- <ul class="nav nav-tabs header-tabs">
+                                <li class="nav-item" data-toggle="chart" data-target="#headerChart" data-update="{&quot;data&quot;:{&quot;datasets&quot;:[{&quot;data&quot;:[0,10,5,15,10,20,15,25,20,30,25,40]}]}}" data-prefix="$" data-suffix="k">
+                                    <a href="#" class="nav-link text-center active" data-toggle="tab">
+                                        <h6 class="header-pretitle text-secondary">
+                                            Earnings
+                                        </h6>
+                                        <h3 class="text-white mb-0">
+                                            $19.2k
+                                        </h3>
+                                    </a>
+                                </li>
+                                <li class="nav-item" data-toggle="chart" data-target="#headerChart" data-update="{&quot;data&quot;:{&quot;datasets&quot;:[{&quot;data&quot;:[50,75, 35,25,55,87,67,53,25,80,87,45]}]}}" data-prefix="" data-suffix="k">
+                                    <a href="#" class="nav-link text-center" data-toggle="tab">
+                                        <h6 class="header-pretitle text-secondary">
+                                            Sessions
+                                        </h6>
+                                        <h3 class="text-white mb-0">
+                                            92.1k
+                                        </h3>
+                                    </a>
+                                </li>
+                                <li class="nav-item" data-toggle="chart" data-target="#headerChart" data-update="{&quot;data&quot;:{&quot;datasets&quot;:[{&quot;data&quot;:[40,57,25,50,57,32,46,28,59,34,52,48]}]}}" data-prefix="" data-suffix="%">
+                                    <a href="#" class="nav-link text-center" data-toggle="tab">
+                                        <h6 class="header-pretitle text-secondary">
+                                            Bounce
+                                        </h6>
+                                        <h3 class="text-white mb-0">
+                                            50.2%
+                                        </h3>
+                                    </a>
+                                </li>
+                            </ul> -->
+
+                        </div>
+                    </div> <!-- / .row -->
+                </div> <!-- / .header-body -->
+                <!-- Footer -->
+                <div class="header-footer">
+
+                    <!-- Chart -->
+                    <!--<div class="chart">
+                        <canvas id="tContainers" class="chart-canvas"></canvas>
+                    </div>-->
+
+                </div>
+
+            </div>
+        </div>
+        <div class="container-fluid mt-n6">
+            <div class="row">
+                <div class="col-12 col-xl-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-header-title">Activos en Operación</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-responsive-sm table-nowrap table-sm ">
+
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Ruta</th>
+                                        <th scope="col">Taller</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Contenedores</th>
+                                        <td><span id="contenedoresRuta"></span></td>
+                                        <td><span id="contenedoresTaller"></span></td>
+                                        <td><span id="contenedoresTotal"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Carros</th>
+                                        <td><span id="carrosRuta"></span></td>
+                                        <td><span id="carrosTaller"></span></td>
+                                        <td><span id="carrosTotal"></span></td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card mt-5">
+                        <div class="card-header">
+                            <h4 class="card-header-title">Resumen Día Anterior</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-responsive-sm table-sm">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Carros</th>
+                                        <th>Contenedores</th>
+                                        <th>Cumplimiento</th>
+                                        <th>Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="saladilloOperaciones">
+                                        <th class="dark">Saladillo</th>
+                                        <td><span id="operacionSalCarros"></span></td>
+                                        <td><span id="operacionSalContenedores"></span></td>
+                                        <td><span id="cumplimientoSal"></span></td>
+                                        <td><span id="operacionSalFecha"></span></td>
+                                    </tr>
+                                    <tr id="ventanaOperaciones">
+                                        <th class="dark">Ventanas</th>
+                                        <td><span id="operacionVenCarros"></span></td>
+                                        <td><span id="operacionVenContenedores"></span></td>
+                                        <td><span id="cumplimientoVen"></span></td>
+                                        <td><span id="operacionVenFecha"></span></td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-12 col-xl-7">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-header-title">Ubicación Activos</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-responsive-sm table-nowrap table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col">Contenedor</th>
+                                        <th scope="col">Carro</th>
+                                        <th scope="col"></th>
+                                        <th scope="col">Contenedor</th>
+                                        <th scope="col">Carro</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Saladillo</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><span class="col1 salsal Contenedor"></span></td>
+                                        <td><span class="col1 salsal Carro"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><center><i class="fe fe-arrow-down-circle" style="color:lightgreen"></i></center></td>
+                                        <td><span class="col1 sallat Contenedor"></span></td>
+                                        <td><span class="col1 sallat Carro"></span></td>
+                                        <td><center><i class="fe fe-arrow-up-circle" style="color:pink"></center></td>
+                                        <td><span class="col2 latsal Contenedor"></span></td>
+                                        <td><span class="col2 latsal Carro"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Los Andes Transferencia</th>
+                                        <td></td>
+                                        <td><span class="col1 latlat Contenedor"></span></td>
+                                        <td><span class="col1 latlat Carro"></span></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><center><i class="fe fe-arrow-down-circle" style="color:lightgreen"></center></i></td>
+                                        <td><span class="col1 latlap Contenedor"></span></td>
+                                        <td><span class="col1 latlap Carro"></span></td>
+                                        <td><center><i class="fe fe-arrow-up-circle" style="color:pink"></center></td>
+                                        <td><span class="col2 laplat Contenedor"></span></td>
+                                        <td><span class="col2 laplat Carro"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Los Andes Ancho</th>
+                                        <td></td>
+                                        <td><span class="col1 laplap Contenedor"></span></td>
+                                        <td><span class="col1 laplap Carro"></span></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><center><i class="fe fe-arrow-down-circle" style="color:lightgreen"></i></center></td>
+                                        <td><span class="col1 lapven Contenedor"></span></td>
+                                        <td><span class="col1 lapven Carro"></span></td>
+                                        <td><center><i class="fe fe-arrow-up-circle" style="color:pink"></center></td>
+                                        <td><span class="col2 venlap Contenedor"></span></td>
+                                        <td><span class="col2 venlap Carro"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ventanas</th>
+                                        <td></td>
+                                        <td><span class="col1 venven Contenedor"></span></td>
+                                        <td><span class="col1 venven Carro"></span></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="tab-pane" id="mapa" role="tabpanel" aria-labelledby="profile-tab">
+        <div id="map" class="min-vh-100 min-vw-100 vh-100"></div>
+    </div>
+
+</div>
+
+
+
+@section Scripts {
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr63Y3sQ9WJJ9YmUCq3re8_Ss4zahYnGY"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.js"></script>
+    @Scripts.Render("~/chart-config")
+    @Scripts.Render("~/maps")
+}

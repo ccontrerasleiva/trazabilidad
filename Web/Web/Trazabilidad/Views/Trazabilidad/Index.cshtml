@@ -1,0 +1,602 @@
+﻿
+
+@{
+    ViewBag.Title = "Resumen Pesaje";
+    ViewBag.Header = "Resumen Pesaje";
+}
+
+
+@*<!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Index</title>
+        <link href="~/Content/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    </head>
+    <body>*@
+
+<style>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('../../Content/Img/ajax_loader.gif') 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+</style>
+
+
+
+<div id="carga"></div>
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-6">
+        <h2>@ViewBag.Header</h2>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("SignOutCallback", "Account" )">Inicio</a></li>
+            @*<li><a href="@Url.Action(" Index", "Home" )">Inicio</a></li>*@
+            <li class="active"><strong>Resumen Pesaje</strong></li>
+        </ol>
+    </div>
+</div>
+@*<style>
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('../../Content/Img/ajax_loader.gif') 50% 50% no-repeat rgb(249,249,249);
+            opacity: .8;
+        }
+
+
+        .card {
+            position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, .125);
+            border-radius: .25rem
+        }
+
+            .card > hr {
+                margin-right: 0;
+                margin-left: 0
+            }
+
+            .card > .list-group:first-child .list-group-item:first-child {
+                border-top-left-radius: .25rem;
+                border-top-right-radius: .25rem
+            }
+
+            .card > .list-group:last-child .list-group-item:last-child {
+                border-bottom-right-radius: .25rem;
+                border-bottom-left-radius: .25rem
+            }
+
+
+        .card-body {
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            padding: 1.25rem
+        }
+
+        .col,
+        .col-1,
+        .col-10,
+        .col-11,
+        .col-12,
+        .col-2,
+        .col-3,
+        .col-4,
+        .col-5,
+        .col-6,
+        .col-7,
+        .col-8,
+        .col-9,
+        .col-auto,
+        .col-lg,
+        .col-lg-1,
+        .col-lg-10,
+        .col-lg-11,
+        .col-lg-12,
+        .col-lg-2,
+        .col-lg-3,
+        .col-lg-4,
+        .col-lg-5,
+        .col-lg-6,
+        .col-lg-7,
+        .col-lg-8,
+        .col-lg-9,
+        .col-lg-auto,
+        .col-md,
+        .col-md-1,
+        .col-md-10,
+        .col-md-11,
+        .col-md-12,
+        .col-md-2,
+        .col-md-3,
+        .col-md-4,
+        .col-md-5,
+        .col-md-6,
+        .col-md-7,
+        .col-md-8,
+        .col-md-9,
+        .col-md-auto,
+        .col-sm,
+        .col-sm-1,
+        .col-sm-10,
+        .col-sm-11,
+        .col-sm-12,
+        .col-sm-2,
+        .col-sm-3,
+        .col-sm-4,
+        .col-sm-5,
+        .col-sm-6,
+        .col-sm-7,
+        .col-sm-8,
+        .col-sm-9,
+        .col-sm-auto,
+        .col-xl,
+        .col-xl-1,
+        .col-xl-10,
+        .col-xl-11,
+        .col-xl-12,
+        .col-xl-2,
+        .col-xl-3,
+        .col-xl-4,
+        .col-xl-5,
+        .col-xl-6,
+        .col-xl-7,
+        .col-xl-8,
+        .col-xl-9,
+        .col-xl-auto {
+            position: relative;
+            width: 100%;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px
+        }
+    </style>*@
+@*RESTO DE LA PAGINA*@
+
+
+@*<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content center">*@
+@*<h4 class="header-title">Historial de Contenedores</h4>*@
+<body>
+    <div class="container-fluid">
+        @*<div class="ibox float-e-margins">
+        <div class="ibox-content">*@
+        <br />
+        @*<div class="">*@
+        @*<div class="row">*@
+        @*<div class="col-sm-8">*@
+        @*<div class="table-responsive">
+        <div class="wrapper wrapper-content">*@
+
+        @*<div class="col-xs-2">
+            <div class="form-group">
+                <label>Patente:</label>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="form-group">
+                @Html.TextBox("Patente")
+            </div>
+        </div>*@
+
+        @*</div>
+        </div>*@
+        @*</div>
+        </div>*@
+        @*</div>*@
+        @*</div>*@
+
+        <div class="row">
+            @*<div class="col-sm-6">*@
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label>Fecha:</label>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.TextBox("dtmDate1")
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <input id="idBuscar" class="btn btn-primary" type="submit" value="Buscar" />
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <a id="ExportaExcell" class="btn btn-primary"><i class="fa fa-plus"></i>Exportar a Excel</a>
+                    <div id="excel">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @*</div>*@
+        @*</div>
+
+
+        </div>*@
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                @*<div class="table-responsive">
+                <div class="wrapper wrapper-content">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">*@
+
+                <table id="tblHojaActivo" class="table table-hover" border="1">
+                    <thead class="text-uppercase bg-light">
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                CV
+                            </th>
+                            <th>
+                                Fecha Registro
+                            </th>
+                            <th>
+                                Locomotora
+                            </th>
+                            <th>
+                                Ruta
+                            </th>
+                            <th>
+                                Guía
+                            </th>
+                            <th>
+                                Total Neto
+                            </th>
+                            <th>
+                                Total Bruto
+                            </th>
+                            <th>
+                                Total Tara
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            @*</div>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+
+        <link href="~/Scripts/jquery-ui.min.css" rel="stylesheet" />
+        <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
+        @section scripts{
+            
+            <script src="~/Scripts/jquery-ui.min.js"></script>
+
+            <script>
+                $("#ExportaExcell").hide();
+            $(function () {
+                //$(".datepicker").datepicker({
+                $("#dtmDate1").datepicker({
+
+                    dateFormat: "dd-mm-yy",
+                    changeMonth: true,
+                    changeYear: true,
+                    //yearRango: "2010,2020",
+                    //minDate: new Date(2017, 0, 1),
+                    //maxDate: new Date(2018, 0, 1),
+                    maxDate: 0,
+                    //showOn: "both",
+                    showOn: "button",
+                    buttonText: "<i class='fa fa-calendar'></i>",
+                    //buttonText: "Calendrier",
+                    firstDay: 1,
+                    monthNames: ['Enero', 'Febreo', 'Marzo',
+                        'Abril', 'Mayo', 'Junio',
+                        'Julio', 'Agosto', 'Septiembre',
+                        'Octubre', 'Noviembre', 'Diciembre'],
+                    dayNamesMin: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                        'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                });
+                $("#dtmDate1").datepicker().datepicker("setDate", "-7d");
+
+                $("#idBuscar").click(function () {
+                    var patente = $("#Patente").val();
+                    if (patente == "") {
+                        alert("Tiene que ingresar la patente. CDAXXX");
+                        return false;
+                    }
+                    var arrf1 = $("#dtmDate1").val().split("-");
+                    var a1 = arrf1[0];
+                    var a2 = arrf1[1];
+                    var a3 = arrf1[2];
+
+                    //var arrf2 = $("#dtmDate2").val().split("-");
+                    //var b1 = arrf2[0];
+                    //var b2 = arrf2[1];
+                    //var b3 = arrf2[2];
+
+                    var f1 = new Date(a3, a2 - 1, a1);
+                    //var f2 = new Date(b3, b2 - 1, b1);
+
+                    //if (f1 > f2) {
+                    //    alert("Fecha fuera de rango");
+                    //    return false;
+                    //}
+                    var fila = '';
+                    var v_id = 0;
+                    //$("#tblHojaActivo tbody").remove;
+                    //$("#tblHojaActivo tbody").dataTable().fnDestroy();
+                    $("#carga").addClass("loader");
+
+                    $("#tblHojaActivo > tbody").html(fila);
+                    
+                    //var aa = $("#dtmDate1").val();
+                 
+                    $.ajax({
+                        url: '@Url.Action(actionName: "GetCabeceraActivosList", controllerName: "Trazabilidad")',
+                        type: 'Post',
+                        data: { FechaConsulta:$("#dtmDate1").val() },
+                        cache: false,
+                        success: function (result) {
+                            //$('#modalUploading').modal('hide');
+                            //$("#divProcessing").hide();
+
+                            if (result.length == 0) {
+                                fila = fila + "<tr>" +
+                                    "<td colspan='9'> No hay datos que mostrar. </td >" +
+                                    "</tr>";
+                            }
+                            else {
+                                $.each(result, function (i, trip) {
+                                    fila = fila + "<tr>" +
+                                        "<td>" + trip.IdTrazabilidad + "</td >" +
+                                        "<td>" + trip.IdCV + "</td >" +
+
+                                    //"<td>" + trip.Locomotora_Patente + "</td>" +
+                                    "<td>" + trip.FechaRegistro + "</td>" +
+                                    "<td>" + trip.Locomotora + "</td>" +
+                                    "<td>" + trip.Ruta + "</td>" +
+                                    "<td align='right'>" + trip.NumeroGuia + "</td>" +
+                                    "<td align='right'>" + trip.PesoNeto + "</td>" +
+                                    "<td align='right'>" + trip.PesoBruto + "</td>" +
+                                    "<td align='right'>" + trip.PesoTara + "</td>";
+                                    fila = fila + "</tr>";
+                                    v_id = trip.IdTrazabilidad;
+                                    //alert(v_id + " Id");
+                                    fila = fila + "<tr>" +
+                                        "<td colspan='9' align='center'><div id='" + v_id + "'>" + v_id + "</div></td>" +
+                                        "</tr>"
+                                    /************/
+                                    var fila2 = '';
+                                    $.ajax({
+                                        url: '@Url.Action(actionName: "GetDetalleActivosList", controllerName: "Trazabilidad")',
+                                        type: 'Post',
+                                        data: { IdTraza: trip.IdTrazabilidad  },
+                                        cache: false,
+                                        success: function (resulta) {
+                                            fila2 = "";
+                                            fila2 = fila2 + "<table border='1' class='table table - bordered'  >";
+                                            fila2 = fila2 + "<thead class= 'text - uppercase bg - light'>";
+                                            fila2 = fila2 + "    <tr>";
+                                            fila2 = fila2 + "    " +
+                                            //fila2 = fila2 + "    <th>IdTrazabilidad</th>" +
+                                                        "      <th>Carro</th>" +
+                                                "       <th>Ubicación</th>" +
+                                                "       <th>Contenedor</th>" +
+                                                "       <th>Ubicación</th>" +
+                                                "       <th>Peso Neto</th>" +
+                                                "       <th>Peso Bruto</th>" +
+                                                "       <th>Peso Tara</th></tr>";
+                                            fila2 = fila2 + "</thead>";
+                                            fila2 = fila2 + "<tbody>";
+                                            //alert(result.length);
+                                           // alert(fila2);
+
+                                            $.each(resulta, function (i, tripdet) {
+                                                //alert(tripdet.IdTrazabilidadMovCarro);
+                                                fila2 = fila2 + "<tr>" +
+                                                    //"<td colspan='7'>Aqui va el detalle" + "</td >";
+                                                    //"<td >" + tripdet.IdTrazabilidad + "</td>" +
+                                                    "<td >" + tripdet.Carro_Patente + "</td>" +
+                                                    "<td>" + tripdet.Ubicacion_carro + "</td>" +
+                                                    "<td>" + tripdet.Contenedor_Patente + "</td>" +
+                                                    "<td>" + tripdet.Ubicacion_Contenedor + "</td>" +
+                                                    "<td align='right'>" + tripdet.PesoNeto + "</td>" +
+                                                    "<td align='right'>" + tripdet.PesoBruto + "</td>" +
+                                                    "<td align='right'>" + tripdet.PesoTara + "</td>";
+                                                fila2 = fila2 + "</tr>";
+                                            });
+                                            fila2 = fila2 + "</tbody></table>";
+                                            //alert(fila2);
+                                            //fila = fila + fila2;
+                                            //$(fila2).appendTo("#" + id);
+                                            //$("#" + v_id).html(fila2);
+                                            //document.getElementById("#" + v_id).innerHTML = "hola";
+                                            $("#" + trip.IdTrazabilidad).html(fila2);
+                                        }
+
+                                    });
+                                    //fila = fila + "<tr>" +
+                                    //    "<td colspan='7'>hola<td>" +
+                                    //    "</tr>";
+                                    //alert(fila2);
+
+                                    /**************/
+
+                            //alert(trip.Link);
+                                });
+                            }
+                            $(fila).appendTo("#tblHojaActivo tbody");
+                            $("#carga").removeClass("loader");
+                            $("#ExportaExcell").show();
+                        }
+                    });
+                    @*alert("paso");*@
+                });
+
+
+                $("#ExportaExcell").click(function (e) {
+
+                    //$(document).ready(function () {
+                    //    var strNewString = $('table.pvtTable').html().replace(/\ó/g, '---');
+                    //    $('table.pvtTable').html(strNewString);
+                    //});
+                    //alert($("#tblHojaActivo").html());
+                    var _html = "<table>" + $("#tblHojaActivo").html() + "</table>";
+                    _html = _html.replace(/\á/g, '&aacute;');
+                    _html = _html.replace(/\é/g, '&eacute;');
+                    _html = _html.replace(/\í/g, '&iacute;');
+                    _html = _html.replace(/\ó/g, '&oacute;');
+                    _html = _html.replace(/\ú/g, '&uacute;');
+                    _html = _html.replace(/\ñ/g, '&ntilde;');
+                    _html = _html.replace(/\Á/g, '&Aacute;');
+                    _html = _html.replace(/\É/g, '&Eacute;');
+                    _html = _html.replace(/\Í/g, '&Iacute;');
+                    _html = _html.replace(/\Ó/g, '&Oacute;');
+                    _html = _html.replace(/\Ú/g, '&Uacute;');
+                    _html = _html.replace(/\Ñ/g, '&Ntilde;');
+                    //                alert(_html);
+                    //_html = _html.replace("ó", "&oacute;");
+                    //_html = _html.replace('ó', '&oacute;');
+                    //_html = _html.replaceWith('ó', '&oacute;');
+
+                    //_html = "<table><tr><td>A</td><td>B</td></tr><tr><td>dos</td><td>uno</td></tr></table>";
+
+                    var parent = $("<div>").append(_html);
+                    parent.find("br").replaceWith('<br style="mso-data-placement:same-cell" />');
+                    html = parent.html();
+                    if (navigator.msSaveOrOpenBlob) {
+                        navigator.msSaveOrOpenBlob(new Blob([_html]), "ResumenTrazabilidad.xls");
+                    }
+
+                    // Non-IE.
+                    else {
+                        $("<a>", {
+                            download: "ResumenTrazabilidad.xls",
+                            href: "data:text/html," + encodeURIComponent(_html)
+                        })[0].click();
+                    }
+
+                    //window.open('data:application/vnd.ms-excel,' + encodeURIComponent("<table>" + _html + "</table>"));
+                    //e.preventDefault();
+                });
+            });
+            </script>
+
+
+
+
+        }
+
+    </div>
+</body>
+
+<script>
+    function sendToExcel(html) {
+        var parent = $("<div>").append(html);
+        parent.find("br").replaceWith('<br style="mso-data-placement:same-cell" />');
+        html = parent.html();
+
+        // IE?
+        // alert(html);
+        if (navigator.msSaveOrOpenBlob) {
+            navigator.msSaveOrOpenBlob(new Blob([html]), "ResumenTrazabilidad.xls");
+        }
+
+        // Non-IE.
+        else {
+            $("<a>", {
+                download: "ResumenTrazabilidad.xls",
+                href: "data:text/html," + encodeURIComponent(html)
+            })[0].click();
+        }
+    }
+
+    //$(function () {
+        //$("#ExportaExcell").click(function (e) {
+        //    sendToExcel("<table>" + $("table.pvtTable").html() + "</table>")
+        //    e.preventDefault();
+
+        //});
+        //$("#ExportaExcell").click(function (e) {
+
+        //    //$(document).ready(function () {
+        //    //    var strNewString = $('table.pvtTable').html().replace(/\ó/g, '---');
+        //    //    $('table.pvtTable').html(strNewString);
+        //    //});
+
+        //    var _html = "<table>" + $("table.pvtTable").html().toString() + "</table>";
+        //    _html = _html.replace(/\á/g, '&aacute;');
+        //    _html = _html.replace(/\é/g, '&eacute;');
+        //    _html = _html.replace(/\í/g, '&iacute;');
+        //    _html = _html.replace(/\ó/g, '&oacute;');
+        //    _html = _html.replace(/\ú/g, '&uacute;');
+        //    _html = _html.replace(/\ñ/g, '&ntilde;');
+        //    _html = _html.replace(/\Á/g, '&Aacute;');
+        //    _html = _html.replace(/\É/g, '&Eacute;');
+        //    _html = _html.replace(/\Í/g, '&Iacute;');
+        //    _html = _html.replace(/\Ó/g, '&Oacute;');
+        //    _html = _html.replace(/\Ú/g, '&Uacute;');
+        //    _html = _html.replace(/\Ñ/g, '&Ntilde;');
+        //    //                alert(_html);
+        //    //_html = _html.replace("ó", "&oacute;");
+        //    //_html = _html.replace('ó', '&oacute;');
+        //    //_html = _html.replaceWith('ó', '&oacute;');
+
+        //    //_html = "<table><tr><td>A</td><td>B</td></tr><tr><td>dos</td><td>uno</td></tr></table>";
+
+        //    var parent = $("<div>").append(_html);
+        //    parent.find("br").replaceWith('<br style="mso-data-placement:same-cell" />');
+        //    html = parent.html();
+        //    if (navigator.msSaveOrOpenBlob) {
+        //        navigator.msSaveOrOpenBlob(new Blob([_html]), "ResumenTrazabilidad.xls");
+        //    }
+
+        //    // Non-IE.
+        //    else {
+        //        $("<a>", {
+        //            download: "ResumenTrazabilidad.xls",
+        //            href: "data:text/html," + encodeURIComponent(_html)
+        //        })[0].click();
+        //    }
+
+        //    //window.open('data:application/vnd.ms-excel,' + encodeURIComponent("<table>" + _html + "</table>"));
+        //    //e.preventDefault();
+        //});
+    //});
+
+
+
+
+</script>

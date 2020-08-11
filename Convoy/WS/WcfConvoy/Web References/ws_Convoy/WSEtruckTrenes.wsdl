@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="SaladilloEtruckTrenes" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns1="SaladilloEtruckCamiones" xmlns:wsdlns="SaladilloEtruckTrenes" name="WSEtruckTrenes" targetNamespace="SaladilloEtruckTrenes" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" elementFormDefault="qualified" targetNamespace="SaladilloEtruckTrenes">
+      <xsd:import namespace="SaladilloEtruckCamiones" />
+      <xsd:complexType name="Respuesta">
+        <xsd:all>
+          <xsd:element name="SDTWSRespuestaFecha" nillable="true" type="xsd:date" />
+          <xsd:element name="SDTWSRespuestaHora" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="SDTWSRespuesta">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="SDTWSRespuestaItem" type="wsdlns:SDT_Respuesta.SDTWSRespuestaItem" />
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfSDT_Respuesta.SDTWSRespuestaItem">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="SDT_Respuesta.SDTWSRespuestaItem" type="wsdlns:SDT_Respuesta.SDTWSRespuestaItem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SDT_Respuesta.SDTWSRespuestaItem">
+        <xsd:all>
+          <xsd:element name="SDTWSRespuestaId" type="xsd:string" />
+          <xsd:element name="SDTWSRespuestaDescripcion" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:element name="WSEtruckTrenes.WS_REGISTRO_CONVOY">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Sdt_registro_convoy" type="tns1:Registro_Convoy" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="WSEtruckTrenes.WS_REGISTRO_CONVOYResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Sdt_respuesta" type="wsdlns:Respuesta" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="WSEtruckTrenes.WS_REGISTRO_SELLO">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Sdt_registro_sello" type="tns1:Registro_Sello" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="WSEtruckTrenes.WS_REGISTRO_SELLOResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Sdt_respuesta" type="wsdlns:Respuesta" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" elementFormDefault="qualified" targetNamespace="SaladilloEtruckCamiones">
+      <xsd:import namespace="SaladilloEtruckTrenes" />
+      <xsd:complexType name="Registro_Convoy">
+        <xsd:all>
+          <xsd:element name="CnvBseCod" type="xsd:short" />
+          <xsd:element name="CnvBasCod" type="xsd:short" />
+          <xsd:element name="CnvID" type="xsd:long" />
+          <xsd:element name="CnvObs" type="xsd:string" />
+          <xsd:element name="CnvCicPesCod" type="xsd:short" />
+          <xsd:element name="CnvChoID" type="xsd:long" />
+          <xsd:element name="CnvChoDV" type="xsd:string" />
+          <xsd:element name="CnvChoNom" type="xsd:string" />
+          <xsd:element name="PesCar">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="PesCarItem" type="tns1:SDT_Registro_Convoy.PesCarItem" />
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfSDT_Registro_Convoy.PesCarItem">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="SDT_Registro_Convoy.PesCarItem" type="tns1:SDT_Registro_Convoy.PesCarItem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SDT_Registro_Convoy.PesCarItem">
+        <xsd:all>
+          <xsd:element name="PesCarIde" type="xsd:string" />
+          <xsd:element name="PesCarDes" type="xsd:string" />
+          <xsd:element name="PesConId" type="xsd:long" />
+          <xsd:element name="PesConDes" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Registro_Sello">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="SDT_Registro_Sello.SDT_Registro_SelloItem" type="tns1:SDT_Registro_Sello.SDT_Registro_SelloItem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SDT_Registro_Sello.SDT_Registro_SelloItem">
+        <xsd:all>
+          <xsd:element name="PesCarIde" type="xsd:string" />
+          <xsd:element name="PesConId" type="xsd:long" />
+          <xsd:element name="PesConSelPor" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+    </xsd:schema>
+  </types>
+  <message name="WSEtruckTrenes.WS_REGISTRO_CONVOYSoapIn">
+    <part name="parameters" element="wsdlns:WSEtruckTrenes.WS_REGISTRO_CONVOY" />
+  </message>
+  <message name="WSEtruckTrenes.WS_REGISTRO_CONVOYSoapOut">
+    <part name="parameters" element="wsdlns:WSEtruckTrenes.WS_REGISTRO_CONVOYResponse" />
+  </message>
+  <message name="WSEtruckTrenes.WS_REGISTRO_SELLOSoapIn">
+    <part name="parameters" element="wsdlns:WSEtruckTrenes.WS_REGISTRO_SELLO" />
+  </message>
+  <message name="WSEtruckTrenes.WS_REGISTRO_SELLOSoapOut">
+    <part name="parameters" element="wsdlns:WSEtruckTrenes.WS_REGISTRO_SELLOResponse" />
+  </message>
+  <portType name="WSEtruckTrenesSoapPort">
+    <operation name="WS_REGISTRO_CONVOY">
+      <input message="wsdlns:WSEtruckTrenes.WS_REGISTRO_CONVOYSoapIn" />
+      <output message="wsdlns:WSEtruckTrenes.WS_REGISTRO_CONVOYSoapOut" />
+    </operation>
+    <operation name="WS_REGISTRO_SELLO">
+      <input message="wsdlns:WSEtruckTrenes.WS_REGISTRO_SELLOSoapIn" />
+      <output message="wsdlns:WSEtruckTrenes.WS_REGISTRO_SELLOSoapOut" />
+    </operation>
+  </portType>
+  <binding name="WSEtruckTrenesSoapBinding" type="wsdlns:WSEtruckTrenesSoapPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="WS_REGISTRO_CONVOY">
+      <soap:operation soapAction="SaladilloEtruckTrenesaction/AWSETRUCKTRENES.WS_REGISTRO_CONVOY" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="WS_REGISTRO_SELLO">
+      <soap:operation soapAction="SaladilloEtruckTrenesaction/AWSETRUCKTRENES.WS_REGISTRO_SELLO" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="WSEtruckTrenes">
+    <port name="WSEtruckTrenesSoapPort" binding="wsdlns:WSEtruckTrenesSoapBinding">
+      <soap:address location="http://10.95.13.80/Fepasa_precision/awsetrucktrenes.aspx" />
+    </port>
+  </service>
+</definitions>

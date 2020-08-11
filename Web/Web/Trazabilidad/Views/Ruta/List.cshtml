@@ -1,0 +1,97 @@
+﻿@model IEnumerable<ViewModels.Models.Ruta>
+@using Resources.Strings;
+@{
+    ViewBag.Header = string.Format(UI.Listing, Models.Ruta);
+}
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-8">
+        <h2>@Models.Ruta</h2>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index", "Home")">@UI.Home</a></li>
+            <li class="active"><strong>@Models.Ruta</strong></li>
+        </ol>
+    </div>
+    <div class="col-sm-4">
+        <div class="title-action">
+            <a data-toggle="modal" href="#modal-create" class="btn btn-primary"><i class="fa fa-plus"></i>Nuevo Ruta</a>
+        </div>
+    </div>
+</div>
+
+@*RESTO DE LA PAGINA*@
+<div class="wrapper wrapper-content">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Ruta Vigentes: @Model.Count()</h5>
+            </div>
+            <div class="ibox-content">
+
+                <table class="table" id="summary">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Habilitado</th>
+                            <th>Descripcion</th>
+                            <th>Sigla Codelco</th>
+                            <th>Longitud</th>
+                            <th>Latitud</th>
+                            <th>Fecha Hora Inicio</th>
+                            <th>Fecha Hora Termino</th>
+                            <th>Nombre</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var Ruta in Model)
+                            {
+                                @Html.Partial("Partial/_Ruta", Ruta)
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL*@
+@Html.Partial("Partial/_Create", new ViewModels.Models.Ruta())
+
+@section Scripts {
+    @*<script src="~/Scripts/bootstrap-datepicker.js"></script>*@
+    <script src="~/Scripts/modal.comun.js"></script>
+    <script type="text/javascript" src="~/Scripts/Custom/datePicker.js"></script>
+    @*<script src="~/Scripts/ValidacionRuta.js"></script>*@
+    @*<script src="~/Scripts/chosen.jquery.js"></script>
+        <script>
+            $('.chosen-select').chosen({ width: "100%" });
+        </script>
+        <script src="~/Scripts/lists.js"></script>
+        @Scripts.Render("~/bundles/DTList")*@
+}
+
+@*@section Styles{
+        <link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/Content/bootstrap-chosen.css" />
+    }*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

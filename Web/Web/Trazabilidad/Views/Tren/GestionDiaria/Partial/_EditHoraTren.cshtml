@@ -1,0 +1,36 @@
+﻿@model ViewModels.Models.Tren
+
+                    @using (Html.BeginForm(nameof(Trazabilidad.Controllers.TrenController.EditHoraTren), nameof(Resources.Strings.Models.Tren), FormMethod.Post, htmlAttributes: new { @id = "modal-element-edit" }))
+                    {
+                        @Html.HiddenFor(x => x.Id)
+
+                        <div class="col-sm-12">
+                            <h3 class="m-t-none m-b">Reprogramar Hora de Tren</h3>
+
+                            <h2 class="m-t-none m-b">Si usted reprograma la hora de salida de un tren, deberá
+                            reasignar nuevamente los tripulantes a dicho Tren, y las actividades asociadas a la jornada de aquellos tripulantes.</h2>
+
+                            <form role="form">
+                                <div class="form-group">
+                                    @Html.LabelFor(tt => tt.HoraInicio, "Hora de inicio")
+                                    @Html.TextBoxFor(model => model.HoraInicio, htmlAttributes: new {  disabled = "disabled" })
+                                    @Html.LabelFor(tt => tt.HoraFin, "Hora de Fin")
+                                    @Html.TextBoxFor(model => model.HoraFin, htmlAttributes: new {disabled = "disabled" })
+
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(tt => tt.HoraInicioReprogramada, "Hora de inicio a reprogramar")
+                                    @Html.TextBoxFor(model => model.HoraInicio, htmlAttributes: new { @class = "form-control", Type = "DateTime" })
+                                    @Html.LabelFor(tt => tt.HoraFinalReprogramada, "Hora de Fin a reprogramar")
+                                    @Html.TextBoxFor(model => model.HoraFin, htmlAttributes: new { @class = "form-control", Type = "DateTime" })
+
+                                </div>
+
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+                                </div>
+                            </form>
+                        </div>
+                    }
+  

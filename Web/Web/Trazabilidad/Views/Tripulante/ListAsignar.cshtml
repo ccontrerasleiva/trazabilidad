@@ -1,0 +1,74 @@
+﻿
+@*@model IEnumerable<ViewModels.Models.Tripulante>*@
+@{
+    ViewBag.Title = "Asignacion";
+    ViewBag.Header = "Asignar Tripulante";
+}
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-8">
+        <h2>@ViewBag.Header</h2>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index", "Home")">Inicio</a></li>
+            <li class="active"><strong>Asignar Tripulante</strong></li>
+        </ol>
+    </div>
+    <div class="col-sm-4">
+        @*<div class="title-action">
+                <a data-toggle="modal" href="#modal-create" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo </a>
+            </div>*@
+    </div>
+</div>
+
+@*RESTO DE LA PAGINA*@
+<div class="wrapper wrapper-content">
+
+    <div class="ibox float-e-margins">
+        @*<select class="chosen-select form-control" id="Estaciones">
+            <option value="0" selected>Seleccione un base a filtrar</option>
+            <option value="1">Alameda</option>
+            <option value="2">Rancagua</option>
+        </select>*@
+
+
+@model ViewModels.Models.Tripulante
+       
+            @using (Html.BeginForm(nameof(Trazabilidad.Controllers.TripulanteController.Create), nameof(Resources.Strings.Models.Tripulante), FormMethod.Post, htmlAttributes: new { @id = "modal-element-create" }))
+        {
+            <div class="col-sm-12">
+                <h3 class="m-t-none m-b">Asignacion</h3>
+
+                <form role="form">
+                    <div class="form-group">
+                        @Html.LabelFor(tt => tt.Tripulante_Persona.Nombre, "Nombre")
+                        @Html.DropDownListFor(model => model.Id_Tripulante_Persona, (SelectList)ViewBag.Persona, "Seleccione un Tripulante", htmlAttributes: new { @class = "form-control chosen-select" })
+                        @Html.ValidationMessageFor(x => x.Id_Tripulante_Persona, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(tt => tt.Tren_Locomotora.Tren.Tren_Concatenado, "Tren")
+                        @Html.DropDownListFor(model => model.Tren_Locomotora.Id_Tren, (SelectList)ViewBag.Trenes, "Seleccione un Tren", htmlAttributes: new { @class = "form-control chosen-select" })
+                        @Html.ValidationMessageFor(x => x.Tren_Locomotora.Id_Tren, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(tt => tt.origen, "Origen")
+                        @Html.DropDownListFor(model => model.Id_Origen, (SelectList)ViewBag.Stations, "Seleccione un origen", htmlAttributes: new { @class = "form-control chosen-select" })
+                        @Html.ValidationMessageFor(x => x.Id_Origen, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(tt => tt.destino, "Destino")
+                        @Html.DropDownListFor(model => model.Id_Destino, (SelectList)ViewBag.Stations, "Seleccione un destino", htmlAttributes: new { @class = "form-control chosen-select" })
+                        @Html.ValidationMessageFor(x => x.Id_Destino, null, new { @class = "text-danger" })
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+                    </div>
+                </form>
+            </div>
+    }
+        </div>
+
+    </div>
+
+@*MODAL*@
+@Html.Partial("Partial/_Create", new ViewModels.Models.Tripulante())

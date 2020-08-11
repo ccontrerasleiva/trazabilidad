@@ -1,0 +1,45 @@
+﻿@model ViewModels.Models.Carro
+@using Trazabilidad.Controllers;
+@using Resources.Strings;
+
+@using (Html.BeginForm(nameof(Trazabilidad.Controllers.CarroController.Edit), nameof(Resources.Strings.Models.Carro), FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+                                                                                                                                                                                                                                                                                                    
+    <div class="col-sm-12">
+        <h3 class="m-t-none m-b">Editar Carro</h3>
+
+        <form role="form">
+
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Descripcion, "Descripcion")
+                @Html.TextBoxFor(model => model.Descripcion, htmlAttributes: new { @class = "form-control " })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(pp => pp.Patente, "Patente")
+                @Html.TextBoxFor(model => model.Patente, htmlAttributes: new { @class = "form-control " })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Id, "Estado")
+                @*@Html.DropDownListFor(model => model.Id_Base, (SelectList)ViewBag.estacion, "Seleccione un origen", htmlAttributes: new { @class = "form-control chosen-select", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(x => x.Id_Base, null, new { @class = "text-danger" })*@
+            </div>
+
+            <div class="form-group">
+                <div class="form-group">
+                    @Html.RadioButtonFor(m => m.Deshabilitado, false, htmlAttributes: new { id = "Habilitado" }) @Html.Label("Habilitado", "Habilitado")
+                    @Html.RadioButtonFor(m => m.Deshabilitado, true, htmlAttributes: new { id = "Deshabilitado" }) @Html.Label("Deshabilitado", "Deshabilitado")
+                    @Html.ValidationMessageFor(x => x.Deshabilitado, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div>
+                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+            </div>
+        </form>
+    </div>
+}
+
+
+
+

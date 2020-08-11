@@ -1,0 +1,41 @@
+﻿@model ViewModels.Models.Tripulante
+
+<div id="modal-create" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    @using (Html.BeginForm(nameof(Trazabilidad.Controllers.TripulanteController.ListActividades), nameof(Resources.Strings.Models.Tripulante), FormMethod.Post, htmlAttributes: new { @id = "modal-element-create" }))
+                    {
+                        
+                        <div class="col-sm-12">
+                            <h3 class="m-t-none m-b">tripulante</h3>
+
+                                <form role="form">
+                                <div class="form-group">
+                                    @Html.LabelFor(cl => cl.Tripulante_Persona.Nombre, "Tripulante")
+                                    @Html.DropDownListFor(cl => cl.Id_Tripulante_Persona, (SelectList)ViewBag.Persona, "Seleccione una tripulante", htmlAttributes: new { @class = "form-control chosen-select" })
+                                </div>
+                               
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Buscar</strong></button>
+                                </div>
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div id="modal-new" class="modal fade" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row" id="travelTimeEdit">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@

@@ -1,0 +1,16 @@
+﻿@model ViewModels.Models.Estacion
+
+@using (Html.BeginForm(nameof(Trazabilidad.Controllers.EstacionController.Delete), nameof(Resources.Strings.Models.Estacion), FormMethod.Post, htmlAttributes: new { @id = "modal-element-delete" }))
+{
+        @Html.HiddenFor(x => x.Id)
+
+        <div class="col-sm-12">
+            <h3 class="m-t-none m-b">Eliminar Estación</h3>
+            <form role="form">
+                <h4 class="m-t-none m-b">¿Desea eliminar la estación  ?</h4>
+                <div>
+                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Eliminar</strong></button>
+                </div>
+            </form>
+        </div>
+    }

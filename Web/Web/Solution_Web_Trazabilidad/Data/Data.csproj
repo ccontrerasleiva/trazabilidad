@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E8E65950-EB4C-4A73-895A-F2D323A5B158}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Data</RootNamespace>
+    <AssemblyName>Data</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\Conductor.cs" />
+    <Compile Include="Entities\Contenedor.cs" />
+    <Compile Include="Entities\Statu.cs" />
+    <Compile Include="Entities\TrazabilidadMovCarro.cs" />
+    <Compile Include="Entities\TrazabilidadMovLocomotora.cs" />
+    <Compile Include="Entities\Trazabilidad.cs" />
+    <Compile Include="Entities\Tag.cs" />
+    <Compile Include="Entities\Carro.cs" />
+    <Compile Include="Entities\Cliente.cs" />
+    <Compile Include="Entities\Locomotora.cs" />
+    <Compile Include="Entities\Ruta.cs" />
+    <Compile Include="Entities\UserTokenCache.cs" />
+    <Compile Include="Extensions\BaseEntity.cs" />
+    <Compile Include="Extensions\BaseRepository.cs" />
+    <Compile Include="Extensions\TypeConfigurationExtensions.cs" />
+    <Compile Include="Extensions\Interfaces\IBaseRepository.cs" />
+    <Compile Include="Interfaces\IConductorRepository.cs" />
+    <Compile Include="Interfaces\IRutaRepository.cs" />
+    <Compile Include="Interfaces\IContenedorRepository.cs" />
+    <Compile Include="Interfaces\ITrazabilidadMovCarro.cs" />
+    <Compile Include="Interfaces\ITrazabilidadMovLocomotora.cs" />
+    <Compile Include="Interfaces\ITrazabilidad.cs" />
+    <Compile Include="Interfaces\Statu.cs" />
+    <Compile Include="Interfaces\ITag.cs" />
+    <Compile Include="Interfaces\ICarroRepository.cs" />
+    <Compile Include="Interfaces\IClienteRepository.cs" />
+    <Compile Include="Interfaces\ILocomotoraRepository.cs" />
+    <Compile Include="Migrations\201807301609262_aa.cs" />
+    <Compile Include="Migrations\201807301609262_aa.Designer.cs">
+      <DependentUpon>201807301609262_aa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807301612525_bb.cs" />
+    <Compile Include="Migrations\201807301612525_bb.Designer.cs">
+      <DependentUpon>201807301612525_bb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807311421597_dd.cs" />
+    <Compile Include="Migrations\201807311421597_dd.Designer.cs">
+      <DependentUpon>201807311421597_dd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807311602192_ee.cs" />
+    <Compile Include="Migrations\201807311602192_ee.Designer.cs">
+      <DependentUpon>201807311602192_ee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProyectoGestionContext.cs" />
+    <Compile Include="Repositories\ConductorRepository.cs" />
+    <Compile Include="Repositories\LocomotoraRepository.cs" />
+    <Compile Include="Repositories\RutaRepository.cs" />
+    <Compile Include="Repositories\ClienteRepository.cs" />
+    <Compile Include="Repositories\ContenedorRepository.cs" />
+    <Compile Include="Repositories\StatuRepository.cs" />
+    <Compile Include="Repositories\TrazabilidadMovCarroRepository.cs" />
+    <Compile Include="Repositories\TrazabilidadMovLocomotoraRepository.cs" />
+    <Compile Include="Repositories\TrazabilidadRepository.cs" />
+    <Compile Include="Repositories\TagRepository.cs" />
+    <Compile Include="Repositories\CarroRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{ca9054d5-6433-4fc6-bf6c-18d6f4f4b00d}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201807301609262_aa.resx">
+      <DependentUpon>201807301609262_aa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807301612525_bb.resx">
+      <DependentUpon>201807301612525_bb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807311421597_dd.resx">
+      <DependentUpon>201807311421597_dd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807311602192_ee.resx">
+      <DependentUpon>201807311602192_ee.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

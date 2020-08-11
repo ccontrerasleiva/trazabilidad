@@ -1,0 +1,49 @@
+﻿@model ViewModels.Models.Ruta
+
+<div id="modal-create" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    @using (Html.BeginForm(nameof(Trazabilidad.Controllers.RutaController.Create), nameof(Resources.Strings.Models.Ruta), FormMethod.Post, htmlAttributes: new { @id = "modal-element-create" }))
+                    {
+                        <div class="col-sm-12">
+                            <h3 class="m-t-none m-b">Ingresar nuevo Ruta</h3>
+
+                            <form role="form">
+
+                                <div class="form-group">
+                                    @Html.LabelFor(x => x.Descripcion, "Descripción")
+                                    @Html.TextBoxFor(x => x.Descripcion, htmlAttributes: new { @class = "form-control", placeholder = "Descripción" })
+                                    @Html.ValidationMessageFor(x => x.Descripcion)
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Fecha Hora Inicio</label>
+                                    <div class="input-daterange input-group" id="datepicker">
+                                        @Html.TextBoxFor(mo => mo.FechaHoraInicio, format: "{0:dd-MM-yyyy}", htmlAttributes: new { required = "required", @class = "form-control", @type = "date", @value = @DateTime.Now.ToString("yyyy-MM") })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Fecha Hora Termino</label>
+                                    @*<div class="input-daterange input-group">*@
+                                    <div class="input-daterange input-group">
+                                        @*@Html.EditorFor(model => model.FechaHoraTermino, new { htmlAttributes = new { @class = "form-control datetimepicker2" } })*@
+                                        @Html.TextBoxFor(model => model.FechaHoraTermino, htmlAttributes: new { format = "{0:dd/MM/yyyy HH:mm:ss", @class = "form-control datetimepicker2", @value = DateTime.Now.ToString("0:dd/MM/yyyy HH:mm:ss") } )
+                                        @*@Html.TextBoxFor(mo => mo.FechaHoraTermino, htmlAttributes: new { required = "required", @class = "form-control", @type = "date", @value = @DateTime.Now.ToString("yyyy-MM") })*@
+                                    </div>
+                                </div>
+
+
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+                                </div>
+
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

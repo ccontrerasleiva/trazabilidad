@@ -1,0 +1,95 @@
+﻿
+
+@model ViewModels.Models.Tren
+<div class="accordion">
+
+    @switch (Model.Estado)
+    {
+
+        case (int)ViewModels.Enum.EstadoTren.Programado:
+            {
+                <span class="label label-default">@Resources.Strings.UI.Programado</span>
+                break;
+            }
+        case (int)ViewModels.Enum.EstadoTren.Confirmado:
+            {
+                <span class="label label-info">@Resources.Strings.UI.Confirmado</span>
+                break;
+            }
+        case (int)ViewModels.Enum.EstadoTren.Autorizado:
+            {
+                <span class="label label-success">@Resources.Strings.UI.Autorizado</span>
+                break;
+            }
+        case (int)ViewModels.Enum.EstadoTren.ATiempo:
+            {
+                <span class="label label-primary">@Resources.Strings.UI.ATiempo</span>
+                break;
+            }
+        case (int)ViewModels.Enum.EstadoTren.Incumpliendo:
+            {
+                <span class="label label-warning">@Resources.Strings.UI.Incumpliendo</span>
+                break;
+            }
+        case (int)ViewModels.Enum.EstadoTren.Atrasado:
+            {
+                <span class="label label-danger">@Resources.Strings.UI.Atrasado</span>
+                break;
+            }
+        case (int)ViewModels.Enum.EstadoTren.Finalizado:
+            {
+                <span class="label label-white">@Resources.Strings.UI.Finalizado</span>
+                break;
+            }
+
+    }
+    @Model.Tren_Concatenado
+
+</div>
+
+
+<div class="panel">
+
+    @*<table class="table">
+        <thead>
+            <tr>
+                <th>estado</th>
+                <th>Tren</th>
+                <th>Tiempo</th>
+
+            </tr>
+        </thead>
+        <tbody>*@
+
+    @if (Model.Tren_Tramos != null)
+    {
+
+        foreach (var trentramo in Model.Tren_Tramos)
+        {
+            @*@Html.Partial("Partial/_Trentramo", trentramo)*@
+
+
+
+
+    <div>
+
+        <h4>Tren: @Model.Tren_Concatenado &nbsp&nbsp tiempo de viaje: @trentramo.Tiempo_Acumulado &nbsp&nbsp Origen: @trentramo.Origen.Nombre &nbsp&nbsp Destino: @trentramo.Destino.Nombre</h4>
+        
+
+
+    </div>
+            @*<div>tiempo de viaje @trentramo.Tiempo_Acumulado</div>
+
+            <div>origen @trentramo.</div>
+                <div>destino  @trentramo.Destino.Nombre</div>*@
+
+
+        }
+    }
+
+    @*</tbody>
+        </table>*@
+
+
+</div>
+

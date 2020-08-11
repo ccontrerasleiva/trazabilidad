@@ -1,0 +1,465 @@
+﻿
+
+@{
+    ViewBag.Title = "Historial de Contenedores";
+    ViewBag.Header = "Informe de Contenedores";
+}
+
+<style>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('../../Content/Img/ajax_loader.gif') 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+</style>
+
+<div id="carga"></div>
+
+@*<!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Index</title>
+        <link href="~/Content/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    </head>
+    <body>*@
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-8">
+        <h2>@ViewBag.Header</h2>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("SignOutCallback", "Account" )">Inicio</a></li>
+            @*<li><a href="@Url.Action(" Index", "Home" )">Inicio</a></li>*@
+            <li class="active"><strong>Historial Contenedores</strong></li>
+        </ol>
+    </div>
+</div>
+<style>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('../../Content/Img/ajax_loader.gif') 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+
+    .card {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, .125);
+        border-radius: .25rem
+    }
+
+        .card > hr {
+            margin-right: 0;
+            margin-left: 0
+        }
+
+        .card > .list-group:first-child .list-group-item:first-child {
+            border-top-left-radius: .25rem;
+            border-top-right-radius: .25rem
+        }
+
+        .card > .list-group:last-child .list-group-item:last-child {
+            border-bottom-right-radius: .25rem;
+            border-bottom-left-radius: .25rem
+        }
+
+
+    .card-body {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1.25rem
+    }
+
+    .col,
+    .col-1,
+    .col-10,
+    .col-11,
+    .col-12,
+    .col-2,
+    .col-3,
+    .col-4,
+    .col-5,
+    .col-6,
+    .col-7,
+    .col-8,
+    .col-9,
+    .col-auto,
+    .col-lg,
+    .col-lg-1,
+    .col-lg-10,
+    .col-lg-11,
+    .col-lg-12,
+    .col-lg-2,
+    .col-lg-3,
+    .col-lg-4,
+    .col-lg-5,
+    .col-lg-6,
+    .col-lg-7,
+    .col-lg-8,
+    .col-lg-9,
+    .col-lg-auto,
+    .col-md,
+    .col-md-1,
+    .col-md-10,
+    .col-md-11,
+    .col-md-12,
+    .col-md-2,
+    .col-md-3,
+    .col-md-4,
+    .col-md-5,
+    .col-md-6,
+    .col-md-7,
+    .col-md-8,
+    .col-md-9,
+    .col-md-auto,
+    .col-sm,
+    .col-sm-1,
+    .col-sm-10,
+    .col-sm-11,
+    .col-sm-12,
+    .col-sm-2,
+    .col-sm-3,
+    .col-sm-4,
+    .col-sm-5,
+    .col-sm-6,
+    .col-sm-7,
+    .col-sm-8,
+    .col-sm-9,
+    .col-sm-auto,
+    .col-xl,
+    .col-xl-1,
+    .col-xl-10,
+    .col-xl-11,
+    .col-xl-12,
+    .col-xl-2,
+    .col-xl-3,
+    .col-xl-4,
+    .col-xl-5,
+    .col-xl-6,
+    .col-xl-7,
+    .col-xl-8,
+    .col-xl-9,
+    .col-xl-auto {
+        position: relative;
+        width: 100%;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px
+    }
+</style>
+@*RESTO DE LA PAGINA*@
+
+
+@*<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content center">*@
+@*<h4 class="header-title">Historial de Contenedores</h4>*@
+<div class="container">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content col-sm-8">
+            <br />
+            <div class="">
+                <div class="row">
+                    @*<div class="col-sm-8">*@
+                    @*<div class="table-responsive">
+                        <div class="wrapper wrapper-content">*@
+
+                    <div class="col-xs-2">
+                        <div class="form-group">
+                            <label>Patente:</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group">
+                            @Html.TextBox("Patente")
+                        </div>
+                    </div>
+
+                    @*</div>
+                        </div>*@
+                    @*</div>
+                        </div>*@
+                    @*</div>*@
+                </div>
+
+                <div class="row">
+                    @*<div class="col-sm-8">*@
+                    <div class="col-xs-2">
+                        <div class="form-group">
+                            <label>Desde:</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group">
+                            @Html.TextBox("dtmDate1")
+                        </div>
+                    </div>
+
+
+                    <div class="col-xs-2">
+                        <div class="form-group">
+                            <label>Hasta:</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group">
+                            @Html.TextBox("dtmDate2")
+                        </div>
+                    </div>
+
+                    @*</div>*@
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-1 col-lg-offset-4">
+                        <input id="idBuscar" class="btn btn-primary" type="submit" value="Buscar" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<table border="1">
+                <tbody>
+                    <tr>
+                        <td>
+                            <p>
+                                Patente :
+                            </p>
+                        </td>
+                        <td colspan="3">
+                            <p>
+                                @Html.TextBox("Patente")
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Desde:</p>
+                        </td>
+                        <td>
+                            <p>@Html.TextBox("dtmDate1")</p>
+                        </td>
+                        <td><p>Hasta:</p></td>
+                        <td><p>@Html.TextBox("dtmDate2")</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" align="center">
+                            <p>
+                                <input id="idBuscar" class="btn btn-primary" type="submit" value="Buscar" />
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>*@
+        @*</div>
+                </div>
+            </div>*@
+
+    </div>
+
+
+
+    <div class="row">
+        @*<div class="col-sm-1">
+                <div class="form-group">
+
+                </div>
+            </div>*@
+        <div class="col-sm-8">
+            <div class="table-responsive">
+                <div class="wrapper wrapper-content">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+
+                            <table id="tblHojaActivo" class="table">
+                                <thead class="text-uppercase bg-light">
+                                    <tr>
+                                        <th>
+                                            Id
+                                        </th>
+                                        <th>
+                                            Ubicación
+                                        </th>
+                                        <th>
+                                            Fecha Lectura
+                                        </th>
+                                        <th>
+                                            Patente
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        @*<div class="col-sm-2">
+                <div class="form-group">
+
+                </div>
+            </div>*@
+    </div>
+
+
+
+
+
+
+    <link href="~/Scripts/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
+    @section scripts{
+
+        <script src="~/Scripts/jquery-ui.min.js"></script>
+
+        <script>
+            $(function () {
+                //$(".datepicker").datepicker({
+                $("#dtmDate1").datepicker({
+
+                    dateFormat: "dd-mm-yy",
+                    changeMonth: true,
+                    changeYear: true,
+                    //yearRango: "2010,2020",
+                    //minDate: new Date(2017, 0, 1),
+                    //maxDate: new Date(2018, 0, 1),
+                    maxDate: 0,
+                    //showOn: "both",
+                    showOn: "button",
+                    buttonText: "<i class='fa fa-calendar'></i>",
+                    //buttonText: "Calendrier",
+                    firstDay: 1,
+                    monthNames: ['Enero', 'Febreo', 'Marzo',
+                        'Abril', 'Mayo', 'Junio',
+                        'Julio', 'Agosto', 'Septiembre',
+                        'Octubre', 'Noviembre', 'Diciembre'],
+                    dayNamesMin: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                        'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                });
+                $("#dtmDate1").datepicker().datepicker("setDate", "-7d");
+
+
+
+                $("#dtmDate2").datepicker({
+                    dateFormat: "dd-mm-yy",
+                    changeMonth: true,
+                    changeYear: true,
+                    //yearRango: "2010,2020",
+                    //minDate: new Date(2017, 0, 1),
+                    //maxDate: new Date(2018, 0, 1),
+                    maxDate: 0,
+                    //showOn: "both",
+                    showOn: "button",
+                    buttonText: "<i class='fa fa-calendar'></i>",
+                    //buttonText: "Calendrier",
+                    firstDay: 1,
+                    monthNames: ['Enero', 'Febreo', 'Marzo',
+                        'Abril', 'Mayo', 'Junio',
+                        'Julio', 'Agosto', 'Septiembre',
+                        'Octubre', 'Noviembre', 'Diciembre'],
+                    dayNamesMin: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                        'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                });
+                $("#dtmDate2").datepicker().datepicker("setDate", new Date());
+
+
+                $("#idBuscar").click(function () {
+                    var patente = $("#Patente").val();
+                    if (patente == "") {
+                        alert("Tiene que ingresar la patente. CDAXXX");
+                        return false;
+                    }
+                    var arrf1 = $("#dtmDate1").val().split("-");
+                    var a1 = arrf1[0];
+                    var a2 = arrf1[1];
+                    var a3 = arrf1[2];
+
+                    var arrf2 = $("#dtmDate2").val().split("-");
+                    var b1 = arrf2[0];
+                    var b2 = arrf2[1];
+                    var b3 = arrf2[2];
+
+                    var f1 = new Date(a3, a2 - 1, a1);
+                    var f2 = new Date(b3, b2 - 1, b1);
+
+                    if (f1 > f2) {
+                        alert("Fecha fuera de rango");
+                        return false;
+                    }
+                    $("#carga").addClass("loader");
+                    var fila = '';
+                    //$("#tblHojaActivo tbody").remove;
+                    //$("#tblHojaActivo tbody").dataTable().fnDestroy();
+
+                    $("#tblHojaActivo > tbody").html(fila);
+
+                    $.ajax({
+                        url: '@Url.Action(actionName: "GetActivosList", controllerName: "HistorialActivo")',
+                        type: 'Post',
+                        data: { FechaDesde: $("#dtmDate1").val(), FechaHasta: $("#dtmDate2").val(), Patente: patente},
+                        cache: false,
+                        success: function (result) {
+                            //$('#modalUploading').modal('hide');
+                            //$("#divProcessing").hide();
+
+                            if (result.length == 0) {
+                                fila = fila + "<tr>" +
+                                    "<td> No hay datos que mostrar. </td >" +
+                                    "</tr>";
+                            }
+                            else {
+                                $.each(result, function (i, trip) {
+                                fila = fila + "<tr>" +
+                                    "<td>" + trip.Id + "</td >" +
+                                    "<td>" + trip.Ubicacion + "</td>" +
+                                    "<td>" + trip.FechaLectura + "</td>" +
+                                    "<td>" + trip.Patente + "</td>";
+
+                                fila = fila + "</tr>";
+                            //alert(trip.Link);
+                                });
+                            }
+                            $(fila).appendTo("#tblHojaActivo tbody");
+                        }
+                    });
+                    $("#carga").removeClass("loader");
+                    @*alert("paso");*@
+                });
+            });
+        </script>
+
+
+
+
+    }

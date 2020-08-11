@@ -1,0 +1,73 @@
+﻿@model ViewModels.Models.Itinerario
+@using Trazabilidad.Controllers;
+@using Resources.Strings;
+<tr>
+    @if (@Model.Id > 0)
+    {
+        <td>@Model.Id.ToString() - @Model.Descripcion</td>
+        @*<td>@Model.Id_Servicio</td>*@
+        <td>@Model.Fecha_Inicio_Vigencia.ToString("MMMM yyyy") - @Model.Fecha_Fin_Vigencia.ToString("MMMM yyyy")</td>
+        <td>@Model.Frequency</td>
+
+        if (@Model.Deshabilitado == false)
+        {
+            <td>Habilitado</td>}
+        else
+        {
+            <td>Deshabilitado</td>}
+
+        <td>
+            @*<td><a href="@Url.Action("Index","Itinerario", routeValues: new { id = Model.Id })"><i class="fa fa-search text-default"></i></a></td>*@
+            @*@</tr>*@
+            <div class="input-group">
+                <div class="input-group-btn">
+                    @*<a data-toggle="modal" onclick="editIti(@Model.Id)" href="#modal-edit" class="btn btn-primary"><i class="fa fa-pencil" data-id="@Model.Id"></i> </a>*@
+                    @*<a data-toggle="modal" onclick="deleteIti(@Model.Id)" href="#modal-delete" class="btn btn-primary"><i class="fa fa-trash-o" data-id="@Model.Id"></i> </a>*@
+                    <a data-toggle="modal" onclick="Edit(@Model.Id,2)" href="#modal-edit" class="btn btn-primary"><i class="fa fa-pencil" data-id="@Model.Id"></i> </a>
+                    <a data-toggle="modal" onclick="Delete(@Model.Id,2)" href="#modal-delete" class="btn btn-primary"><i class="fa fa-trash-o" data-id="@Model.Id"></i> </a>
+                    <a data-toggle="modal" onclick="List2(@Model.Id)" href="@Url.Action("List2", "Itinerario", routeValues: new {id = Model.Id})" class="btn btn-primary"><i class="fa fa-search" data-id="@Model.Id"></i> </a>
+                </div>
+            </div>
+        </td>
+    } 
+</tr>
+
+@*AGREGADO JTC*@
+<div id="modal-edit" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="ItinerarioEdit">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*AGREGADO JTC*@
+<div id="modal-delete" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="ItinerarioDelete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*
+@*AGREGADO JTC
+<div id="modal-search" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="ItinerarioSearch">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
+
+

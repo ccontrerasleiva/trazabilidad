@@ -1,0 +1,6 @@
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Domain\bin\Debug\Domain.dll
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Domain\bin\Debug\Domain.pdb
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Domain\obj\Debug\Domain.csprojAssemblyReference.cache
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Domain\obj\Debug\Domain.csproj.CoreCompileInputs.cache
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Domain\obj\Debug\Domain.dll
+C:\Users\cristian.contreras\dev\Trazabilidad2\Web\Web\Domain\obj\Debug\Domain.pdb

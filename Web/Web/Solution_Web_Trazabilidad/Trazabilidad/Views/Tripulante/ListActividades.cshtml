@@ -1,0 +1,195 @@
+﻿
+@model IEnumerable<ViewModels.Models.Actividad>
+@{
+    ViewBag.Title = "Tripulante";
+    ViewBag.Header = "Resumen Jornada";
+
+
+}
+
+@using Trazabilidad.Controllers;
+@using Resources.Strings;
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-8">
+        <h2>@ViewBag.Header</h2>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index", "Home")">Inicio</a></li>
+            <li class="active"><strong>Resumen Jornada</strong></li>
+        </ol>
+    </div>
+    <div class="col-sm-4">
+        <div class="title-action">
+            <a data-toggle="modal" href="#modal-create" class="btn btn-primary"><i class="fa fa-search"></i> tripulante </a>
+        </div>
+    </div>
+</div>
+
+@*----------------RESTO DE LA PAGINA------------------------*@
+
+@*seccion nombre tripulante*@
+
+@*<div class="wrapper wrapper-content">*@
+<strong>
+
+    @if (Model.Count() >= 1) {
+
+        //foreach (var tTime in Model) {
+
+        @*@Html.Partial("Partial/_Tripulante", tTime)*@
+        string nombre = @Model.Select(x => x.Tripulante.Tripulante_Persona.Nombre).FirstOrDefault().ToString();
+        string rut = Model.Select(x => x.Tripulante.Tripulante_Persona.Rut).FirstOrDefault().ToString();
+        string baseTrip = Model.Select(x => x.Tripulante.Tripulante_Persona.Base.Nombre).FirstOrDefault().ToString();
+
+        <h2>@Html.Raw(nombre)</h2>
+        <h4>Trabajador: @Html.Raw(rut)</h4>
+        <h4>Base: @Html.Raw(baseTrip)</h4>
+        //}
+
+        @*<h3>@nombre</h3>*@
+
+        @*<h3 id="nombreTripulante">@Html.Label(nombre)</h3>*@
+    }
+
+</strong>
+@*</div>*@
+
+
+@*Seccion actividades*@
+<input type="button" id="btnExport" value=" Exportar a Excel" />
+<div class="wrapper wrapper-content">
+    <div id="excel">
+    <table class="table" id="summary">
+        <thead>
+            <tr>
+                <th></th>
+                <th colspan="3" class="text-center">Inicio</th>
+                <th colspan="3" class="text-center">Término</th>
+                <th>Horas</th>
+                <th>Horas</th>
+                <th>Horas</th>
+                <th>Horas</th>
+                <th>Horas</th>
+                <th>Horas</th>
+                @*<th>Horas</th>
+                    <th colspan="3">Días Proporcionales</th>*@
+                <th colspan="2">Viáticos</th>
+            </tr>
+            <tr>
+                <th>Tipo de Actividad</th>
+                <th>Fecha </th>
+                <th>Hora </th>
+                <th>Lugar </th>
+                <th>Fecha </th>
+                <th>Hora </th>
+                <th>Lugar </th>
+                <th>Trab.</th>
+                <th>Real</th>
+                <th>S.Jor</th>
+                <th>Noct.</th>
+                <th>Fest.</th>
+                <th>Pasaj</th>
+                @*<th>2 Desc.</th>
+                    <th>Líc.M</th>
+                    <th>Acc</th>
+                    <th>Vac</th>*@
+                @*<th>Estado</th>*@
+                @*<th>Horas Pasajero</th>*@
+                <th>C</th>
+                <th>A</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var tTime in Model) {
+                @Html.Partial("Partial/_ArmaReporte",tTime)
+            }
+            @Html.Partial("Partial/_TotalHoras",Model)
+
+        </tbody>
+    </table>
+
+
+
+    @*<table class="table" id="summary">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Tripulante</th>
+                    <th>Rol</th>
+                    <th>Base</th>
+                    <th>Horas Trabajadas</th>
+                    <th>Horas Pasajero</th>
+                    <th>Viatico Colacion</th>
+                    <th>Viatico Alojamiento</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var tTime in Model)
+                {
+                    @Html.Partial("Partial/_Tripulante", tTime)
+                }
+            </tbody>
+        </table>*@
+
+
+</div>
+</div>
+
+
+
+@*MODAL*@
+
+@Html.Partial("Partial/_Create", new ViewModels.Models.Tripulante())
+
+
+@section Scripts {
+
+
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script>    $('.chosen-select').chosen({ width: "100%" });</script>
+    <script>
+        $("#btnExport").click(function (e) {
+            window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#excel').html()));
+            e.preventDefault();
+        });
+    </script>
+
+}
+
+@section styles {
+    <link href="~/Content/bootstrap-chosen.css" type="text/css" rel="stylesheet" />
+    <style>
+        #page-wrapper {
+            height: 100% !important;
+        }
+    </style>
+}
+
+
+
+@*@model ViewModels.Models.Actividad
+    <tr>
+
+        @using (Html.BeginForm(nameof(Trazabilidad.Controllers.TripulanteController.ListActividades), nameof(Resources.Strings.Models.Tripulante), FormMethod.Post))
+        {
+            if (Model.Estado == 2)
+            {
+
+                @Html.HiddenFor(x => x.Id)
+
+                <td>@Resources.Util.Enums.GetDescription((ViewModels.Enum.TipoActividad)Model.Tipo)</td>
+                <td>@Model.Hora_Inicio.ToString("HH:mm:ss")</td>
+                <td>@Model.Hora_Fin.ToString("HH:mm:ss")</td>
+
+
+                <td>@Resources.Util.Enums.GetDescription((ViewModels.Enum.EstadoActividad)Model.Estado)</td>
+            }
+
+
+
+        }
+    </tr>*@

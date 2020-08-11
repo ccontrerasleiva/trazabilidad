@@ -1,0 +1,51 @@
+﻿@using ViewModels.Enum;
+@model ViewModels.Models.Actividad
+<tr>
+
+    @if (Model.Estado == (int)EstadoActividad.Finalizado) {
+
+
+        @Html.HiddenFor(x => x.Id)
+        <td>@Resources.Util.Enums.GetDescription((ViewModels.Enum.TipoActividad)Model.Tipo)&nbsp;#@Model.Tripulante.Tren_Locomotora.Tren.Itinerario.Servicio.Codigo</td>
+        <td>@Model.Hora_Inicio_Real.ToString("MM-dd")</td>
+        <td>@Model.Hora_Inicio_Real.ToString("HH:mm")</td>
+        <td>@Model.Tripulante.Tren_Locomotora.Tren.Itinerario.Origen.Nombre</td>
+        <td>@Model.Hora_Final_Real.ToString("MM-dd")</td>
+        <td>@Model.Hora_Final_Real.ToString("HH:mm")</td>
+        <td>@Model.Tripulante.Tren_Locomotora.Tren.Itinerario.Destino.Nombre</td>
+        <td>@Model.Horas_Trabajadas</td>
+        <td>@Model.Horas_Real</td>
+        <td>@Model.Horas_SobreJornada</td>
+        <td>@Model.Horas_Nocturna</td>
+        <td>@Model.Horas_Festivo</td>
+        <td>@Model.Horas_Pasajero</td>
+        @*<td>@Model.Horas_2Desc</td>
+            <td>@Model.Horas_LicMédica</td>
+            <td>@Model.Horas_Acc</td>
+            <td>@Model.Horas_Vac</td>*@
+
+        @*<td>@Resources.Util.Enums.GetDescription((ViewModels.Enum.EstadoActividad)Model.Estado)</td>*@
+
+        @*<td>@Model.Tripulante.Tren_Locomotora.Id_Tren.VColacion</td>
+            <td>@Model.Tripulante.Tren_Locomotora.Id_Tren.VAlojamiento</td>*@
+
+        if (Model.Tripulante.Tren_Locomotora.Tren.VColacion == true) {
+
+            <td>1</td>
+        } else {
+
+            <td>0</td>
+        }
+
+
+        if (Model.Tripulante.Tren_Locomotora.Tren.VAlojamiento == true) {
+            <td>1</td>
+        } else {
+            <td>0</td>
+        }
+
+    }
+
+
+
+</tr>

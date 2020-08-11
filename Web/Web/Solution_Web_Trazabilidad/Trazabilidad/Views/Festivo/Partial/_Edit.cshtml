@@ -1,0 +1,52 @@
+﻿@model ViewModels.Models.Festivo
+@using Trazabilidad.Controllers;
+@using Resources.Strings;
+
+@using (Html.BeginForm(nameof(Trazabilidad.Controllers.FestivoController.Edit), nameof(Resources.Strings.Models.Festivo), FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="col-sm-12">
+        <h3 class="m-t-none m-b">Editar Tiempo de Viaje de Tramo</h3>
+
+        <form role="form">
+
+
+            <div class="form-group">
+                <label class="control-label"></label>
+                <div class="form-group" id="data_5">
+                    <label class="control-label">Fecha</label>
+                    <div class="input-daterange input-group" id="datepicker">
+                        @Html.TextBoxFor(mo => mo.Fecha, format: "{0:dd-MM-yyyy}", htmlAttributes: new { required = "required", @class = "form-control", @type = "datetime", @value = @DateTime.Now.ToString("yyyy-MM") })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Descripcion, "Descripcion")
+                @Html.TextBoxFor(model => model.Descripcion, htmlAttributes: new { @class = "form-control " })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(tt => tt.Id_Base, "Base")
+                @Html.DropDownListFor(model => model.Id_Base, (SelectList)ViewBag.estacion, "Seleccione un origen", htmlAttributes: new { @class = "form-control chosen-select", @disabled = "disabled" })
+                @Html.ValidationMessageFor(x => x.Id_Base, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <div class="form-group">
+                    @Html.RadioButtonFor(m => m.Deshabilitado, false, htmlAttributes: new { id = "Habilitado" }) @Html.Label("Habilitado", "Habilitado")
+                    @Html.RadioButtonFor(m => m.Deshabilitado, true, htmlAttributes: new { id = "Deshabilitado" }) @Html.Label("Deshabilitado", "Deshabilitado")
+                    @Html.ValidationMessageFor(x => x.Deshabilitado, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div>
+                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+            </div>
+        </form>
+    </div>
+}
+
+
+

@@ -1,0 +1,19 @@
+﻿@*@model IEnumerable<ViewModels.Models.Itinerario>*@
+
+@model ViewModels.Models.Itinerario
+@using Trazabilidad.Controllers;
+@using Resources.Strings;
+
+@using (Html.BeginForm(nameof(Trazabilidad.Controllers.ItinerarioController.List2), nameof(Resources.Strings.Models.Itinerario), FormMethod.Post))
+{
+    @*<td>@Model.Id</td>*@
+    <td>@Model.HoraInicio</td>
+    <td>@Model.Descripcion</td>
+    @*
+        <td>@Model.Hora_Salida_Planificada</td>
+        <td>@Model.Tiempo_Viaje</td>*@
+}
+
+
+
+

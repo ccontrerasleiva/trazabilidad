@@ -1,0 +1,113 @@
+﻿@model IEnumerable<ViewModels.Models.Carro>
+@using Resources.Strings;
+@{
+    ViewBag.Header = string.Format(UI.Listing, Models.Carro);
+}
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-8">
+        <h2>@Models.Carro</h2>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("SignOutCallback", "Account")">@UI.Home</a></li>
+            <li class="active"><strong>@Models.Carro</strong></li>
+        </ol>
+    </div>
+    <div class="col-sm-4">
+        <div class="title-action">
+            <a data-toggle="modal" href="#modal-create" class="btn btn-primary"><i class="fa fa-plus"></i>Nuevo Carro</a>
+        </div>
+    </div>
+</div>
+
+@*RESTO DE LA PAGINA*@
+<div class="wrapper wrapper-content">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Carro Vigentes: @Model.Count()</h5>
+            </div>
+            <div class="ibox-content">
+
+                <table class="table" id="summary">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Habilitado</th>
+                            <th>Descripcion</th>
+                            <th>Identificador</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var carro in Model)
+                            {
+                                @Html.Partial("Partial/_Carro", carro)
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL*@
+@Html.Partial("Partial/_Create", new ViewModels.Models.Carro())
+
+@section Scripts {
+    @*<script src="~/Scripts/bootstrap-datepicker.js"></script>*@
+    <script>
+     
+        //jQuery(document).ready(function () {
+        //    jQuery('.input_des').keypress(function (tecla) {
+        //        var cant = $("#Descripcion").val().trim().length;
+        //        if (cant > 3) {
+        //            toastr.success("Ha ingresado un texto de largo " + cant + " caracteres siendo que solo puede ingresar 30");
+        //        }
+        //    //    if (tecla.charCode < 48 || tecla.charCode > 57) return false;
+        //    });
+        //});
+
+
+        //jQuery(document).ready(function () {
+        //    jQuery('.input_pat').keypress(function (tecla) {
+        //        if (tecla.charCode < 48 || tecla.charCode > 57) return false;
+        //    });
+        //});
+
+    </script>
+    <script src="~/Scripts/modal.comun.js"></script>
+    @*<script src="~/Scripts/ValidacionCarro.js"></script>*@
+    @*<script src="~/Scripts/chosen.jquery.js"></script>
+        <script>
+            $('.chosen-select').chosen({ width: "100%" });
+        </script>
+        <script src="~/Scripts/lists.js"></script>
+        @Scripts.Render("~/bundles/DTList")*@
+
+
+}
+
+@*@section Styles{
+        <link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/Content/bootstrap-chosen.css" />
+    }*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

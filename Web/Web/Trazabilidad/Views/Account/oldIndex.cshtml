@@ -1,0 +1,100 @@
+﻿<div class="row form-mapa">
+    <style>
+        table {
+            border-collapse: collapse;
+            /*width: 100%;*/
+        }
+
+        th, td {
+            padding: 5px;
+        }
+    </style>
+    <form id="form1" runat="server" style="height:100%;">
+        <asp:Panel ID="Panel1" runat="server">
+            @*<%--Place holder to fill with javascript by server side code--%>*@
+            <asp:Literal ID="js" runat="server"></asp:Literal>
+            @*<%--Place for google to show your MAP--%>*@
+
+            <div class="ibox-content">
+                <table class="table" id="resumen" border="0" >
+                    <thead>
+                        <tr>
+                            <td colspan="6"><strong>Resumen Activos de Contenedores</strong></td>
+                            @*<th>Estaciones</th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td ><span class="label label-primary">SD.SD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                            <td id="activo" style="text-align:right"><strong id="SD_SD" name="SD_SD"></strong></td>
+                            <td><span class="label label-primary">SD.RB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                            <td id="activo" style="text-align:right"><strong id="SD_RB" name="SD_RB"></strong></td>
+                            <td><span class="label label-primary">RB.RB&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                            <td id="activo" style="text-align:right"><strong id="RB_RB" name="RB_RB"></strong></td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-primary">RB.LS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                            <td id="activo" style="text-align:right"><strong id="RB_LS" name="RB_LS"></strong></td>
+                            <td><span class="label label-primary">LS.LS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                            <td id="activo" style="text-align:right"><strong id="LS_LS" name="LS_LS"></strong></td>
+                            <td><span class="label label-primary">LS.VE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                            <td id="activo" style="text-align:right"><strong id="LS_VE" name="LS_VE"></strong></td>
+                        </tr>
+                        <tr>
+                            <td ><span class="label label-primary">VE.VE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                            <td id="activo" style="text-align:right"><strong id="VE_VE" name="VE_VE"></strong></td>
+                            <td><span class="label label-primary">VE.LSA&nbsp;&nbsp;&nbsp;</span></td>
+                            <td id="activo" style="text-align:right"><strong id="VE_LSA" name="VE_LSA"></strong></td>
+                            <td><span class="label label-primary">LS.RB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                            <td id="activo" style="text-align:right"><strong id="LS_RB" name="LS_RB"></strong></td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-primary">RB.SD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                            <td id="activo" style="text-align:right"><strong id="RB_SD" name="RB_SD"></strong></td>
+                            <td><span class="label label-primary">LSM.LSM</span></td>
+                            <td id="activo" style="text-align:right"><strong id="LSM_LSM" name="LSM_LSM"></strong></td>
+                            <td><span class="label label-primary">LSA.LSA</span></td>
+                            <td id="activo" style="text-align:right"><strong id="LSA_LSA" name="LSA_LSA"></strong></td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-primary">TOTAL : &nbsp;</span></td>
+                            <td id="activo" style="text-align:right"><strong id="total_act" name="total_act"></strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="margin-bottom: 4px">
+                    <label class="css-checkbox" style="float:left;margin-right:15px;">
+                        <input type="checkbox" name="Estaciones" value="Estaciones" id="estacion"> Estaciones
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="css-checkbox" style="float:left;">
+                        <input type="checkbox" name="Vias" value="Vias" id="vias"> Vías Ferreas
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <select class="chosen-select form-control" id="EstacionIds">
+                    <option value="0" selected>Seleccione un activo a ubicar</option>
+                </select>
+            </div>
+            <div id="map" style="height: 100%;">
+            </div>
+        </asp:Panel>
+    </form>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/maps")
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr63Y3sQ9WJJ9YmUCq3re8_Ss4zahYnGY&libraries=places,geometry&callback=initMap"></script>
+
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script> $('.chosen-select').chosen({ width: "100%" });</script>
+
+}
+@section styles {
+    <link href="~/Content/bootstrap-chosen.css" type="text/css" rel="stylesheet" />
+    <style>
+        #page-wrapper {
+            height: 100% !important;
+        }
+            </style>
+        }

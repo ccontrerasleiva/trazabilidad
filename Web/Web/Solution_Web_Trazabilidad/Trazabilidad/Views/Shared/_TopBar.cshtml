@@ -1,0 +1,83 @@
+﻿@{
+    var user = (System.Security.Claims.ClaimsIdentity) User.Identity;
+    try
+    {
+        ViewBag.FirstName = user.Claims.FirstOrDefault(x => x.Type.Contains("/givenname")).Value;
+    }
+    catch (Exception)
+    {
+
+    }
+    //ViewBag.Name = user.Claims.FirstOrDefault(x => x.Type.Equals("name")).Value;
+    // ViewBag.FirstName = user.Claims.FirstOrDefault(x => x.Type.Contains("/givenname")).Value;
+    //ViewBag.JobTitle = user.Claims.FirstOrDefault(x => x.Type.Contains("jobTitle")).Value;
+    //ViewBag.Office = user.Claims.FirstOrDefault(x => x.Type.Contains("Office")).Value;
+}
+
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            <form role="search" class="navbar-form-custom hide" action="search_results.html">
+                <div class="form-group">
+                    <input type="text" placeholder="Buscar..." class="form-control" name="top-search" id="top-search">
+                </div>
+            </form>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                    <span class="m-r-sm text-muted welcome-message">Bienvenido, @ViewBag.FirstName</span>
+                </a>
+                <ul class="dropdown-menu dropdown-messages">
+                    <li>
+                        <div class="dropdown-messages-box">
+                            <div class="contact-box center-version">
+
+                                    <a href="#">
+                                        <img alt="Foto del Usuario" class="img-circle" src="~/Content/img/user_default.png" style="width:30%;">
+
+                                        <h3 class="m-b-xs"><strong>@ViewBag.Name</strong></h3>
+
+                                        <div class="font-bold">@ViewBag.JobTitle</div>
+                                        @*<address class="m-t-md">
+                <strong>Twitter, Inc.</strong><br>
+                795 Folsom Ave, Suite 600<br>
+                San Francisco, CA 94107<br>
+                <abbr title="Phone">P:</abbr> (123) 456-7890
+            </address>*@
+                                    </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="text-center link-block">
+                            @if (Request.IsAuthenticated)
+                            {
+                                <a href="@Url.Action("SignOut", "Account")">
+                                    <strong>
+                                        <i class="fa fa-sign-out"></i> Salir
+                                    </strong>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("SignIn", "Account", routeValues: null)" , id="loginLink">
+                                    <strong>
+                                        <i class="fa fa-sign-in"></i> Ingresar
+                                    </strong>
+                                </a>
+                            }
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li>
+            </li>
+
+            <li>
+            </li>
+        </ul>
+    </nav>
+</div>

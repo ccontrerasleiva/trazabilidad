@@ -1,0 +1,83 @@
+﻿@model ViewModels.Models.Itinerario
+<h2>Vigencia del Itinerario</h2>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="form-group">
+            @Html.LabelFor(sch => sch.Descripcion, "Descripción del Itinerario")
+            @Html.TextBoxFor(srv => srv.Descripcion, htmlAttributes: new { @class = "form-control", placeholder = "Descripción" })
+            @Html.ValidationMessageFor(sch => sch.Descripcion, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @if (ViewBag.Services != null)
+        {
+            <div class="form-group">
+                @Html.LabelFor(srv => srv.Id, "Servicio")
+                @Html.DropDownListFor(model => model.Servicio.Id, (SelectList)ViewBag.Services, "Seleccione un Servicio", htmlAttributes: new { @class = "form-control chosen-select" })
+                @Html.ValidationMessageFor(x => x.Servicio.Id, null, new { @class = "text-danger" })
+            </div>
+        }
+        </div>
+
+        <div class="form-group" id="data_4">
+            <label>Vigencia</label>
+            <div class="input-group">
+
+                @*@Html.TextBoxFor(mo => mo.Fecha_Inicio_Vigencia, format: "{0:yyyy-MM}", htmlAttributes: new { required = "required", @class = "form-control", @type = "month", @value = @DateTime.Now.ToString("yyyy-MM"), @onchange = "CallChangefunc(this.value)" })*@
+                @Html.TextBoxFor(mo => mo.Fecha_Inicio_Vigencia, format: "{0:yyyy-MM}", htmlAttributes: new { required = "required", @class = "form-control", @type = "date", @value = @DateTime.Now.ToString("yyyy-MM"), @onblur = "CallChangefunc(this.value)" })
+                <span class="input-group-addon"><i class="fa fa-calendar"></i> hasta</span>
+
+                @*@Html.TextBoxFor(mo => mo.Fecha_Fin_Vigencia, format: "{0:yyyy-MM}", htmlAttributes: new { required = "required", @class = "form-control", @type = "month", @value = @DateTime.Now.AddMonths(1).ToString("yyyy-MM"), @onchange = "CallChangefunc(this.value)" })*@
+                @Html.TextBoxFor(mo => mo.Fecha_Fin_Vigencia, format: "{0:yyyy-MM}", htmlAttributes: new { required = "required", @class = "form-control", @type = "date", @value = @DateTime.Now.AddMonths(1).ToString("yyyy-MM"), @onblur = "CallChangefunc(this.value)" })
+
+            </div>
+                    @Html.ValidationMessageFor(x => x.Fecha_Inicio_Vigencia, null, new { @class = "text-danger" })<br />
+                    @Html.ValidationMessageFor(x => x.Fecha_Fin_Vigencia, null, new { @class = "text-danger" })
+
+
+                <div class="form-group">
+                    <label class="control-label">Frecuencia de Trenes</label>
+                    <div class="col-sm-12">
+
+                        <div class="checkbox checkbox-primary checkbox-inline">
+                            @Html.CheckBoxFor(model => model.Frecuencia_Lunes, htmlAttributes: new { @class = "styled" })
+                            @Html.LabelFor(model => model.Frecuencia_Lunes, labelText: "Lun")
+                        </div>
+                        <div class="checkbox checkbox-primary checkbox-inline">
+                            @Html.CheckBoxFor(model => model.Frecuencia_Martes, htmlAttributes: new { @class = "styled" })
+                            @Html.LabelFor(model => model.Frecuencia_Martes, labelText: "Mar")
+                        </div>
+                        <div class="checkbox checkbox-primary checkbox-inline">
+                            @Html.CheckBoxFor(model => model.Frecuencia_Miercoles, htmlAttributes: new { @class = "styled" })
+                            @Html.LabelFor(model => model.Frecuencia_Miercoles, labelText: "Mie")
+                        </div>
+                        <div class="checkbox checkbox-primary checkbox-inline">
+                            @Html.CheckBoxFor(model => model.Frecuencia_Jueves, htmlAttributes: new { @class = "styled" })
+                            @Html.LabelFor(model => model.Frecuencia_Jueves, labelText: "Jue")
+                        </div>
+                        <div class="checkbox checkbox-primary checkbox-inline">
+                            @Html.CheckBoxFor(model => model.Frecuencia_Viernes, htmlAttributes: new { @class = "styled" })
+                            @Html.LabelFor(model => model.Frecuencia_Viernes, labelText: "Vie")
+                        </div>
+                        <div class="checkbox checkbox-primary checkbox-inline">
+                            @Html.CheckBoxFor(model => model.Frecuencia_Sabado, htmlAttributes: new { @class = "styled" })
+                            @Html.LabelFor(model => model.Frecuencia_Sabado, labelText: "Sab")
+                        </div>
+                        <div class="checkbox checkbox-primary checkbox-inline">
+                            @Html.CheckBoxFor(model => model.Frecuencia_Domingo, htmlAttributes: new { @class = "styled" })
+                            @Html.LabelFor(model => model.Frecuencia_Domingo, labelText: "Dom")
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(x => x, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="text-center">
+                    <div style="margin-top: 20px">
+                        <i class="fa fa-calendar" style="font-size: 180px;color: #e5e5e5 "></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+

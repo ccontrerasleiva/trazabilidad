@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+    var user = (System.Security.Claims.ClaimsIdentity)User.Identity;
+    ViewBag.Name = user.Claims.FirstOrDefault(x => x.Type.Equals("name")).Value;
+    ViewBag.FirstName = user.Claims.FirstOrDefault(x => x.Type.Contains("/givenname")).Value;
+}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>No autorizado</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/font-awesome.css" rel="stylesheet">
+    <link href="~/Content/animate.css" rel="stylesheet">
+    <link href="~/Content/Site.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center animated fadeInDown">
+        <h2>No Autorizado</h2>
+        <h3 class="font-bold"></h3>
+
+        <div class="error-desc">
+            Estimad@@ @ViewBag.FirstName, no se encuentra autorizado
+            para acceder al recurso pedido.
+            Consulte con los administradores de la plataforma.
+            Puede volver al principio haciendo clic al siguiente botón
+            O ingresar con otra cuenta<br />
+            @if (user.HasClaim("groups", Resources.Strings.AzureGroups.PlatformHumanResources))
+            {
+            <a href="@Url.Action("Index", "Home", routeValues: null)" class="btn btn-primary m-t"><i class="fa fa-home"></i> Inicio</a>
+            }
+            <a href="@Url.Action("SignOut","Account", routeValues: null)" class="btn btn-default m-t"><i class="fa fa-sign-out"></i> Salir</a>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

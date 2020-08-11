@@ -1,0 +1,36 @@
+﻿@model ViewModels.Models.Ruta
+
+@using (Html.BeginCollectionItem(nameof(ViewModels.Models.Ruta)))
+{
+    <div class="vertical-timeline-block">
+        @*@Html.HiddenFor(m => m.Orden)*@
+        @Html.HiddenFor(m => m.Origen.Id)
+        @Html.HiddenFor(m => m.Destino.Id)
+
+        <div class="vertical-timeline-icon blue-bg">
+            <i class="fa fa-train"></i>
+        </div>
+        <div class="vertical-timeline-content">
+            @*<a href="#" class="btn btn-sm btn-danger close-btn" style="outline-width: 0px !important; user-select: !important;"> <i class="fa fa-close"></i></a>*@
+            <h4>@Html.DisplayFor(m => m.Origen.Nombre) > @Html.DisplayFor(m => m.Destino.Nombre);</h4>
+            <ul class="estaciones-it" id="routes">
+                <!--  <li class="row pto-control label-row">-->
+                <li class="row">
+                    <div class="col-xs-2">@Html.Label("Estaciones")</div>
+                    <div class="col-xs-2">@Html.Label("Tiempo Marcha")</div>
+                    <div class="col-xs-2">@Html.Label("Hora Llegada")</div>
+                    <div class="col-xs-2">@Html.Label("Detención")</div>
+                    <div class="col-xs-2">@Html.Label("Hora Salida")</div>
+                    <div class="col-xs-2">@Html.Label("Observaciones")</div>
+                    <div class="col-xs-2"></div>
+                </li>
+
+                    @foreach (var item in Model.Tramo_Itinerario)
+                    {
+                        @Html.Partial("Partial/_Section", item);
+                    }
+            </ul>
+
+        </div>
+    </div>
+}

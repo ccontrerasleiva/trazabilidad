@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TrazabilidadDBModelo.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ET_Pesaje_Cabecera">
+          <Key>
+            <PropertyRef Name="IdEtPesajeCabecera" />
+          </Key>
+          <Property Name="IdEtPesajeCabecera" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CnvBseCod" Type="int" />
+          <Property Name="CnvBasCod" Type="int" />
+          <Property Name="CnvID" Type="varchar" MaxLength="100" />
+          <Property Name="CnvPesId" Type="int" />
+          <Property Name="CnvFecReg" Type="datetime" />
+          <Property Name="Estado_Proceso" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ET_Pesaje_Detalle">
+          <Key>
+            <PropertyRef Name="IdEtPesaje_Detalle" />
+          </Key>
+          <Property Name="IdEtPesaje_Detalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEtPesajeCabecera" Type="int" Nullable="false" />
+          <Property Name="PesNro" Type="int" />
+          <Property Name="PesCarIde" Type="varchar" MaxLength="50" />
+          <Property Name="PesComFec" Type="datetime" />
+          <Property Name="PesTarFec" Type="datetime" />
+          <Property Name="PesComBrut" Type="int" />
+          <Property Name="PesComNet" Type="int" />
+          <Property Name="PesTar" Type="int" />
+          <Property Name="PesConSelPor" Type="varchar" MaxLength="10" />
+          <Property Name="PesConId" Type="int" />
+        </EntityType>
+        <EntityType Name="ET_Pesaje_Sello">
+          <Key>
+            <PropertyRef Name="IdEtPesajeSello" />
+          </Key>
+          <Property Name="IdEtPesajeSello" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEtPesajeCabecera" Type="int" Nullable="false" />
+          <Property Name="CnvIdSello" Type="int" />
+          <Property Name="CnvSelloIni" Type="int" />
+          <Property Name="CnvSelloFin" Type="int" />
+          <Property Name="CnvSelloEstado" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <Association Name="FK_ET_Pesaje_Detalle_ET_Pesaje_Cabecera">
+          <End Role="ET_Pesaje_Cabecera" Type="Self.ET_Pesaje_Cabecera" Multiplicity="1" />
+          <End Role="ET_Pesaje_Detalle" Type="Self.ET_Pesaje_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ET_Pesaje_Cabecera">
+              <PropertyRef Name="IdEtPesajeCabecera" />
+            </Principal>
+            <Dependent Role="ET_Pesaje_Detalle">
+              <PropertyRef Name="IdEtPesajeCabecera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ET_Pesaje_Sello_ET_Pesaje_Cabecera">
+          <End Role="ET_Pesaje_Cabecera" Type="Self.ET_Pesaje_Cabecera" Multiplicity="1" />
+          <End Role="ET_Pesaje_Sello" Type="Self.ET_Pesaje_Sello" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ET_Pesaje_Cabecera">
+              <PropertyRef Name="IdEtPesajeCabecera" />
+            </Principal>
+            <Dependent Role="ET_Pesaje_Sello">
+              <PropertyRef Name="IdEtPesajeCabecera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TrazabilidadDBModeloStoreContainer">
+          <EntitySet Name="ET_Pesaje_Cabecera" EntityType="Self.ET_Pesaje_Cabecera" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ET_Pesaje_Detalle" EntityType="Self.ET_Pesaje_Detalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ET_Pesaje_Sello" EntityType="Self.ET_Pesaje_Sello" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ET_Pesaje_Detalle_ET_Pesaje_Cabecera" Association="Self.FK_ET_Pesaje_Detalle_ET_Pesaje_Cabecera">
+            <End Role="ET_Pesaje_Cabecera" EntitySet="ET_Pesaje_Cabecera" />
+            <End Role="ET_Pesaje_Detalle" EntitySet="ET_Pesaje_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ET_Pesaje_Sello_ET_Pesaje_Cabecera" Association="Self.FK_ET_Pesaje_Sello_ET_Pesaje_Cabecera">
+            <End Role="ET_Pesaje_Cabecera" EntitySet="ET_Pesaje_Cabecera" />
+            <End Role="ET_Pesaje_Sello" EntitySet="ET_Pesaje_Sello" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TrazabilidadDBModelo" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ET_Pesaje_Cabecera">
+          <Key>
+            <PropertyRef Name="IdEtPesajeCabecera" />
+          </Key>
+          <Property Name="IdEtPesajeCabecera" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CnvBseCod" Type="Int32" />
+          <Property Name="CnvBasCod" Type="Int32" />
+          <Property Name="CnvID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CnvPesId" Type="Int32" />
+          <Property Name="CnvFecReg" Type="DateTime" Precision="3" />
+          <Property Name="Estado_Proceso" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ET_Pesaje_Detalle" Relationship="Self.FK_ET_Pesaje_Detalle_ET_Pesaje_Cabecera" FromRole="ET_Pesaje_Cabecera" ToRole="ET_Pesaje_Detalle" />
+          <NavigationProperty Name="ET_Pesaje_Sello" Relationship="Self.FK_ET_Pesaje_Sello_ET_Pesaje_Cabecera" FromRole="ET_Pesaje_Cabecera" ToRole="ET_Pesaje_Sello" />
+        </EntityType>
+        <EntityType Name="ET_Pesaje_Detalle">
+          <Key>
+            <PropertyRef Name="IdEtPesaje_Detalle" />
+          </Key>
+          <Property Name="IdEtPesaje_Detalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEtPesajeCabecera" Type="Int32" Nullable="false" />
+          <Property Name="PesNro" Type="Int32" />
+          <Property Name="PesCarIde" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PesComFec" Type="DateTime" Precision="3" />
+          <Property Name="PesTarFec" Type="DateTime" Precision="3" />
+          <Property Name="PesComBrut" Type="Int32" />
+          <Property Name="PesComNet" Type="Int32" />
+          <Property Name="PesTar" Type="Int32" />
+          <Property Name="PesConSelPor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PesConId" Type="Int32" />
+          <NavigationProperty Name="ET_Pesaje_Cabecera" Relationship="Self.FK_ET_Pesaje_Detalle_ET_Pesaje_Cabecera" FromRole="ET_Pesaje_Detalle" ToRole="ET_Pesaje_Cabecera" />
+        </EntityType>
+        <EntityType Name="ET_Pesaje_Sello">
+          <Key>
+            <PropertyRef Name="IdEtPesajeSello" />
+          </Key>
+          <Property Name="IdEtPesajeSello" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEtPesajeCabecera" Type="Int32" Nullable="false" />
+          <Property Name="CnvIdSello" Type="Int32" />
+          <Property Name="CnvSelloIni" Type="Int32" />
+          <Property Name="CnvSelloFin" Type="Int32" />
+          <Property Name="CnvSelloEstado" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ET_Pesaje_Cabecera" Relationship="Self.FK_ET_Pesaje_Sello_ET_Pesaje_Cabecera" FromRole="ET_Pesaje_Sello" ToRole="ET_Pesaje_Cabecera" />
+        </EntityType>
+        <Association Name="FK_ET_Pesaje_Detalle_ET_Pesaje_Cabecera">
+          <End Role="ET_Pesaje_Cabecera" Type="Self.ET_Pesaje_Cabecera" Multiplicity="1" />
+          <End Role="ET_Pesaje_Detalle" Type="Self.ET_Pesaje_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ET_Pesaje_Cabecera">
+              <PropertyRef Name="IdEtPesajeCabecera" />
+            </Principal>
+            <Dependent Role="ET_Pesaje_Detalle">
+              <PropertyRef Name="IdEtPesajeCabecera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ET_Pesaje_Sello_ET_Pesaje_Cabecera">
+          <End Role="ET_Pesaje_Cabecera" Type="Self.ET_Pesaje_Cabecera" Multiplicity="1" />
+          <End Role="ET_Pesaje_Sello" Type="Self.ET_Pesaje_Sello" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ET_Pesaje_Cabecera">
+              <PropertyRef Name="IdEtPesajeCabecera" />
+            </Principal>
+            <Dependent Role="ET_Pesaje_Sello">
+              <PropertyRef Name="IdEtPesajeCabecera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TrazabilidadDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ET_Pesaje_Cabecera" EntityType="Self.ET_Pesaje_Cabecera" />
+          <EntitySet Name="ET_Pesaje_Detalle" EntityType="Self.ET_Pesaje_Detalle" />
+          <EntitySet Name="ET_Pesaje_Sello" EntityType="Self.ET_Pesaje_Sello" />
+          <AssociationSet Name="FK_ET_Pesaje_Detalle_ET_Pesaje_Cabecera" Association="Self.FK_ET_Pesaje_Detalle_ET_Pesaje_Cabecera">
+            <End Role="ET_Pesaje_Cabecera" EntitySet="ET_Pesaje_Cabecera" />
+            <End Role="ET_Pesaje_Detalle" EntitySet="ET_Pesaje_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ET_Pesaje_Sello_ET_Pesaje_Cabecera" Association="Self.FK_ET_Pesaje_Sello_ET_Pesaje_Cabecera">
+            <End Role="ET_Pesaje_Cabecera" EntitySet="ET_Pesaje_Cabecera" />
+            <End Role="ET_Pesaje_Sello" EntitySet="ET_Pesaje_Sello" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TrazabilidadDBModeloStoreContainer" CdmEntityContainer="TrazabilidadDBEntities">
+          <EntitySetMapping Name="ET_Pesaje_Cabecera">
+            <EntityTypeMapping TypeName="TrazabilidadDBModelo.ET_Pesaje_Cabecera">
+              <MappingFragment StoreEntitySet="ET_Pesaje_Cabecera">
+                <ScalarProperty Name="IdEtPesajeCabecera" ColumnName="IdEtPesajeCabecera" />
+                <ScalarProperty Name="CnvBseCod" ColumnName="CnvBseCod" />
+                <ScalarProperty Name="CnvBasCod" ColumnName="CnvBasCod" />
+                <ScalarProperty Name="CnvID" ColumnName="CnvID" />
+                <ScalarProperty Name="CnvPesId" ColumnName="CnvPesId" />
+                <ScalarProperty Name="CnvFecReg" ColumnName="CnvFecReg" />
+                <ScalarProperty Name="Estado_Proceso" ColumnName="Estado_Proceso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ET_Pesaje_Detalle">
+            <EntityTypeMapping TypeName="TrazabilidadDBModelo.ET_Pesaje_Detalle">
+              <MappingFragment StoreEntitySet="ET_Pesaje_Detalle">
+                <ScalarProperty Name="IdEtPesaje_Detalle" ColumnName="IdEtPesaje_Detalle" />
+                <ScalarProperty Name="IdEtPesajeCabecera" ColumnName="IdEtPesajeCabecera" />
+                <ScalarProperty Name="PesNro" ColumnName="PesNro" />
+                <ScalarProperty Name="PesCarIde" ColumnName="PesCarIde" />
+                <ScalarProperty Name="PesComFec" ColumnName="PesComFec" />
+                <ScalarProperty Name="PesTarFec" ColumnName="PesTarFec" />
+                <ScalarProperty Name="PesComBrut" ColumnName="PesComBrut" />
+                <ScalarProperty Name="PesComNet" ColumnName="PesComNet" />
+                <ScalarProperty Name="PesTar" ColumnName="PesTar" />
+                <ScalarProperty Name="PesConSelPor" ColumnName="PesConSelPor" />
+                <ScalarProperty Name="PesConId" ColumnName="PesConId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ET_Pesaje_Sello">
+            <EntityTypeMapping TypeName="TrazabilidadDBModelo.ET_Pesaje_Sello">
+              <MappingFragment StoreEntitySet="ET_Pesaje_Sello">
+                <ScalarProperty Name="IdEtPesajeSello" ColumnName="IdEtPesajeSello" />
+                <ScalarProperty Name="IdEtPesajeCabecera" ColumnName="IdEtPesajeCabecera" />
+                <ScalarProperty Name="CnvIdSello" ColumnName="CnvIdSello" />
+                <ScalarProperty Name="CnvSelloIni" ColumnName="CnvSelloIni" />
+                <ScalarProperty Name="CnvSelloFin" ColumnName="CnvSelloFin" />
+                <ScalarProperty Name="CnvSelloEstado" ColumnName="CnvSelloEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

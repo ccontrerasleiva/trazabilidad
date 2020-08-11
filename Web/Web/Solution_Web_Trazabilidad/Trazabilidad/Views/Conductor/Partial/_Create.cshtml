@@ -1,0 +1,43 @@
+﻿@model ViewModels.Models.Conductor
+
+<div id="modal-create" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    @using(Html.BeginForm(nameof(Trazabilidad.Controllers.ConductorController.Create), nameof(Resources.Strings.Models.Conductor), FormMethod.Post, htmlAttributes: new { @id = "modal-element-create" }))
+                    {
+                        <div class="col-sm-12">
+                            <h3 class="m-t-none m-b">Crear Nuevo Conductor</h3>
+
+                           @* <p>Ingresar un nuevo Conductor al sistema con el fin de asignarle servicios.</p>*@
+
+                            <form role="form">
+                                <div class="form-group">
+                                    @Html.LabelFor(cl => cl.Rut, "Rut")
+                                    @Html.TextBoxFor(cl => cl.Rut, htmlAttributes: new { @class = "form-control", placeholder = "Rut del Conductor" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(cl => cl.Nombres, "Nombre")
+                                    @Html.TextBoxFor(cl => cl.Nombres, htmlAttributes: new { @class = "form-control", placeholder = "Nombre del Conductor" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(cl => cl.Apellidos, "Apellido")
+                                    @Html.TextBoxFor(cl => cl.Apellidos, htmlAttributes: new { @class = "form-control", placeholder = "Apellido del Conductor" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(cl => cl.Celular, "Celular")
+                                    @Html.TextBoxFor(cl => cl.Celular, htmlAttributes: new { @class = "form-control", placeholder = "Celular" })
+                                </div>
+
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+                                </div>
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

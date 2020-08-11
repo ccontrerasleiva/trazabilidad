@@ -1,0 +1,93 @@
+﻿@model ViewModels.Models.Itinerario
+
+<div id="modal-create" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+
+                    @using (Html.BeginForm("Create", "Itinerario", FormMethod.Post, htmlAttributes: new { @id = "modal-element-create" }))
+                    {
+                        <div class="col-sm-12">
+                            <h3 class="m-t-none m-b">Nuevo Itinerario</h3>
+
+                            <p>Nuevo Itinerario</p>
+
+                            <form role="form">
+
+                                <div class="form-group">
+                                    @Html.LabelFor(sch => sch.Descripcion, "Descripción del Itinerario")
+                                    @Html.TextBoxFor(srv => srv.Descripcion, htmlAttributes: new { @class = "form-control", placeholder = "Descripción" })
+                                    @Html.ValidationMessageFor(sch => sch.Descripcion)
+                                </div>
+                                
+                                @if (ViewBag.Services != null)
+                                {
+                                    <div class="form-group">
+                                        @*@Html.LabelFor(srv => srv.Servicio.Id , "Servicio")
+                                            @Html.DropDownListFor( model => model.Servicio.Id, (SelectList) ViewBag.Services, "Seleccione un Servicio", htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(sch => sch.Servicio.Id)*@
+                                        @Html.LabelFor(srv => srv.Id_Servicio, "Servicio")
+                                        @Html.DropDownListFor(model => model.Id_Servicio, (SelectList)ViewBag.Services, "Seleccione un Servicio", htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(sch => sch.Id_Servicio)
+                                    </div>
+                                }
+
+                                <div class="form-group">
+                                    <label class="control-label">Frecuencia del Servicio</label>
+
+                                    <div class="col-sm-10">
+                                        <label class="checkbox-inline">
+                                            @Html.CheckBoxFor(model => model.Frecuencia_Lunes) Lun
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.CheckBoxFor(model => model.Frecuencia_Martes) Mar
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.CheckBoxFor(model => model.Frecuencia_Miercoles) Mie
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.CheckBoxFor(model => model.Frecuencia_Jueves) Jue
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.CheckBoxFor(model => model.Frecuencia_Viernes) Vie
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.CheckBoxFor(model => model.Frecuencia_Sabado) Sáb
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            @Html.CheckBoxFor(model => model.Frecuencia_Domingo) Dom
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label"></label>
+                                    <div class="form-group" id="data_5">
+                                        <label class="control-label">Vigencia</label>
+                                        <div class="input-daterange input-group" id="datepicker">
+                                            @Html.TextBoxFor(mo => mo.Fecha_Inicio_Vigencia, htmlAttributes: new { @class = "input-sm form-control", name = "start" }, format: "dd/MM/yyyy")
+                                            <span class="input-group-addon">hasta</span>
+                                            @Html.TextBoxFor(mo => mo.Fecha_Fin_Vigencia, htmlAttributes: new { @class = "input-sm form-control", name = "end" }, format: "dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                                        <strong>
+                                            <i class="fa fa-plus"></i> Guardar
+                                        </strong>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

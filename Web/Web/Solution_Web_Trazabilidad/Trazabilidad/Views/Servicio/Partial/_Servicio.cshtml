@@ -1,0 +1,74 @@
+﻿@model ViewModels.Models.Servicio
+@using Trazabilidad.Controllers
+@using Resources.Strings
+<tr>
+    @using (Html.BeginForm(nameof(Trazabilidad.Controllers.ServicioController.Edit), nameof(Resources.Strings.Models.Servicio), FormMethod.Post))
+    {
+        @Html.HiddenFor(x => x.Id)
+        <td>@Model.Codigo</td>
+        <td>@Model.Itinerario.Count</td>
+
+        if (@Model.Deshabilitado == false){
+            <td>Habilitado</td>}
+        else{
+            <td>Deshabilitado</td>}
+
+        <td>
+            @*@using (Html.BeginForm(nameof(ServicioController.ToggleService), nameof(Models.Servicio), routeValues: new { id = Model.Id }))*@
+            <div class="input-group">
+                <div class="input-group-btn">
+
+                    <a data-toggle="modal" onclick="Edit(@Model.Id,1)" href="#modal-edit" class="btn btn-primary"><i class="fa fa-pencil" data-id="@Model.Id"></i> </a>
+                    <a data-toggle="modal" onclick="Delete(@Model.Id,1)" href="#modal-delete" class="btn btn-primary"><i class="fa fa-trash-o" data-id="@Model.Id"></i> </a>
+
+                    @*onClick="return aceptar(rate_id_amount,rate_id_amount2.value);">*@
+
+                    @*<a data-toggle="modal" onclick="editServ(@Model.Id)" href="#modal-edit" class="btn btn-primary"><i class="fa fa-pencil" data-id="@Model.Id"></i> </a>*@
+                    @*<a data-toggle="modal" onclick="deleteServ(@Model.Id)" href="#modal-delete" class="btn btn-primary"><i class="fa fa-trash-o" data-id="@Model.Id"></i> </a>*@
+
+                    @*<a href="@Url.Action("Index","Servicio", routeValues: new { id = Model.Codigo })" class="btn btn-xs btn-success"><i class="fa fa-search"></i></a>*@
+
+                    @*<button type="submit" class="btn btn-xs @(Model.Deshabilitado ? "btn-success" : "btn-default")">
+                        <i class="fa fa-power-off" aria-hidden="true"></i>
+                        </button>*@
+                </div>
+            </div>
+        </td>
+    }
+</tr>
+
+@*AGREGADO. JTC.(Crea el formulario que edita y elimina)*@
+<div id="modal-edit" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="ServicioEdit">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-delete" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="ServicioDelete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

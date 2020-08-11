@@ -1,0 +1,219 @@
+﻿@model ViewModels.Models.Programacion
+@{
+    ViewBag.Title = "Home";
+    ViewBag.Header = "Asignación Mensual de Tripulantes";
+}
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-8">
+        <h2>@ViewBag.Header</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+            </li>
+            <li class="active">
+                <strong>@ViewBag.Header</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-sm-4">
+        <ol class="breadcrumb">
+            <li>
+                @*<a href="@Url.Action("LoadProgramacion", "Programacion")">Generar Programación</a>*@
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="wrapper wrapper-content">
+
+    @using (Html.BeginForm("DownloadProgramacion", "Programacion"))
+    {
+        @*RESTO DE LA PAGINA*@
+        @*<div class="row">*@ @*comentado jtc.*@
+        <div class="row wrapper border-bottom white-bg page-heading">
+            @*agregado.jtc*@
+            <div class="col-lg-6 calendar">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <h3>Paso 1 - Descarga Excel</h3>
+                        <h4>Seleccione periodo a descargar y luego presione "Descargar Excel"</h4>
+                        <div class="bs-callout bs-callout-info" id="migration">
+                            <div class="input-group">
+                                @Html.TextBoxFor(Model => Model.Dia, format: "{0:yyyy-MM}", htmlAttributes: new { required = "required", @class = "form-control", @type = "month", @value = @DateTime.Now.ToString("yyyy-MM") })
+                            </div>
+                            <div class="input-group"></div>
+                            <div class="input-group">
+                                <input type="submit" value="Descargar Excel" />
+                                @* <h4> <a href="@Url.Action("DownloadProgramacion", "Programacion",new { @class = "btn btn-primary" } )">Descargar Excel</a></h4>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 calendar">
+            </div>
+        </div>
+        <!-- </div>-->
+    }
+    <br /> @*agregado.jtc*@
+    <!--<div class="wrapper wrapper-content">-->
+    @*<div class="row">*@ @*comentado jtc.*@
+    <div class="row wrapper border-bottom white-bg page-heading">
+        @*agregado.jtc*@
+        <div class="col-lg-6 calendar">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <h3>Paso 2 - Carga de Excel</h3>
+                    <h4>Seleccione archivo a cargar y luego presione "Subir archivo"</h4>
+
+                    @using (Html.BeginForm("UploadExcel", "Programacion", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            <input type="file" name="files" id="files" value="Selecciona el archivo" />
+                        </div>
+                        <input type="button" id="btnUpload" value="Subir archivo" class="btn btn-primary" disabled />
+                        <!--<input type="submit" value="Subir archivo" />-->
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 calendar">
+            <div id="divProcessing" style="display:none">
+                <p>  Espere un momento ... <img src="~/Content/img/Rolling.gif" /> </p>
+            </div>
+        </div>
+
+    </div>
+    <br /> @*agregado.jtc*@
+    @*<div class="row" id="dvConfirmar" style="display: none;">*@
+    <div class="row wrapper border-bottom white-bg page-heading" id="dvConfirmar" style="display: none;">
+        @*agregado.jtc*@
+        <div class="col-lg-6 calendar">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    @using (Html.BeginForm("ConfirmarExcel", "Programacion", FormMethod.Post))
+                    {
+                        <h3>Paso 3 - Confirmar Carga</h3>
+                        <h4>Presione el botón confirmar para que los cambios se hagan efectivos</h4>
+                        <input type="submit" value="Confirmar" />
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 calendar">
+
+        </div>
+    </div>
+</div>
+
+<div id="divResult">
+</div>
+<br /> @*agregado.jtc*@
+@section Scripts {
+    <script src="~/Scripts/chosen.jquery.js"></script>
+
+    <script type="text/javascript">
+
+        $("#files").on('change', function (e) {
+            var files = e.target.files;
+            if (files.length > 0) {
+                $("#btnUpload").prop("disabled", false);
+            }
+        });
+
+
+        $("#btnUpload").click(function () {
+            $("#divProcessing").show();
+            var url = "/Programacion/UploadExcel/";
+            var fileUpload = $("#files").get(0);
+            var files = fileUpload.files;
+            if (files.length > 0) {
+                if (window.FormData !== undefined) {
+                    var data = new FormData();
+                    for (var i = 0; i < files.length; i++) {
+                        data.append("file" + i, files[i]);
+                    }
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function (result) {
+                            $("#divProcessing").hide();
+                            if (result.estado == "OK") {
+                                toastr.success("Archivo cargado correctamente", "Excel");
+                                $("#dvConfirmar").css("display", "block");
+                            } else {
+                                toastr.error(result.Msg, "Error");
+                            }
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            $("#divProcessing").hide();
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] == "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                        }
+                    });
+                }
+            }
+        }); 
+
+                                    //function ejecutarUpload() {
+                                    //    var url = "Programacion/UploadExcel";
+                                    //    var data = new FormData();
+                                    //    jQuery.each(jQuery('#file')[0].files, function (i, file) {
+                                    //        data.append('file-' + i, file);
+                                    //    });
+
+                                    //    $.ajax({
+                                    //        url: url,
+                                    //        type: "POST",
+                                    //        data: data,
+                                    //        dataType: "json",
+                                    //        success: function (resp) {
+                                    //            debugger;
+                                    //            // Hide the "busy" gif:
+                                    //            $("#divProcessing").hide();
+                                    //            // Do something useful with the data:
+                                    //            //$("<h3>" + resp.FirstName + " " + resp.LastName + "</h3>").appendTo("#divResult");
+                                    //        }
+                                    //    });
+                                    //}
+                                                                            //$(document).ready(function () {
+                                                                            //    // Hide the "busy" Gif at load:
+                                                                            //    $("#divProcessing").hide();
+                                                                            //    $("#frmDownload").on("submit", function (event) {
+                                                                            //        event.preventDefault();
+                                                                            //        // Show the "busy" Gif:
+                                                                            //        $("#divProcessing").show();
+                                                                            //        var url = $(this).attr("action");
+                                                                            //        var formData = $(this).serialize();
+                                                                            //        $.ajax({
+                                                                            //            url: url,
+                                                                            //            type: "POST",
+                                                                            //            data: formData,
+                                                                            //            dataType: "json",
+                                                                            //            success: function (resp) {
+                                                                            //                debugger;
+                                                                            //                // Hide the "busy" gif:
+                                                                            //                $("#divProcessing").hide();
+                                                                            //                // Do something useful with the data:
+                                                                            //                //$("<h3>" + resp.FirstName + " " + resp.LastName + "</h3>").appendTo("#divResult");
+                                                                            //            }
+                                                                            //        })
+                                                                            //    });
+                                                                            //});
+    </script>
+}
+
+@section Styles{
+    <link href="~/Content/fullcalendar.css" rel="stylesheet" />
+    <link href="~/Content/fullcalendar.print.css" rel="stylesheet" media="print" />
+    <link href="~/Content/bootstrap-chosen.css" rel="stylesheet" />
+}

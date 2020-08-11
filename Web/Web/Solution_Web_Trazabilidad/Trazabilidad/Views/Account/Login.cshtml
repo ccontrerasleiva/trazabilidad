@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Ingreso al Sistema";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body class="gray-bg">
+    <div class="middle-box text-center lockscreen animated fadeInDown">
+        <div>
+            <div class="m-b-md">
+                <img alt="image" class="" src="~/Content/img/logo.png" style="width:50%;">
+            </div>
+            <h3>Gestión de Jornada e Itinerario</h3>
+            <p>Bienvenido al portal de Gestión e Itinerario de FEPASA. Para ingresar por favor haga clic al botón en la parte inferior.</p>
+            @*<a href="@Url.Action("SignIn", "Account", routeValues: null)" id="loginLink" class="m-t btn btn-lg btn-success">
+                <i class="fa fa-sign-in"></i> Ingresar
+            </a>*@
+        </div>
+    </div>
+
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")*@
+</body>
+</html>

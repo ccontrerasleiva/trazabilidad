@@ -1,0 +1,118 @@
+﻿
+@model ViewModels.Models.Tripulante
+@using ViewModels.Enum;
+@if (Model != null) {
+    <div class="GestionTrip @(Model.Tripulante_Persona.Base.Nombre.ToLower().Replace(' ', '-'))">
+    <div class="ibox float-e-margins accordion">
+    <div class="ibox-title accordion-head">
+        <a class="toggler">
+            <h3>
+                @*<strong style="padding-right:10px;">#@Model.Itinerario.Servicio.Codigo</strong>
+                    <strong style="padding-right:10px;">@Model.Itinerario.Origen.Codigo - @Model.Itinerario.Destino.Codigo</strong>
+
+                    <strong>
+                        @Model.HoraInicio.ToString("dd/MM")
+                        @Model.HoraInicio.ToString("HH:mm")
+                        ---
+                        @Model.HoraFin.ToString("dd/MM")
+                        @Model.HoraFin.ToString("HH:mm")
+                    </strong>
+                    <i class="fa fa-chevron-down pull-right"></i>
+                    @if (Model.Estado >= (int)EstadoTren.Confirmado && Model.Estado < (int)EstadoTren.Finalizado)
+                    {
+                        <strong class="pull-right" style="padding-right:10px; text-align:right">
+                            @Resources.Util.Enums.GetDescription((ViewModels.Enum.EstadoTren)Model.Estado)
+                        </strong>
+                    }
+
+                    @if (Model.Estado >= (int)EstadoTren.ATiempo && Model.Estado < (int)EstadoTren.Finalizado)
+                    {
+                        <strong class="pull-right" style="padding-right:10px; text-align:right">
+                           En Curso: @Model.Tren_Tramos.OrderByDescending(x => x.Id).Select(y => y.Tiempo_Acumulado).FirstOrDefault()
+                        </strong>
+                    }*@
+                <strong>@Model.Tripulante_Persona.Nombre</strong>
+                <strong style="padding-right:10px; padding-left:10px; text-align:center">(Base @Model.Tripulante_Persona.Base.Nombre)</strong>
+
+
+
+                <strong style="padding-right:10px; padding-left:10px; text-align:center">(Rol @Model.Rol)</strong>
+
+            </h3>
+        </a>
+    </div>
+    <div class="ibox-content toggled">
+
+        <div class="row">
+
+            <div class="col-xs-12">
+
+
+                <strong>Actividades Asignadas </strong>
+
+                <strong class="pull-right" style="padding-right:10px; padding-left:10px; text-align:center">
+                    <a data-toggle="modal" onclick="Create(@Model.Id,1)" href="#modal-create" class="btn btn-primary"><i class="fa fa-plus" data-id="@Model.Id" data-idActividad="@Model.">Agregar Pasajero</i> </a>
+                    @*<a data-toggle="modal" href="#modal-create" class="btn btn-primary"><i class="fa fa-plus"></i>Agregar Pasajero</a>*@
+                </strong>
+                <strong class="pull-right" style="padding-right:10px; padding-left:10px; text-align:center">
+                    <a data-toggle="modal" onclick="Create(@Model.Id,2)" href="#modal-create2" class="btn btn-primary"><i class="fa fa-plus" data-id="@Model.Id" data-idActividad="@Model.">Agregar Patio</i> </a>
+                </strong>
+
+
+
+                <table class="table table-sm table-hover issue-tracker">
+                    <tbody>
+
+                        @if (Model.Actividades != null && Model.Actividades.Count() > 0)
+                        {
+
+                            foreach (var act in Model.Actividades)
+                            {
+                                @Html.Partial("GestionTripulante/Partial/_Actividades", act)
+                            }
+                        }
+                    </tbody>
+                </table>
+
+
+
+                <strong>Este tripulante tiene un total de @Model.HorasTotalesasignadas de tiempo Asignado a su Jornada </strong>
+                @*<a data-train-id="@Model.Id" data-toggle="modal" href="#modal-edit" class="btn btn-success showModal"><i class="fa fa-pencil"></i> Modificar</a>*@
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+}
+
+<div id="modal-create" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="ActividadPasajeroCreate">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-create2" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" id="ActividadPatioCreate">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    @*<script src="~/Scripts/GestionDiaria.js"></script>*@
+    @*<script src="~/Scripts/ModalGestionDiaria.js"></script>*@
+    <script src="~/Scripts/Modal.Gestion.js"></script>
+
+}
+

@@ -1,0 +1,17 @@
+﻿@model ViewModels.Models.Tramo
+
+@using (Html.BeginForm(nameof(Trazabilidad.Controllers.TramoController.Delete), nameof(Resources.Strings.Models.Tramo), FormMethod.Post, htmlAttributes: new { @id = "modal-element-delete" }))
+{
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="col-sm-12">
+        <h3 class="m-t-none m-b">Eliminar Tramo</h3>
+        <form role="form">
+            <h4 class="m-t-none m-b">¿Desea eliminar Tramo ?</h4>
+
+            <div>
+                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Eliminar Tramo</strong></button>
+            </div>
+        </form>
+    </div>
+}

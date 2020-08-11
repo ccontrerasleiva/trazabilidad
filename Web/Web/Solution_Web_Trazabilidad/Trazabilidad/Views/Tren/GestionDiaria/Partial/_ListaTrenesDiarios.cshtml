@@ -1,0 +1,91 @@
+﻿@model ViewModels.Models.Tren_Locomotora
+<div id="modal-edit" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="m-t-none m-b">Agregar Pareja de Tripulantes</h3>
+                    </div>
+                    <div class="col-md-12">
+                        @using (Html.BeginForm(nameof(Trazabilidad.Controllers.TrenController.CreateLoc),
+                            nameof(Resources.Strings.Models.Tren), FormMethod.Post, htmlAttributes: new { @id = "modal-element-edit" }))
+                        {
+                            foreach (var trenLocom in Model.Tripulantes)
+                                {
+                                    @*@Html.Partial("Partial/Plans/Daily/Edit/_AgregarPareja", trenLocom)*@
+                                }
+                            <form role="form">
+                                @*<div id="trainForm">
+                                    </div>*@
+                                @Html.HiddenFor(x => x.Id_Tren)
+
+                                <div class="form-group">
+                                    @Html.LabelFor(tt => tt.Locomotora.Patente, "Locomotora")
+
+                                    @Html.DropDownListFor(tt => tt.Id_Locomotora, (SelectList)ViewBag.Locomotoras, "Seleccione una Locomotora", htmlAttributes: new { @class = "form-control chosen-select" })
+                                    @Html.ValidationMessageFor(tt => tt.Id_Locomotora, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(tt => tt.Maquinista, "Maquinista")
+
+                                    @Html.DropDownListFor(tt => tt.Maquinista, (SelectList)ViewBag.Tripulantes, "Seleccione una Maquinista", htmlAttributes: new { @class = "form-control chosen-select" })
+                                    @Html.ValidationMessageFor(tt => tt.Maquinista, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(tt => tt.JefeTren, "Jefe de Tren")
+
+                                    @Html.DropDownListFor(tt => tt.JefeTren, (SelectList)ViewBag.Tripulantes, "Seleccione una Jefe de Tren", htmlAttributes: new { @class = "form-control chosen-select" })
+                                    @Html.ValidationMessageFor(tt => tt.JefeTren, null, new { @class = "text-danger" })
+                                </div>
+                                @*<div class="col-md-6">
+                                        <button id="addLocomotive" class="btn btn-sm btn-success pull-left m-t-n-xs" type="button"><i class="fa fa-train"></i> Agregar Locomotora</button>
+                                    </div>*@
+                                <div class="col-md-6">
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+                                </div>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*@model ViewModels.Models.Tren_Locomotora*@
+<div id="modal-delete" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="m-t-none m-b">Eliminar Locomotora y sus asignados</h2>
+                    </div>
+                    <div class="col-md-12">
+
+                        @using (Html.BeginForm(nameof(Trazabilidad.Controllers.TrenController.DeleteTrenLoc), nameof(Resources.Strings.Models.Tren), FormMethod.Post, htmlAttributes: new { @id = "modal-element-delete" }))
+
+                            {
+                                @Html.HiddenFor(x => x.Id)
+                                               
+                                                    
+
+                                    <form role="form">
+
+                                       <h4 class="m-t-none m-b">¿Desea eliminar locomotora y tripulantes al tren  ?</h4>
+
+                                          <div>
+                                            <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Eliminar</strong></button>
+                                          </div>
+                                    </form>
+                                                
+                                            
+                            }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

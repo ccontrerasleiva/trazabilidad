@@ -1,0 +1,216 @@
+﻿@model IEnumerable<ViewModels.Models.Trazabilidad>
+@{
+    ViewBag.Title = "Trazabilidad";
+    ViewBag.Header = "Resumen General";
+}
+
+
+@using Trazabilidad.Controllers;
+@using Resources.Strings;
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-8">
+        <h2>@ViewBag.Header</h2>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action(" Index", "Home" )">Inicio</a></li>
+            <li class="active"><strong>Resumen Jornada</strong></li>
+        </ol>
+    </div>
+</div>
+
+@*RESTO DE LA PAGINA*@
+<div class="wrapper wrapper-content scrooll">
+    <div >
+        <div >
+            <div  >
+                <button id="ExportaExcell" style="display:none" type="button">Exportar a Excel</button>
+                <br />
+                <div id="excel">
+
+                </div>
+            </div>
+            <div class="content">
+                <div id="output" >
+                    <div id="divProcessing" style="display:none"  align="center">
+                        <div class="center-block">
+                            <p>  Espere un momento ... <img src="~/Content/img/Rolling.gif" width="50" height="50" /> </p>
+                        </div>
+                    </div>
+
+                    <table id="tblReporte" border="0" style=" display:none; height:auto;">
+                        <thead>
+                            <tr>
+                                <th class="head">Ruta</th>
+                                <th>Nombre Cliente</th>
+                                <th>Celular_Cliente</th>
+                                <th>Fecha_Registro</th>
+                                <th>Fecha_Inicio</th>
+                                <th>Fecha_Cierre</th>
+                                <th>Rut_Conductor</th>
+                                <th>Nombre_Conductor</th>
+                                <th>Celular_Conductor</th>
+                                <th>Observación</th>
+                                <th>Locomotora</th>
+                                <th>Locomotora_Patente</th>
+                                <th>Carro</th>
+                                <th>Carro_Patente</th>
+                                <th>Contenedor</th>
+                                <th>Contenedor_Patente</th>
+                                <th>Status</th>
+                                <th>Tag</th>
+                                <th>Código_Sello</th>
+                                <th>Peso_Neto</th>
+                                <th>Peso_Bruto</th>
+                                <th>Peso_Tasa</th>
+                                <th>Sello</th>
+
+                            </tr>
+                        </thead>
+                        <tbody style="overflow-x: auto;"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            @section scripts{-
+             
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+
+
+
+                @Scripts.Render("~/bundles/DTList")
+                @Scripts.Render("~/bundles/DTList2")
+                @Scripts.Render("~/bundles/DTList2_CSS")
+              
+                <script>
+                    $(function () {
+                        //$("#divProcessing").show();
+                      
+                        $.getJSON("/Trazabilidad/ResumenGeneral", function (mps) {
+                            $(mps).each(function () {
+                                //alert(this.Carro);
+                                var fila = "";
+                                fila = fila + "<tr><td>" + this.Ruta +
+                                    "</td><td>" + this.Cliente +
+                                    "</td><td>" + this.Celular_Cliente +
+                                    "</td><td>" + this.FechaRegistro +
+                                    "</td><td>" + this.FechaInicio +
+                                    "</td><td>" + this.FechaCierre +
+                                    "</td><td>" + this.Rut_Conductor +
+                                    "</td><td>" + this.Conductor +
+                                    "</td><td>" + this.Celular_Conductor +
+                                    "</td><td>" + this.Observacion +
+                                    "</td><td>" + this.Locomotora +
+                                    "</td><td>" + this.Locomotora_Patente +
+                                    "</td><td>" + this.Carro +
+                                    "</td><td>" + this.Carro_Patente +
+                                    "</td><td>" + this.Contenedor +
+                                    "</td><td>" + this.Contenedor_Patente +
+                                    "</td><td>" + this.Statu +
+                                    "</td><td>" + this.Tag +
+                                    "</td><td>" + this.CodigoSello +
+                                    "</td><td>" + this.PesoNeto +
+                                    "</td><td>" + this.PesoBruto +
+                                    "</td><td>" + this.PesoTara +
+                                    "</td><td>" + this.Sello +
+                                    "</td></tr>";
+                                $(fila).appendTo("#tblReporte tbody");
+                            });
+
+                        $.pivotUtilities.tipsData2 = $.pivotUtilities.tipsData;
+                           //alert($.pivotUtilities.tipsData2);
+                    
+                            $("#output").pivotUI(
+                                $("#tblReporte"), {
+                                    rows: ["Locomotora"],
+                                    cols: ["Contenedor"],
+                                    vals: ["Peso_Neto", "Peso_Bruto"],
+                                    aggregatorName: "Sum over Sum",
+                                    rendererName: "Bar Chart",
+                                    renderers: $.extend(
+                                        $.pivotUtilities.renderers,
+                                        $.pivotUtilities.c3_renderers
+                                    )
+                                });
+                
+                        });
+                    });
+                </script>
+
+                <script>
+                    var acc = document.getElementsByClassName("accordion");
+                    var i;
+
+                    for (i = 0; i < acc.length; i++) {
+                        acc[i].addEventListener("click", function () {
+                            this.classList.toggle("active");
+                            var panel = this.nextElementSibling;
+                            if (panel.style.maxHeight) {
+                                panel.style.maxHeight = null;
+                            } else {
+                                panel.style.maxHeight = panel.scrollHeight + "px";
+                            }
+                        });
+                    }
+                </script>
+
+                @*<script>
+                    //$("#hideSelect").click(function (e) {
+                    //    var contenidoTabla = "<table>" + $("table.pvtTable").html() + "</table>";
+                    //    window.open('data:application/vnd.ms-excel,' + encodeURIComponent(contenidoTabla));
+                    //    e.preventDefault();
+                    //});
+            </script>*@
+                <script>
+                    ExportaExcell.style = "display:block"
+                </script>
+                <script>
+                    function sendToExcel(html) {
+                        var parent = $("<div>").append(html);
+                        parent.find("br").replaceWith('<br style="mso-data-placement:same-cell" />');
+                        html = parent.html();
+
+                        // IE?
+                        if (navigator.msSaveOrOpenBlob) {
+                            navigator.msSaveOrOpenBlob(new Blob([html]), "ResumenTrazabilidad.xls");
+                        }
+
+                        // Non-IE.
+                        else {
+                            $("<a>", {
+                                download: "ResumenTrazabilidadGrafica.xls",
+                                href: "data:text/html," + encodeURIComponent(html)
+                            })[0].click();
+                        }
+                    }
+
+                    $(function () {
+                        $("#ExportaExcell").click(function (e) {
+                            sendToExcel("<table>" + $("table.pvtTable").html() + "</table>")
+                            e.preventDefault();
+                        });
+                    });
+
+                </script>
+            }
+
+            @section styles {
+               
+                @*<link href="~/Content/bootstrap-chosen.css" type="text/css" rel="stylesheet" hidden="hidden" />*@
+                <style>
+                    #page-wrapper {
+                        /*    height: 100% !important;*/
+                        font-size: 10px;
+                        /*  width: 90%;  */
+                    }
+
+                    */
+
+                    .cscrooll {
+                    }
+                </style>
+            }
+

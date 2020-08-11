@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TrazabilidadModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ET_Convoy_Cabecera">
+          <Key>
+            <PropertyRef Name="IdEtConvoyCabecera" />
+          </Key>
+          <Property Name="IdEtConvoyCabecera" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CnvBseCod" Type="int" />
+          <Property Name="CnvBasCod" Type="int" />
+          <Property Name="CnvID" Type="varchar" MaxLength="60" />
+          <Property Name="CnvObs" Type="varchar" MaxLength="255" />
+          <Property Name="CnvCicPesCod" Type="int" />
+          <Property Name="CnvChoid" Type="int" />
+          <Property Name="CnvChoDid" Type="varchar" MaxLength="1" />
+          <Property Name="CnvChoNom" Type="varchar" MaxLength="60" />
+          <Property Name="Procesado" Type="bit" />
+          <Property Name="IdCV" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="ET_Convoy_Detalle">
+          <Key>
+            <PropertyRef Name="IdEtConvoyDetalle" />
+          </Key>
+          <Property Name="IdEtConvoyDetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEtConvoyCabecera" Type="int" Nullable="false" />
+          <Property Name="PesCarIde" Type="varchar" MaxLength="10" />
+          <Property Name="PesCarDes" Type="varchar" MaxLength="30" />
+          <Property Name="PesConId" Type="int" />
+          <Property Name="PesConDes" Type="varchar" MaxLength="30" />
+          <Property Name="PesConSelPor" Type="varchar" MaxLength="12" />
+        </EntityType>
+        <Association Name="FK_ET_Comboy_Detalle_ET_Comboy_Cabecera">
+          <End Role="ET_Convoy_Cabecera" Type="Self.ET_Convoy_Cabecera" Multiplicity="1" />
+          <End Role="ET_Convoy_Detalle" Type="Self.ET_Convoy_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ET_Convoy_Cabecera">
+              <PropertyRef Name="IdEtConvoyCabecera" />
+            </Principal>
+            <Dependent Role="ET_Convoy_Detalle">
+              <PropertyRef Name="IdEtConvoyCabecera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TrazabilidadModelStoreContainer">
+          <EntitySet Name="ET_Convoy_Cabecera" EntityType="Self.ET_Convoy_Cabecera" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ET_Convoy_Detalle" EntityType="Self.ET_Convoy_Detalle" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ET_Comboy_Detalle_ET_Comboy_Cabecera" Association="Self.FK_ET_Comboy_Detalle_ET_Comboy_Cabecera">
+            <End Role="ET_Convoy_Cabecera" EntitySet="ET_Convoy_Cabecera" />
+            <End Role="ET_Convoy_Detalle" EntitySet="ET_Convoy_Detalle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TrazabilidadModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ET_Convoy_Cabecera">
+          <Key>
+            <PropertyRef Name="IdEtConvoyCabecera" />
+          </Key>
+          <Property Name="IdEtConvoyCabecera" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CnvBseCod" Type="Int32" />
+          <Property Name="CnvBasCod" Type="Int32" />
+          <Property Name="CnvID" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="CnvObs" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CnvCicPesCod" Type="Int32" />
+          <Property Name="CnvChoid" Type="Int32" />
+          <Property Name="CnvChoDid" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CnvChoNom" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Procesado" Type="Boolean" />
+          <NavigationProperty Name="ET_Convoy_Detalle" Relationship="Self.FK_ET_Comboy_Detalle_ET_Comboy_Cabecera" FromRole="ET_Convoy_Cabecera" ToRole="ET_Convoy_Detalle" />
+          <Property Name="IdCV" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ET_Convoy_Detalle">
+          <Key>
+            <PropertyRef Name="IdEtConvoyDetalle" />
+          </Key>
+          <Property Name="IdEtConvoyDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEtConvoyCabecera" Type="Int32" Nullable="false" />
+          <Property Name="PesCarIde" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PesCarDes" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PesConId" Type="Int32" />
+          <Property Name="PesConDes" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PesConSelPor" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ET_Convoy_Cabecera" Relationship="Self.FK_ET_Comboy_Detalle_ET_Comboy_Cabecera" FromRole="ET_Convoy_Detalle" ToRole="ET_Convoy_Cabecera" />
+        </EntityType>
+        <Association Name="FK_ET_Comboy_Detalle_ET_Comboy_Cabecera">
+          <End Role="ET_Convoy_Cabecera" Type="Self.ET_Convoy_Cabecera" Multiplicity="1" />
+          <End Role="ET_Convoy_Detalle" Type="Self.ET_Convoy_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ET_Convoy_Cabecera">
+              <PropertyRef Name="IdEtConvoyCabecera" />
+            </Principal>
+            <Dependent Role="ET_Convoy_Detalle">
+              <PropertyRef Name="IdEtConvoyCabecera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TrazabilidadEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ET_Convoy_Cabecera" EntityType="Self.ET_Convoy_Cabecera" />
+          <EntitySet Name="ET_Convoy_Detalle" EntityType="Self.ET_Convoy_Detalle" />
+          <AssociationSet Name="FK_ET_Comboy_Detalle_ET_Comboy_Cabecera" Association="Self.FK_ET_Comboy_Detalle_ET_Comboy_Cabecera">
+            <End Role="ET_Convoy_Cabecera" EntitySet="ET_Convoy_Cabecera" />
+            <End Role="ET_Convoy_Detalle" EntitySet="ET_Convoy_Detalle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TrazabilidadModelStoreContainer" CdmEntityContainer="TrazabilidadEntities">
+    <EntitySetMapping Name="ET_Convoy_Cabecera">
+      <EntityTypeMapping TypeName="IsTypeOf(TrazabilidadModel.ET_Convoy_Cabecera)">
+        <MappingFragment StoreEntitySet="ET_Convoy_Cabecera">
+          <ScalarProperty Name="IdCV" ColumnName="IdCV" />
+                <ScalarProperty Name="IdEtConvoyCabecera" ColumnName="IdEtConvoyCabecera" />
+          <ScalarProperty Name="CnvBseCod" ColumnName="CnvBseCod" />
+          <ScalarProperty Name="CnvBasCod" ColumnName="CnvBasCod" />
+          <ScalarProperty Name="CnvID" ColumnName="CnvID" />
+          <ScalarProperty Name="CnvObs" ColumnName="CnvObs" />
+          <ScalarProperty Name="CnvCicPesCod" ColumnName="CnvCicPesCod" />
+          <ScalarProperty Name="CnvChoid" ColumnName="CnvChoid" />
+          <ScalarProperty Name="CnvChoDid" ColumnName="CnvChoDid" />
+          <ScalarProperty Name="CnvChoNom" ColumnName="CnvChoNom" />
+          <ScalarProperty Name="Procesado" ColumnName="Procesado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ET_Convoy_Detalle">
+      <EntityTypeMapping TypeName="IsTypeOf(TrazabilidadModel.ET_Convoy_Detalle)">
+        <MappingFragment StoreEntitySet="ET_Convoy_Detalle">
+          <ScalarProperty Name="IdEtConvoyDetalle" ColumnName="IdEtConvoyDetalle" />
+          <ScalarProperty Name="IdEtConvoyCabecera" ColumnName="IdEtConvoyCabecera" />
+          <ScalarProperty Name="PesCarIde" ColumnName="PesCarIde" />
+          <ScalarProperty Name="PesCarDes" ColumnName="PesCarDes" />
+          <ScalarProperty Name="PesConId" ColumnName="PesConId" />
+          <ScalarProperty Name="PesConDes" ColumnName="PesConDes" />
+          <ScalarProperty Name="PesConSelPor" ColumnName="PesConSelPor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

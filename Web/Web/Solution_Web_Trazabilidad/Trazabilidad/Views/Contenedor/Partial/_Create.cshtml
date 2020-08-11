@@ -1,0 +1,43 @@
+﻿@model ViewModels.Models.Contenedor
+
+<div id="modal-create" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    @using (Html.BeginForm(nameof(Trazabilidad.Controllers.ContenedorController.Create), nameof(Resources.Strings.Models.Contenedor), FormMethod.Post, htmlAttributes: new { @id = "modal-element-create" }))
+                    {
+                        <div class="col-sm-12">
+                            <h3 class="m-t-none m-b">Ingresar nuevo Contenedor</h3>
+
+                            <form role="form">
+
+                                <div class="form-group">
+                                    @Html.LabelFor(x => x.Descripcion, "Descripción")
+                                    @Html.TextBoxFor(x => x.Descripcion, htmlAttributes: new { @class = "form-control", placeholder = "Descripción" })
+                                    @Html.ValidationMessageFor(x => x.Descripcion)
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(x => x.PesoTara, "Peso Tara")
+                                    @Html.TextBoxFor(x => x.PesoTara, htmlAttributes: new { @class = "form-control", placeholder = "Peso Tara" })
+                                    @Html.ValidationMessageFor(x => x.PesoTara)
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(cl => cl.Patente, "Patente")
+                                    @Html.TextBoxFor(cl => cl.Patente, htmlAttributes: new { @class = "form-control", placeholder = "Patente" })
+                                </div>
+
+
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+                                </div>
+
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

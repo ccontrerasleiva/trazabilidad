@@ -1,0 +1,203 @@
+﻿@model IEnumerable<ViewModels.Models.Novedad>
+@{
+    ViewBag.Title = "Novedades Diarias";
+    ViewBag.Header = "Novedades Diarias";
+}
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-8">
+        <h2>@ViewBag.Header</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+            </li>
+            <li class="active">
+                <strong>Novedades Diarias</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-sm-4">
+        <div class="title-action">
+            <a data-toggle="modal" href="#modal-create" class="btn btn-primary"><i class="fa fa-plus"></i> Nueva</a>
+        </div>
+    </div>
+</div>
+
+@*RESTO DE LA PAGINA*@
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+
+                <div class="ibox-content" style="">
+                    <div class="clearfix">
+                        <select class="form-control filter-button-group chosen-select pull-left" style="width:30%;">
+                            <option data-filter="*">Mostrar Todo</option>
+                            <option data-filter=".problemas-con-la-carga">Problemas con la Carga</option>
+                            <option data-filter=".accidente-a-personal">Accidente a Personal</option>
+                            <option data-filter=".accidente-a-terceros">Accidente a Terceros</option>
+                            <option data-filter=".ingreso-storage">Ingreso Storage</option>
+                            <option data-filter=".carpas">Carpas</option>
+                            <option data-filter=".carros">Carros</option>
+                            <option data-filter=".vias">Vías</option>
+                            <option data-filter=".comunicaciones">Comunicaciones</option>
+                            <option data-filter=".ipa">IPA</option>
+                        </select>
+                        <div class="button-group pull-right option-set" data-option-key="sortAscending">
+                            <a class="btn btn-default" href="#sortAscending=false" data-option-value="false">Fecha descendente <i class="fa fa-long-arrow-down"></i></a>
+                            <a class="btn btn-default" href="#sortAscending=true" data-option-value="true">Fecha ascendente <i class="fa fa-long-arrow-up"></i></a>
+                        </div>
+                    </div>
+                    @*<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Buscar...">*@
+                    <ul class="novedades">
+
+                        @*<li class="novedad accidente-a-personal">
+                                <p>00:33 EMPALME 50009 3208 REPORTADO POR: CLAUDIO YÁÑEZ, PATENTES: 3208 Notificados: DANIEL NÚÑEZ, JORGE BADILLA Evento/Falla : FALLA DE LOC. DESCARGA DE BATERÍAS, POR DICHA SITUACIÓN SE SUPRIME TREN 50009 Observación: FALLA DE LOC. DESCARGA DE BATERÍAS, POR DICHA SITUACIÓN SE SUPRIME TREN 50009.</p>
+                                <p class="pull-left">Reportado por: Claudio Yáñez</p>
+                                <p class="pull-left">Fecha reporte: <span class="date">10/11/2017 20:00</span></p>
+                            </li>
+                            <li class="novedad accidente-a-terceros">
+                                <p>00:33 EMPALME 50009 3208 REPORTADO POR: CLAUDIO YÁÑEZ, PATENTES: 3208 Notificados: DANIEL NÚÑEZ, JORGE BADILLA Evento/Falla : FALLA DE LOC. DESCARGA DE BATERÍAS, POR DICHA SITUACIÓN SE SUPRIME TREN 50009 Observación: FALLA DE LOC. DESCARGA DE BATERÍAS, POR DICHA SITUACIÓN SE SUPRIME TREN 50009.</p>
+                                <p class="pull-left">Reportado por: Claudio Yáñez</p>
+                                <p class="pull-left">Fecha reporte:  <span class="date" data-date="2017-11-22T13:00:00Z">22/11/2017 13:00</span></p>
+                            </li>
+                            <li class="novedad ipa">
+                                <p>00:33 EMPALME 50009 3208 REPORTADO POR: CLAUDIO YÁÑEZ, PATENTES: 3208 Notificados: DANIEL NÚÑEZ, JORGE BADILLA Evento/Falla : FALLA DE LOC. DESCARGA DE BATERÍAS, POR DICHA SITUACIÓN SE SUPRIME TREN 50009 Observación: FALLA DE LOC. DESCARGA DE BATERÍAS, POR DICHA SITUACIÓN SE SUPRIME TREN 50009.</p>
+                                <p class="pull-left">Reportado por: Claudio Yáñez</p>
+                                <p class="pull-left">Fecha reporte: <span class="date">20/11/2017 09:00</span></p>
+                            </li>*@
+                        @if (Model != null && Model.Count() > 0) {
+                            foreach (var news in Model) {
+                                @Html.Partial("Partial/_Summary",news)
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*Baasado en clients*@
+@*<div class="wrapper wrapper-content">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+
+                <div class="ibox-content">
+                    <table class="table" id="summary">
+                        <thead>
+                            <tr>
+                                <th>TrainRouteId</th>
+                                <th>Reason</th>
+                                <th>Details</th>
+                                <th>Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                foreach (var news in Model)
+                                {
+                                    @Html.Partial("Partial/_Summary", news)
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+@section Scripts{
+
+    <script src="~/Scripts/modal.news.js"></script>
+    <script src="https://unpkg.com/isotope-layout@2/dist/isotope.pkgd.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            var $grid = $('.novedades').isotope({
+                // options
+                itemSelector: '.novedad',
+                layoutMode: 'fitRows',
+                getSortData: {
+                    time: function ($elem) {
+                        var fecha = new Date($($elem).find('.date').attr('data-date'));
+                        return fecha;
+
+                    }
+                },
+                sortBy: 'time'
+            });
+
+            $('.filter-button-group').change(function () {
+                var filterValue = $(this).find('option:selected').attr('data-filter');
+                $grid.isotope({
+                    filter: filterValue
+                });
+            });
+            var $optionSets = $('.option-set'),
+                $optionLinks = $optionSets.find('a');
+
+            $optionLinks.click(function () {
+                var $this = $(this);
+                // don't proceed if already selected
+                if ($this.hasClass('selected')) {
+                    return false;
+                }
+                var $optionSet = $this.parents('.option-set');
+                $optionSet.find('.selected').removeClass('selected');
+                $this.addClass('selected');
+
+                // make option object dynamically, i.e. { filter: '.my-filter-class' }
+                var options = {},
+                    key = $optionSet.attr('data-option-key'),
+                    value = $this.attr('data-option-value');
+                // parse 'false' as false boolean
+                value = value === 'false' ? false : value;
+                options[key] = value;
+                if (key === 'layoutMode' && typeof changeLayoutMode === 'function') {
+                    // changes in layout modes need extra logic
+                    changeLayoutMode($this, options);
+                } else {
+                    // otherwise, apply new options
+                    $grid.isotope(options);
+                }
+
+                return false;
+            });
+
+            $('.filter-button-group').on('click', 'button', function () {
+                var filterValue = $(this).attr('data-filter');
+                // use filterFn if matches value
+
+                $grid.isotope({ filter: filterValue });
+            });
+        });
+    </script>
+}
+
+@*MODAL FOR CREATION*@
+@Html.Partial("Partial/_Create",new ViewModels.Models.Novedad())
+@*<script src="~/Scripts/chosen.jquery.js"></script>*@
+
+@section Styles{
+    <style>
+        .novedades {
+            padding: 15px 0;
+        }
+
+        .novedad {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            width: 100%;
+        }
+    </style>
+}
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/modal")
+    }*@

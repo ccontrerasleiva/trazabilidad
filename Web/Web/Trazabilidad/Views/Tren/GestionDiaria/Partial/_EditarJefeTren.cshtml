@@ -1,0 +1,31 @@
+﻿@model ViewModels.Models.Tren_Locomotora
+@using (Html.BeginForm(nameof(Trazabilidad.Controllers.TrenController.EditTripulantexPlan),
+                            nameof(Resources.Strings.Models.Tren), FormMethod.Post, htmlAttributes: new { @id = "modal-element-edit" }))
+ {
+              @Html.HiddenFor(x => x.Id)
+              @Html.HiddenFor(x => x.OldTripulanteMaquinista)
+              @Html.HiddenFor(x => x.OldTripulanteJefeTren)     
+    
+                <div class="col-md-12">
+                    <h3 class="m-t-none m-b">Modificar Tripulante</h3>
+                </div>
+                <form role="form">
+                            
+                    <div class="form-group">
+                        @Html.LabelFor(tt => tt.JefeTren, "Jefe de Tren")
+
+                        @Html.DropDownListFor(tt => tt.JefeTren, (SelectList)ViewBag.Tripulantes, "Seleccione una Jefe de Tren", htmlAttributes: new { @class = "form-control chosen-select" })
+                        @Html.ValidationMessageFor(tt => tt.JefeTren, null, new { @class = "text-danger" })
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+                    </div>
+                </form>
+ }
+     
+
+
+
+

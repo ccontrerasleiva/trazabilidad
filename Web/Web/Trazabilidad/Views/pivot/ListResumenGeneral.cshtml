@@ -1,0 +1,297 @@
+@model IEnumerable<ViewModels.Models.Tripulante>
+@{
+    ViewBag.Title = "Tripulante";
+    ViewBag.Header = "Resumen General";
+}
+@using PlataformaGestion.Controllers;
+@using Resources.Strings;
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-8">
+        <h2>@ViewBag.Header</h2>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action(" Index", "Home" )">Inicio</a></li>
+            <li class="active"><strong>Resumen Jornada</strong></li>
+        </ol>
+    </div>
+</div>
+
+@*RESTO DE LA PAGINA*@
+<div class="wrapper wrapper-content ">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title title-action" style="background-color:#b2eaea">
+
+                <a id="ExportaExcell" class="btn btn-primary"><i class="fa fa-plus"></i>Exportar a Excel</a>
+                <div id="excel">
+                    @*<div id="output" style="margin:30px; float:left; width:auto; overflow-y:auto; overflow-x:auto; height:auto; background-color:cadetblue; overflow-x: scroll;"></div>*@
+                </div>
+
+            </div>
+            @*<div id="output"></div>*@
+            <div class="content">
+                <div class="ibox-content" style="background-color:#b5dada">
+
+                    <div id="divProcessing" style="display:none" class="col-xs-12" align="center">
+                        <div class="center-block">
+                            <p>  Espere un momento ... <img src="~/Content/img/Rolling.gif" width="50" height="50" /> </p>
+                        </div>
+                    </div>
+
+
+                    @*var derivers = $.pivotUtilities.derivers;
+                    $("#output").pivotUI(mps, {
+                    //rendererOptions: { gchart: { width: 10, height: 10} },
+                    width: 1
+                    , hight: 2
+                    , rows: ["Rut", "Base", "Actividad", "FechaInicio", "HoraInicio", "EstacionOrigen", "FechaFin", "HoraFin", "EstacionDestino", "HorasTrabajadas", "HorasReal", "HorasSobreJornada", "HorasNocturna", "HorasPasajero", "HorasFestivo", "Colacion", "Alojamiento"]
+                    , cols: ["Nombre_Tripulante"]
+                    });*@
+
+
+                    <table id="tblReporte" border="1" style="width:500px; display:none;">
+                        <thead>
+                            @*<tr>
+                                <th class="head">Tripulante</th>
+                                <th>Rut</th>
+                                <th>Cargo</th>
+                                <th>Rol</th>
+                                <th>Base</th>
+                                <th>Servicio</th>
+                                <th>Fecha Inicio</th>
+                                <th>Hora Inicio</th>
+                                <th>Estacion Origen</th>
+                                <th>Fecha Fin</th>
+                                <th>Hora Fin</th>
+                                <th>Estacion Destino</th>
+                                <th>H. Trabajadas</th>
+                                <th>Horas Real</th>
+                                <th>Horas SobreJornada</th>
+                                <th>Horas Nocturna</th>
+                                <th>Horas Pasajero</th>
+                                <th>Horas Festivo</th>
+                                <th>Colacion</th>
+                                <th>Alojamiento</th>
+                                <th>Anualidad</th>
+                                <th>Mes</th>
+                                @*<th>HorasTrabajadasTotal</th>
+                            </tr>*@
+
+                            <tr>
+                                <th class="head">Tripulante</th>
+                                <th>Rut</th>
+                                <th>Cargo</th>
+                                <th>Rol</th>
+                                <th>Base</th>
+                                <th>Servicio</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Estacion Origen</th>
+                                <th>Fecha Fin</th>
+                                <th>Hora Fin</th>
+                                <th>Estacion Destino</th>
+                                <th>H.Trabajadas</th>
+                                <th>Horas Real</th>
+                                <th>Horas SobreJornada</th>
+                                <th>Horas Nocturna</th>
+                                <th>HAPA</th>
+                                <th>Horas Festivo</th>
+                                <th>V.C</th>
+                                <th>V.A</th>
+                                <th>Anualidad</th>
+                                <th>Mes</th>
+                            </tr>
+                        </thead>
+                        <tbody style="overflow-x: auto;"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <!--  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    @Scripts.Render("~/bundles/DTList")
+
+    @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.14.0/pivot.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.14.0/pivot.min.js"></script>*@
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.6/c3.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.6/c3.min.js"></script>
+    @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.6.0/tips_data.min.js"></script>*@
+    @*@Scripts.Render("~/bundles/pivot")*@
+
+    @*<link href="https://pivottable.js.org/dist/pivot.css" type="text/css" rel="stylesheet" />*@
+    @*<script type="text/javascript" src="https://pivottable.js.org/dist/pivot.js"></script>*@
+    <script>
+        $("#output").pivotUI(
+            $.pivotUtilities.tipsData, {
+                rows: ["sex"],
+                cols: ["smoker"],
+                vals: ["tip", "total_bill"],
+                aggregatorName: "Sum over Sum",
+                rendererName: "Bar Chart",
+                hideTotals: true,
+                renderers: $.extend(
+                    $.pivotUtilities.renderers,
+                    $.pivotUtilities.c3_renderers
+                )
+            });
+    </script>
+    <script>
+        $(function () {
+            var derivers = $.pivotUtilities.derivers;
+            var renderers = $.extend($.pivotUtilities.renderers,
+                $.pivotUtilities.c3_renderers);
+
+            $("#divProcessing").show();
+            $.getJSON("/Tripulante/ResumenGeneral", function (mps) {
+                $(mps).each(function () {
+                    var fila = "";
+
+                    fila = fila + "<tr><td>" + this.Tripulante + "</td><td>" + this.Rut +
+                        //"</td><td>" + "Panel Horizontal" +
+                        "</td><td>" + this.Cargo +
+                        "</td><td>" + this.Rol +
+                        "</td><td>" + this.Base +
+                        "</td><td>" + this.Actividad +
+                        "</td><td>" + this.FechaInicio +
+                        "</td><td>" + this.HoraInicio +
+                        "</td><td>" + this.EstacionOrigen +
+                        "</td><td>" + this.FechaFin +
+                        "</td><td>" + this.HoraFin +
+                        "</td><td>" + this.EstacionDestino +
+                        "</td><td>" + this.HorasTrabajadas +
+                        "</td><td>" + this.HorasReal +
+                        "</td><td>" + this.HorasSobreJornada +
+                        "</td><td>" + this.HorasNocturna +
+                        "</td><td>" + this.HorasPasajero +
+                        "</td><td>" + this.HorasFestivo +
+                        "</td><td>" + this.Colacion +
+                        "</td><td>" + this.Alojamiento +
+                        "</td><td>" + this.Año +
+                        "</td><td>" + this.Mes +
+                        //"</td><td>" + this.HorasTrabajadasTotal +
+                        "</td></tr>";
+
+                    $(fila).appendTo("#tblReporte tbody");
+                });
+
+                $("#divProcessing").hide();
+
+                // this is your saved/serialized config in a string
+                var serializedConfig = '{"rows":["Province"], "cols":["Party"],' +
+                    '"vals":["Age"],"aggregatorName":"Integer Sum"}';
+
+                $(".ibox-content").pivotUI($("#tblReporte"), {
+                    hideTotals: true,
+                    rows: ["Base", "Tripulante", "Fecha", "Hora", "Servicio", "H.Trabajadas", "Horas Real", "Horas SobreJornada",
+                        "Horas Nocturna", "HAPA", "Horas Festivo","V.C", "V.A"]
+
+                },
+                    false,
+                    "es"
+
+                    
+                );
+            });
+        });
+    </script>
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        }
+    </script>
+
+    @*<script>
+                //$("#hideSelect").click(function (e) {
+                //    var contenidoTabla = "<table>" + $("table.pvtTable").html() + "</table>";
+                //    window.open('data:application/vnd.ms-excel,' + encodeURIComponent(contenidoTabla));
+                //    e.preventDefault();
+                //});
+        </script>*@
+
+    <script>
+        function sendToExcel(html) {
+            var parent = $("<div>").append(html);
+            parent.find("br").replaceWith('<br style="mso-data-placement:same-cell" />');
+            html = parent.html();
+
+            // IE?
+            if (navigator.msSaveOrOpenBlob) {
+                navigator.msSaveOrOpenBlob(new Blob([html]), "ResumenGeneral.xls");
+            }
+
+            // Non-IE.
+            else {
+                $("<a>", {
+                    download: "ResumenGeneral.xls",
+                    href: "data:text/html," + encodeURIComponent(html)
+                })[0].click();
+            }
+        }
+
+        $(function () {
+            $("#ExportaExcell").click(function (e) {
+                sendToExcel("<table>" + $("table.pvtTable").html() + "</table>")
+                e.preventDefault();
+            });
+        });
+
+    </script>
+
+
+    @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>*@
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script>$('.chosen-select').chosen({ width: "10%" });</script>
+}
+
+@section styles {
+    @*@Styles.Render("~/bundles/csspivot")*@
+    @*<link href="~/Content/pivottable-master/dist/pivot.css" type="text/css" rel="stylesheet" hidden="hidden" />*@
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.6/c3.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.6/c3.min.css" />
+    <link href="~/Content/bootstrap-chosen.css" type="text/css" rel="stylesheet" hidden="hidden" />
+    <style>
+        #page-wrapper {
+            /*height: 100% !important;*/
+            font-size: 10px;
+            /*width: 90%;*/
+        }
+
+        tbody > tr > th.pvtTotalLabel, .colTotal, .pvtGrandTotal {
+            display: none;
+        }
+
+        .pvtRowTotalLabel {
+            display: none;
+        }
+
+        .rowTotal{
+            display:none
+        }
+        
+        .cscrooll {
+        }
+    </style>
+    @*<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css">*@
+
+
+}
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1e03a2a7f7e8406795124271d5c7aa0b" Name="Diagram1">
+        <EntityTypeShape EntityType="TrazabilidadDBModelo.ET_Pesaje_Cabecera" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrazabilidadDBModelo.ET_Pesaje_Detalle" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrazabilidadDBModelo.ET_Pesaje_Sello" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="TrazabilidadDBModelo.FK_ET_Pesaje_Detalle_ET_Pesaje_Cabecera" ManuallyRouted="false" />
+        <AssociationConnector Association="TrazabilidadDBModelo.FK_ET_Pesaje_Sello_ET_Pesaje_Cabecera" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

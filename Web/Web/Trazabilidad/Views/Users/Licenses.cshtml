@@ -1,0 +1,102 @@
+﻿@model IEnumerable<ViewModels.Models.Absence>
+@{
+    ViewBag.Title = "Ausencias por Usuario";
+    ViewBag.Header = "Ausencias";
+}
+
+@*BARRA SUPERIOR*@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>@ViewBag.Header</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+            </li>
+            <li class="active">
+                <strong>Ausencias</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-sm-8">
+        <div class="title-action">
+            <a data-toggle="modal" href="#modal-create" class="btn btn-primary"><i class="fa fa-plus"></i> Nueva</a>
+        </div>
+    </div>
+</div>
+
+@*RESTO DE LA PAGINA*@
+<div class="wrapper wrapper-content">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Ausencias por Usuario</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div id='calendar'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL FOR CREATION*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/modal")
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/fullcalendar.js"></script>
+    <script>
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek'
+            },
+            events: [
+                {
+                    title: 'Jaime Medina',
+                    start: new Date(y, m, 1),
+                    allDay: true
+                },
+                {
+                    title: 'Luis Vidal',
+                    start: new Date(y, m, 1),
+                    allDay: true
+                },
+                {
+                    id: 999,
+                    title: 'Evelyn Saavedra',
+                    start: new Date(y, m, d + 4),
+                    allDay: true
+                },
+                {
+                    title: 'Geovanni Luna',
+                    start: new Date(y, m, d),
+                    allDay: true
+                },
+                {
+                    title: 'Jorge Sarmiento',
+                    start: new Date(y, m, d + 1),
+                    end: new Date(y, m, d + 10),
+                    allDay: true
+                }
+            ]
+            // put your options and callbacks here
+        })
+    </script>
+}
+
+@section Styles{
+    <link href="~/Content/fullcalendar.css" rel="stylesheet" />
+    <link href="~/Content/fullcalendar.print.css" rel="stylesheet" media="print" />
+}
+
+@section Headers{
+}

@@ -1,0 +1,43 @@
+﻿@model ViewModels.Models.Client
+
+<div id="modal-create" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    @using (Html.BeginForm("Create", "Clients", FormMethod.Post, htmlAttributes: new { @id = "modal-element-create" }))
+                    {
+                        <div class="col-sm-12">
+                            <h3 class="m-t-none m-b">Crear Nuevo Cliente</h3>
+
+                            <p>Ingresar un nuevo cliente al sistema con el fin de asignarle servicios.</p>
+
+                            <form role="form">
+                                <div class="form-group">
+                                    @Html.LabelFor(cl => cl.Code, "Código")
+                                    @Html.TextBoxFor(cl => cl.Code, htmlAttributes: new { @class = "form-control", placeholder = "Código del Cliente" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(cl => cl.Name, "Nombre")
+                                    @Html.TextBoxFor(cl => cl.Name, htmlAttributes: new { @class = "form-control", placeholder = "Nombre" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(cl => cl.Address, "Dirección")
+                                    @Html.TextBoxFor(cl => cl.Address, htmlAttributes: new { @class = "form-control", placeholder = "Dirección" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(cl => cl.City, "Nombre")
+                                    @Html.TextBoxFor(cl => cl.City, htmlAttributes: new { @class = "form-control", placeholder = "Ciudad" })
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+                                </div>
+                            </form>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

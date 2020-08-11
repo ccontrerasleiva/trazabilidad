@@ -1,0 +1,209 @@
+﻿@*@model ViewModels.Models.Servicio
+    @using (Html.BeginForm(nameof(Trazabilidad.Controllers.ServicioController.Create), nameof(Resources.Strings.Models.Servicio), FormMethod.Post, htmlAttributes: new { @id = "modal-element-create" }))
+    {
+        <div id="modal-create" class="modal fade" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h3 class="modal-title m-t-none m-b">Ingresar Servicio</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+
+                        <div class="content col-sm-12">
+
+                            <form role="form">
+
+                                <div class="form-group">
+                                    @Html.LabelFor(srv => srv.Descripcion, "Descripción")
+                                    @Html.TextBoxFor(srv => srv.Descripcion, htmlAttributes: new { @class = "form-control", placeholder = "Descripcion" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(srv => srv.Codigo, "Código")
+                                    @Html.TextBoxFor(srv => srv.Codigo, htmlAttributes: new { @class = "form-control", placeholder = "Codigo" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(srv => srv.Responsable, "Responsable")
+                                    @Html.TextBoxFor(srv => srv.Responsable, htmlAttributes: new { @class = "form-control", placeholder = "Responsable" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(srv => srv.Id_Servicio_Cliente, "Id Servicio Cliente")
+                                    @Html.TextBoxFor(srv => srv.Id_Servicio_Cliente, htmlAttributes: new { @class = "form-control", placeholder = "Id_Servicio_Cliente" })
+                                </div>
+
+
+                                <div class="checkbox checkbox-primary checkbox-inline">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-6">
+                                            @Html.CheckBoxFor(model => model.Bonificable, htmlAttributes: new { @class = "styled" })
+                                            @Html.LabelFor(model => model.Bonificable, labelText: "Bonificable")
+                                        </div>
+                                        <div class="col-sm-6">
+                                            @Html.CheckBoxFor(model => model.Deshabilitado, htmlAttributes: new { @class = "styled" })
+                                            @Html.LabelFor(model => model.Deshabilitado, labelText: "Deshabilitado")
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div>
+                            <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div id="modal-edit" class="modal fade" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row" id="ServicioEdit">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-delete" class="modal fade" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row" id="ServicioDelete">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+@model ViewModels.Models.Servicio
+<div id="modal-create" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    @*@using (Html.BeginForm("Create", "Servicio", FormMethod.Post, htmlAttributes: new { @id = "modal-element-create" }))*@
+                    @using (Html.BeginForm(nameof(Trazabilidad.Controllers.ServicioController.Create), nameof(Resources.Strings.Models.Servicio), FormMethod.Post, htmlAttributes: new { @id = "modal-element-create" }))
+                    {
+                        <div class="col-sm-12">
+                            <h3 class="m-t-none m-b">Nuevo Servicio</h3>
+
+                            <p>Crear nuevo Servicio con el fin de asignarle itinerarios.</p>
+
+                            <form role="form">
+
+                                @*@if (ViewBag.ClientId > 0)
+                    {
+                        <input type="hidden" value="@ViewBag.ClientId" name="ClientId" />
+                    }
+                    else if (ViewBag.Clients != null)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(srv => srv.Codigo, "Número")
+                            @Html.DropDownListFor(model=> model.Id_Servicio_Cliente, (SelectList) ViewBag.Clients, "Seleccione un Cliente", htmlAttributes: new { @class = "form-control chosen-select" })
+                        </div>
+                    }*@
+
+                                <div class="form-group">
+                                    @Html.LabelFor(srv => srv.Codigo, "Codigo")
+                                    @Html.TextBoxFor(srv => srv.Codigo, htmlAttributes: new { @class = "form-control", placeholder = "Código" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(srv => srv.Descripcion, "Descripción")
+                                    @Html.TextBoxFor(srv => srv.Descripcion, htmlAttributes: new { @class = "form-control", placeholder = "Descripción" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(srv => srv.Responsable, "Responsable")
+                                    @Html.TextBoxFor(srv => srv.Responsable, htmlAttributes: new { @class = "form-control", placeholder = "Responsable" })
+                                </div>
+
+                                @*<div class="form-group hidden">
+                        @Html.LabelFor(srv => srv.Id_Servicio_Cliente, "Id Servicio Cliente")
+                        @Html.TextBoxFor(srv => srv.Id_Servicio_Cliente , htmlAttributes: new { @class = "form-control", placeholder = "Id_Servicio_Cliente", value= "1" })
+                    </div>*@
+
+                                @*<div class="checkbox checkbox-primary checkbox-inline">
+                        <div class="col-sm-12">
+                            <div class="col-sm-6">
+                                @Html.CheckBoxFor(model => model.Bonificable, htmlAttributes: new { @class = "styled" })
+                                @Html.LabelFor(model => model.Bonificable, labelText: "Bonificable")
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.CheckBoxFor(model => model.Deshabilitado, htmlAttributes: new { @class = "styled" })
+                                @Html.LabelFor(model => model.Deshabilitado, labelText: "Deshabilitado")
+                            </div>
+                        </div>
+                    </div>*@
+
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-primary checkbox-inline col-sm-12">
+
+                                        <div class="col-sm-4">
+                                            @Html.CheckBoxFor(model => model.VColacion, htmlAttributes: new { @class = "styled" })
+                                            @Html.LabelFor(model => model.VColacion, labelText: "Viatico Colacion")
+                                        </div>
+
+                                        <div class="col-sm-8">
+                                            @Html.CheckBoxFor(model => model.VAlojamiento, htmlAttributes: new { @class = "styled" })
+                                            @Html.LabelFor(model => model.VAlojamiento, labelText: "Viatico Alojamiento")
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                @*@if(Html.CheckBoxFor(Model => Model.VColacion = true))
+                    {
+                    @Html.CheckBoxFor(x => x.VAlojamiento, new { @checked = "checked" })
+                    }
+                    else
+                    {
+                    @Html.CheckBoxFor(x => x.VColacion)
+                    }*@
+
+                                @*
+                    <div style="visibility: hidden">
+                        <div class="form-group">
+                            <div class="form-group">
+                                @Html.RadioButtonFor(m => m.Deshabilitado, false, htmlAttributes: new { id = "Habilitado" }) @Html.Label("Habilitado", "Habilitado")
+                                @Html.RadioButtonFor(m => m.Deshabilitado, true, htmlAttributes: new { id = "Deshabilitado" }) @Html.Label("Deshabilitado", "Deshabilitado")
+                                @Html.ValidationMessageFor(x => x.Deshabilitado, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                                *@
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><i class="fa fa-plus"></i> Guardar</strong></button>
+                                </div>
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
